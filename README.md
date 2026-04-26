@@ -36,6 +36,12 @@ App locale par défaut: `http://localhost:3000/fr`.
 
 Voir `docs/architecture.md` pour les diagrammes de flux.
 
+## Palette de marque
+
+- Bleu PAP: `#1E5A96` (inchangé)
+- Corail Méditerranée: `#EF6F50`
+- Crème: `#FBF6EC` (inchangé)
+
 ## Qualité & CI/CD
 
 - Coverage métier ciblé `lib/` + `hooks/` avec seuil global >= 60%.
