@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import type { SellerProfile } from "./types";
 
@@ -18,9 +19,11 @@ export function ListingSeller({ seller }: Props) {
       <div className="flex items-center gap-3">
         <div className="border-line bg-creme h-12 w-12 overflow-hidden rounded-full border">
           {seller.avatar_url ? (
-            <img
+            <Image
               src={seller.avatar_url}
               alt={seller.full_name ?? "Vendeur"}
+              width={48}
+              height={48}
               className="h-full w-full object-cover"
             />
           ) : null}

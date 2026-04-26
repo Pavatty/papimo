@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 type ConversationItem = {
@@ -65,9 +66,11 @@ export function ConversationList({
           >
             <div className="border-line bg-creme h-10 w-10 overflow-hidden rounded-full border">
               {conversation.peerAvatar ? (
-                <img
+                <Image
                   src={conversation.peerAvatar}
                   alt={conversation.peerName}
+                  width={40}
+                  height={40}
                   className="h-full w-full object-cover"
                 />
               ) : null}

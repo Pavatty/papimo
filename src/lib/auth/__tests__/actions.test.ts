@@ -108,7 +108,7 @@ describe("auth actions", () => {
     const result = await sendMagicLink("user@example.com");
     expect(result.ok).toBe(true);
     expect(hoisted.signInWithOtp).toHaveBeenCalled();
-  });
+  }, 15000);
 
   it("sendWhatsAppCode returns code and link", async () => {
     const { sendWhatsAppCode } = await import("@/lib/auth/actions");

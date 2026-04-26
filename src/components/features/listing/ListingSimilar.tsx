@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { formatPrice } from "@/lib/listing/format";
 import type { Tables } from "@/types/database";
@@ -31,9 +32,11 @@ export function ListingSimilar({ locale, listings }: Props) {
             className="border-line bg-paper overflow-hidden rounded-xl border transition hover:shadow-sm"
           >
             {listing.cover_url ? (
-              <img
+              <Image
                 src={listing.cover_url}
                 alt={listing.title}
+                width={800}
+                height={450}
                 className="aspect-video w-full object-cover"
               />
             ) : null}

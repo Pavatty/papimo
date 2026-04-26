@@ -2,6 +2,7 @@
 
 import { MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
@@ -43,9 +44,11 @@ export function ListingContactCard({
       <div className="mb-3 flex items-center gap-3">
         <div className="border-line bg-creme h-11 w-11 overflow-hidden rounded-full border">
           {seller.avatar_url ? (
-            <img
+            <Image
               src={seller.avatar_url}
               alt={seller.full_name ?? "Vendeur"}
+              width={44}
+              height={44}
               className="h-full w-full object-cover"
             />
           ) : null}

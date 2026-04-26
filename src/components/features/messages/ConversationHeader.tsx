@@ -2,6 +2,7 @@
 
 import { Ban, Flag } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useTransition } from "react";
 
 import { signalConversation } from "@/app/[locale]/(authed)/messages/actions";
@@ -27,9 +28,11 @@ export function ConversationHeader({
       <div className="flex items-center gap-3">
         <div className="border-line bg-creme h-10 w-10 overflow-hidden rounded-full border">
           {peerAvatar ? (
-            <img
+            <Image
               src={peerAvatar}
               alt={peerName}
+              width={40}
+              height={40}
               className="h-full w-full object-cover"
             />
           ) : null}

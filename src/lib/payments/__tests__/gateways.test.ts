@@ -13,7 +13,7 @@ vi.mock("stripe", () => {
       },
     };
     webhooks = {
-      constructEvent: vi.fn((_body: string, _signature: string) => ({
+      constructEvent: vi.fn(() => ({
         type: "checkout.session.completed",
       })),
     };
