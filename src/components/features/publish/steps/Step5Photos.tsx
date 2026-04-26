@@ -16,6 +16,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ImagePlus, X } from "lucide-react";
+import Image from "next/image";
 import { useDropzone } from "react-dropzone";
 import { useTransition } from "react";
 
@@ -71,7 +72,13 @@ function SortablePhoto({
       {...listeners}
       className="border-line group relative overflow-hidden rounded-xl border bg-white"
     >
-      <img src={image.url} alt="" className="h-40 w-full object-cover" />
+      <Image
+        src={image.url}
+        alt=""
+        width={640}
+        height={320}
+        className="h-40 w-full object-cover"
+      />
       <div className="absolute top-2 right-2 flex gap-2">
         <button
           type="button"
