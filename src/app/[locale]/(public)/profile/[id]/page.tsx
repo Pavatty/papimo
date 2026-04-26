@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { createClient } from "@/lib/supabase/server";
@@ -40,16 +39,20 @@ export default async function PublicProfilePage({ params }: Props) {
       .order("created_at", { ascending: false })
       .limit(12),
   ]);
-  if (!profile) notFound();
+  const profileName = profile?.full_name ?? "Profil utilisateur";
+  const createdAt = profile?.created_at
+    ? new Date(profile.created_at).toLocaleDateString("fr-FR")
+    : "N/A";
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 md:px-6">
-      <h1 className="text-ink text-3xl font-bold">
-        {profile.full_name ?? "Profil utilisateur"}
-      </h1>
-      <p className="text-ink-soft mt-2 text-sm">
-        Membre depuis {new Date(profile.created_at).toLocaleDateString("fr-FR")}
-      </p>
+      <h1 className="text-ink text-3xl font-bold">{profileName}</h1>
+      <p className="text-ink-soft mt-2 text-sm">Membre depuis {createdAt}</p>
+      {!profile ? (
+        <p className="text-ink-soft mt-4 text-sm">
+          Ce profil n&apos;est pas disponible publiquement pour le moment.
+        </p>
+      ) : null}
       <section className="mt-6 space-y-2">
         {(listings ?? []).map((listing) => (
           <article
