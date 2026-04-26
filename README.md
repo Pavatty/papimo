@@ -92,3 +92,26 @@ Optionnel: définir `UNSPLASH_ACCESS_KEY` pour images via API Unsplash.
 - Renforcer notifications utilisateur (modération, paiements, messages).
 - Compléter les scénarios e2e de charge et résilience.
 - Ajouter export photos vers stockage froid automatisé.
+
+## Workflow Git
+
+- `main`: production.
+- `develop`: branche d'intégration/staging.
+- `feat/xxx`: nouvelles fonctionnalités.
+- `fix/xxx`: correctifs.
+
+### Créer une nouvelle feature
+
+```bash
+git checkout develop
+git pull
+git checkout -b feat/nom-feature
+# développer
+git push -u origin feat/nom-feature
+```
+
+Ensuite:
+
+1. Ouvrir une PR `feat/nom-feature -> develop`.
+2. Merger vers `develop` après validation.
+3. Quand `develop` est stable, ouvrir une PR `develop -> main`.
