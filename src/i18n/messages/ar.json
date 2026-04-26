@@ -1,0 +1,39 @@
+{
+  "common": {
+    "brandName": "papimo",
+    "tagline": {
+      "fr": "L'immobilier entre particuliers",
+      "en": "Real estate between private owners",
+      "ar": "العقارات بين الخواص"
+    }
+  },
+  "a11y": {
+    "mainMenu": "القائمة الرئيسية",
+    "languageMenu": "مبدّل اللغة"
+  },
+  "navigation": {
+    "buy": "شراء",
+    "rent": "إيجار",
+    "estimate": "تقدير",
+    "tools": "أدوات",
+    "login": "تسجيل الدخول",
+    "publishMyProperty": "نشر عقاري",
+    "discover": "استكشف العقارات",
+    "languages": {
+      "fr": "Français",
+      "ar": "العربية",
+      "en": "English"
+    }
+  },
+  "footer": {
+    "columnIndividuals": "الأفراد",
+    "columnAbout": "من نحن",
+    "columnLanguages": "اللغات"
+  },
+  "home": {
+    "hero": {
+      "headline": "العقار، <bleu>بين يديك</bleu> <corail>مباشرة</corail>.",
+      "subline": "إعلانات بين الأفراد — بدون وكيل، بدون وسيط."
+    }
+  }
+}

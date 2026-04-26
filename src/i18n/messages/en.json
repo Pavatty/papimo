@@ -1,0 +1,39 @@
+{
+  "common": {
+    "brandName": "papimo",
+    "tagline": {
+      "fr": "L'immobilier entre particuliers",
+      "en": "Real estate between private owners",
+      "ar": "العقارات بين الخواص"
+    }
+  },
+  "a11y": {
+    "mainMenu": "Main menu",
+    "languageMenu": "Language switcher"
+  },
+  "navigation": {
+    "buy": "Buy",
+    "rent": "Rent",
+    "estimate": "Valuation",
+    "tools": "Tools",
+    "login": "Log in",
+    "publishMyProperty": "List my property",
+    "discover": "Browse properties",
+    "languages": {
+      "fr": "Français",
+      "ar": "العربية",
+      "en": "English"
+    }
+  },
+  "footer": {
+    "columnIndividuals": "Private owners",
+    "columnAbout": "About",
+    "columnLanguages": "Languages"
+  },
+  "home": {
+    "hero": {
+      "headline": "Real estate, <bleu>at home</bleu> and <corail>direct</corail>.",
+      "subline": "Listings from owner to owner — no agency, no intermediary."
+    }
+  }
+}

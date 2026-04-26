@@ -1,0 +1,12 @@
+{
+  "plugins": {
+    "supabase": {
+      "enabled": true,
+      "project_ref": "iwwzxxdgzelfhgpptngq",
+      "features": ["database", "docs", "development", "edge-functions"]
+    },
+    "vercel": {
+      "enabled": true
+    }
+  }
+}
