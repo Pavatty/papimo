@@ -1,13 +1,19 @@
 import Stripe from "stripe";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-if (!stripeSecretKey) {
-  // This module can still be imported for type-checking.
-}
+let stripeClient: Stripe | null = null;
 
-export const stripe = new Stripe(stripeSecretKey ?? "sk_test_placeholder", {
-  apiVersion: "2025-03-31.basil",
-});
+function getStripeClient() {
+  if (!stripeSecretKey) {
+    throw new Error("Missing STRIPE_SECRET_KEY");
+  }
+  if (!stripeClient) {
+    stripeClient = new Stripe(stripeSecretKey, {
+      apiVersion: "2025-03-31.basil",
+    });
+  }
+  return stripeClient;
+}
 
 type CreateCheckoutSessionInput = {
   amount: number;
@@ -20,9 +26,7 @@ type CreateCheckoutSessionInput = {
 };
 
 export async function createCheckoutSession(input: CreateCheckoutSessionInput) {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error("Missing STRIPE_SECRET_KEY");
-  }
+  const stripe = getStripeClient();
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
     customer_email: input.customerEmail,
@@ -55,5 +59,6 @@ export async function createCheckoutSession(input: CreateCheckoutSessionInput) {
 export function parseWebhook(rawBody: string, signature: string) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!secret) throw new Error("Missing STRIPE_WEBHOOK_SECRET");
+  const stripe = getStripeClient();
   return stripe.webhooks.constructEvent(rawBody, signature, secret);
 }
