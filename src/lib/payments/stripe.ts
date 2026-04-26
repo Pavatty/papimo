@@ -1,11 +1,10 @@
 import Stripe from "stripe";
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-if (!stripeSecretKey) {
-  // This module can still be imported for type-checking.
-}
+/** Build-safe: empty env must not become `""` or Stripe throws "Neither apiKey nor config.authenticator". */
+const stripeSecretKey =
+  process.env.STRIPE_SECRET_KEY?.trim() || "sk_test_placeholder";
 
-export const stripe = new Stripe(stripeSecretKey ?? "sk_test_placeholder", {
+export const stripe = new Stripe(stripeSecretKey, {
   apiVersion: "2026-04-22.dahlia",
 });
 
