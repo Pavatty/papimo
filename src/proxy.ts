@@ -7,7 +7,7 @@ import { getSupabaseEnv } from "@/lib/supabase/env";
 import type { Database } from "@/types/database";
 
 const intlMiddleware = createIntlMiddleware(routing);
-const protectedPrefixes = ["/dashboard", "/publish", "/messages"];
+const protectedPrefixes = ["/dashboard", "/publish", "/messages", "/checkout"];
 const adminPrefix = "/admin";
 
 function getLocaleFromPath(pathname: string) {
