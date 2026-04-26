@@ -17,6 +17,16 @@ const withPWA = pwa({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
 });
+const isDevelopment = process.env.NODE_ENV === "development";
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline' ${isDevelopment ? "'unsafe-eval' " : ""}https://plausible.io https://us.i.posthog.com`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https:",
+  `connect-src 'self' ${isDevelopment ? "ws: http://localhost:* http://127.0.0.1:* " : ""}https://*.supabase.co https://plausible.io https://us.i.posthog.com`,
+  "frame-src https://api.mapbox.com",
+  "font-src 'self' data:",
+].join("; ");
 
 const nextConfig: NextConfig = {
   // Évite l’avertissement HMR Playwright (127.0.0.1) en dev
@@ -57,8 +67,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io https://us.i.posthog.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://*.supabase.co https://plausible.io https://us.i.posthog.com; frame-src https://api.mapbox.com; font-src 'self' data:;",
+            value: contentSecurityPolicy,
           },
         ],
       },
