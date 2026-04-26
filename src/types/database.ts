@@ -12,6 +12,42 @@ export type Database = {
   };
   public: {
     Tables: {
+      auth_otp: {
+        Row: {
+          attempts: number;
+          code: string;
+          created_at: string;
+          expires_at: string;
+          id: string;
+          ip: string | null;
+          phone: string;
+          used: boolean;
+          user_agent: string | null;
+        };
+        Insert: {
+          attempts?: number;
+          code: string;
+          created_at?: string;
+          expires_at: string;
+          id?: string;
+          ip?: string | null;
+          phone: string;
+          used?: boolean;
+          user_agent?: string | null;
+        };
+        Update: {
+          attempts?: number;
+          code?: string;
+          created_at?: string;
+          expires_at?: string;
+          id?: string;
+          ip?: string | null;
+          phone?: string;
+          used?: boolean;
+          user_agent?: string | null;
+        };
+        Relationships: [];
+      };
       ad_campaigns: {
         Row: {
           advertiser_email: string | null;

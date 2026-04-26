@@ -4,8 +4,10 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { type ReactNode } from "react";
 
+import { AuthProvider } from "@/components/providers/AuthProvider";
 import { BRAND } from "@/config/brand";
 import { routing } from "@/i18n/routing";
+import { getCurrentUser } from "@/lib/auth/session";
 
 const localeDirs: Record<string, "ltr" | "rtl"> = {
   fr: "ltr",
@@ -51,13 +53,16 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  const { user, profile } = await getCurrentUser();
   const dir = localeDirs[locale] ?? "ltr";
 
   return (
     <html lang={locale} dir={dir} className="h-full antialiased">
       <body className="flex min-h-full flex-col">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <AuthProvider initialUser={user} initialProfile={profile}>
+            {children}
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

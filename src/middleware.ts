@@ -1,10 +1,92 @@
-import createMiddleware from "next-intl/middleware";
+import { createServerClient } from "@supabase/ssr";
+import createIntlMiddleware from "next-intl/middleware";
+import { NextResponse, type NextRequest } from "next/server";
 
-import { routing } from "./i18n/routing";
+import { routing } from "@/i18n/routing";
+import type { Database } from "@/types/database";
 
-export default createMiddleware(routing);
+const intlMiddleware = createIntlMiddleware(routing);
+const protectedPrefixes = ["/dashboard", "/publish", "/messages"];
+const adminPrefix = "/admin";
+
+function getLocaleFromPath(pathname: string) {
+  const segment = pathname.split("/")[1];
+  return routing.locales.includes(segment as (typeof routing.locales)[number])
+    ? segment
+    : routing.defaultLocale;
+}
+
+function removeLocalePrefix(pathname: string, locale: string) {
+  return pathname.replace(new RegExp(`^/${locale}`), "") || "/";
+}
+
+export async function middleware(request: NextRequest) {
+  const response = intlMiddleware(request);
+  const locale = getLocaleFromPath(request.nextUrl.pathname);
+  const pathWithoutLocale = removeLocalePrefix(
+    request.nextUrl.pathname,
+    locale,
+  );
+
+  const supabase = createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options);
+          });
+        },
+      },
+    },
+  );
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const needsAuth = protectedPrefixes.some(
+    (prefix) =>
+      pathWithoutLocale === prefix ||
+      pathWithoutLocale.startsWith(`${prefix}/`),
+  );
+  const needsAdmin =
+    pathWithoutLocale === adminPrefix ||
+    pathWithoutLocale.startsWith("/admin/");
+
+  if (needsAuth && !user) {
+    const url = new URL(`/${locale}/login`, request.url);
+    url.searchParams.set("redirect_to", request.nextUrl.pathname);
+    return NextResponse.redirect(url);
+  }
+
+  if (needsAdmin) {
+    if (!user) {
+      const url = new URL(`/${locale}/login`, request.url);
+      url.searchParams.set("reason", "unauthorized");
+      return NextResponse.redirect(url);
+    }
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (profile?.role !== "admin") {
+      const url = new URL(`/${locale}/login`, request.url);
+      url.searchParams.set("reason", "unauthorized");
+      return NextResponse.redirect(url);
+    }
+  }
+
+  return response;
+}
 
 export const config = {
-  // Matcher exclut les assets et les routes d’API / fichiers statiques
   matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };
