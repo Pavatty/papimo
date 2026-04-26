@@ -1,0 +1,317 @@
+﻿[
+  {
+    "group": "public",
+    "path": "/fr",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "public",
+    "path": "/fr/search",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "public",
+    "path": "/fr/pricing",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "public",
+    "path": "/fr/outils",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "public",
+    "path": "/fr/outils/estimation",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/outils/simulateur-credit",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/outils/frais-achat",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/outils/description-ia",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/outils/inventaire-mobile",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/outils/diagnostic-prix",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/legal",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "public",
+    "path": "/fr/legal/cgu",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/legal/cgv",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/legal/confidentialite",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/legal/cookies",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/legal/mentions-legales",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/achat",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "public",
+    "path": "/fr/achat/appartement-tunis",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/location",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "public",
+    "path": "/fr/location/villa-marsa",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "public",
+    "path": "/fr/login",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "public",
+    "path": "/fr/signup",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "public",
+    "path": "/fr/profile/0613d077-b93d-4a2c-8ae2-1864900ab735",
+    "status": 404,
+    "location": null,
+    "rawStatus": "HTTP/1.1 404 Not Found"
+  },
+  {
+    "group": "authed",
+    "path": "/fr/dashboard",
+    "status": 307,
+    "location": "/fr/login?redirect_to=%2Ffr%2Fdashboard",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "authed",
+    "path": "/fr/dashboard/listings",
+    "status": 307,
+    "location": "/fr/login?redirect_to=%2Ffr%2Fdashboard%2Flistings",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "authed",
+    "path": "/fr/dashboard/billing",
+    "status": 307,
+    "location": "/fr/login?redirect_to=%2Ffr%2Fdashboard%2Fbilling",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "authed",
+    "path": "/fr/publish",
+    "status": 307,
+    "location": "/fr/login?redirect_to=%2Ffr%2Fpublish",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "authed",
+    "path": "/fr/messages",
+    "status": 307,
+    "location": "/fr/login?redirect_to=%2Ffr%2Fmessages",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "authed",
+    "path": "/fr/checkout",
+    "status": null,
+    "location": null,
+    "rawStatus": {}
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/annonces",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/users",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/moderation",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/transactions",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/partenaires",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/leads",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/pubs",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/rapports",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/reglages",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/feature-flags",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "admin",
+    "path": "/fr/admin/audit-log",
+    "status": 307,
+    "location": "/fr/login?reason=unauthorized",
+    "rawStatus": "HTTP/1.1 307 Temporary Redirect"
+  },
+  {
+    "group": "i18n",
+    "path": "/ar",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "i18n",
+    "path": "/ar/search",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "i18n",
+    "path": "/en",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  },
+  {
+    "group": "i18n",
+    "path": "/en/search",
+    "status": 200,
+    "location": null,
+    "rawStatus": "HTTP/1.1 200 OK"
+  }
+]
