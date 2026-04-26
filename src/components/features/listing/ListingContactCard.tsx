@@ -49,6 +49,7 @@ export function ListingContactCard({
               alt={seller.full_name ?? "Vendeur"}
               width={44}
               height={44}
+              loading="lazy"
               className="h-full w-full object-cover"
             />
           ) : null}

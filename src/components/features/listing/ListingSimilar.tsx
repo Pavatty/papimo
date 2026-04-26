@@ -36,8 +36,9 @@ export function ListingSimilar({ locale, listings }: Props) {
                 src={listing.cover_url}
                 alt={listing.title}
                 width={800}
-                height={450}
-                className="aspect-video w-full object-cover"
+                height={600}
+                loading="lazy"
+                className="aspect-[4/3] w-full object-cover"
               />
             ) : null}
             <div className="p-3">

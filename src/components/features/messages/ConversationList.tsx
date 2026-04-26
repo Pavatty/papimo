@@ -71,6 +71,7 @@ export function ConversationList({
                   alt={conversation.peerName}
                   width={40}
                   height={40}
+                  loading="lazy"
                   className="h-full w-full object-cover"
                 />
               ) : null}

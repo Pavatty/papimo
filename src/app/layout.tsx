@@ -25,6 +25,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
       lang="fr"
       className={`${geist.variable} ${manrope.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://api.mapbox.com" crossOrigin="" />
+        <link
+          rel="preconnect"
+          href="https://events.mapbox.com"
+          crossOrigin=""
+        />
+      </head>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

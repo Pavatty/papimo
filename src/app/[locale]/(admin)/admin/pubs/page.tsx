@@ -95,8 +95,9 @@ export default async function AdminAdsPage({ params }: Props) {
                 src={c.image_url}
                 alt={c.alt_text ?? "preview"}
                 width={720}
-                height={224}
-                className="mt-3 h-28 w-full rounded object-cover"
+                height={540}
+                loading="lazy"
+                className="mt-3 aspect-[4/3] w-full rounded object-cover"
               />
             ) : (
               <div className="bg-creme-pale mt-3 h-28 rounded" />
