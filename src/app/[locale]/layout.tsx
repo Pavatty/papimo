@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale,
+} from "next-intl/server";
 import { type ReactNode } from "react";
 
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { BRAND } from "@/config/brand";
 import { routing } from "@/i18n/routing";
 import { getCurrentUser } from "@/lib/auth/session";
+import { localeAlternates } from "@/lib/seo/metadata";
 
 const localeDirs: Record<string, "ltr" | "rtl"> = {
   fr: "ltr",
@@ -37,6 +42,18 @@ export async function generateMetadata(
     },
     description: tagline,
     metadataBase: new URL(BRAND.url),
+    alternates: localeAlternates(""),
+    openGraph: {
+      title: `${BRAND.name} — ${tagline}`,
+      description: tagline,
+      locale,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${BRAND.name} — ${tagline}`,
+      description: tagline,
+    },
   };
 }
 
@@ -53,18 +70,23 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  const t = await getTranslations();
   const { user, profile } = await getCurrentUser();
   const dir = localeDirs[locale] ?? "ltr";
 
   return (
-    <html lang={locale} dir={dir} className="h-full antialiased">
-      <body className="flex min-h-full flex-col">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <AuthProvider initialUser={user} initialProfile={profile}>
-            {children}
-          </AuthProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <div lang={locale} dir={dir} className="flex min-h-full flex-col">
+      <a
+        href="#main-content"
+        className="bg-bleu focus-visible:ring-bleu sr-only z-50 rounded px-3 py-2 text-white focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus-visible:ring-2"
+      >
+        {t("common.skipToContent")}
+      </a>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <AuthProvider initialUser={user} initialProfile={profile}>
+          {children}
+        </AuthProvider>
+      </NextIntlClientProvider>
+    </div>
   );
 }

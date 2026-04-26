@@ -1,6 +1,7 @@
 {
   "common": {
     "brandName": "papimo",
+    "skipToContent": "Aller au contenu principal",
     "tagline": {
       "fr": "L'immobilier entre particuliers",
       "en": "Real estate between private owners",
@@ -28,12 +29,33 @@
   "footer": {
     "columnIndividuals": "Particuliers",
     "columnAbout": "À propos",
-    "columnLanguages": "Langues"
+    "columnLanguages": "Langues",
+    "legalNotice": "Mentions légales",
+    "privacy": "Confidentialité"
   },
   "home": {
     "hero": {
       "headline": "L’immobilier, <bleu>chez-vous</bleu> et <corail>directement</corail>.",
       "subline": "Annonces entre particuliers, sans agence, sans intermédiaire."
     }
+  },
+  "cookies": {
+    "title": "Gestion des cookies",
+    "description": "Nous utilisons des cookies analytiques uniquement avec votre consentement.",
+    "acceptAll": "Accepter tous",
+    "rejectAll": "Refuser tous",
+    "customize": "Personnaliser"
+  },
+  "legal": {
+    "cgu": "Conditions générales d'utilisation",
+    "cgv": "Conditions générales de vente",
+    "privacy": "Politique de confidentialité",
+    "cookies": "Politique cookies",
+    "notices": "Mentions légales"
+  },
+  "seo": {
+    "homeTitle": "papimo | L'immobilier entre particuliers",
+    "searchTitle": "Recherche immobilière | papimo",
+    "listingNotFound": "Annonce introuvable | papimo"
   }
 }

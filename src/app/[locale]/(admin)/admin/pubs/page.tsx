@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { logAuditEvent } from "@/lib/audit/log";
 import { requireAdmin } from "@/lib/admin/guards";
 import type { Enums } from "@/types/database";
@@ -89,9 +91,11 @@ export default async function AdminAdsPage({ params }: Props) {
               Stats: {c.clicks} clics / {c.impressions} impressions
             </p>
             {c.image_url ? (
-              <img
+              <Image
                 src={c.image_url}
                 alt={c.alt_text ?? "preview"}
+                width={720}
+                height={224}
                 className="mt-3 h-28 w-full rounded object-cover"
               />
             ) : (

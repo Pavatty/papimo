@@ -4,6 +4,7 @@ import PDFDocument from "pdfkit";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
+import { captureServerEvent } from "@/lib/analytics/events";
 import { logAuditEvent } from "@/lib/audit/log";
 import { createClient } from "@/lib/supabase/server";
 import type { Enums } from "@/types/database";
@@ -346,6 +347,10 @@ export async function handleKonnectWebhook(
         transaction.id,
       );
     }
+    await captureServerEvent("payment_completed", transaction.user_id, {
+      transactionId: transaction.id,
+      gateway: "konnect",
+    });
   }
 
   await logAuditEvent({
@@ -373,6 +378,11 @@ export async function handleStripeWebhook(event: {
   const status = completed ? "completed" : "failed";
 
   const supabase = await createClient();
+  const { data: txRow } = await supabase
+    .from("transactions")
+    .select("user_id")
+    .eq("id", transactionId)
+    .maybeSingle();
   await supabase
     .from("transactions")
     .update({
@@ -404,6 +414,10 @@ export async function handleStripeWebhook(event: {
         transactionId,
       );
     }
+    await captureServerEvent("payment_completed", txRow?.user_id ?? "unknown", {
+      transactionId,
+      gateway: "stripe",
+    });
   }
 
   await logAuditEvent({

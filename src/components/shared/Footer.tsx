@@ -62,6 +62,22 @@ export async function Footer() {
                   papimo.com
                 </a>
               </li>
+              <li>
+                <Link
+                  className="hover:text-bleu focus-visible:ring-bleu/40 focus-visible:ring-offset-creme-pale rounded-sm focus-visible:ring-2 focus-visible:ring-offset-2"
+                  href="/legal/mentions-legales"
+                >
+                  {t("footer.legalNotice")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="hover:text-bleu focus-visible:ring-bleu/40 focus-visible:ring-offset-creme-pale rounded-sm focus-visible:ring-2 focus-visible:ring-offset-2"
+                  href="/legal/confidentialite"
+                >
+                  {t("footer.privacy")}
+                </Link>
+              </li>
             </ul>
           </div>
           <div>

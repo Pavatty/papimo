@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 
+import { captureServerEvent } from "@/lib/analytics/events";
 import { moderateMessageAsync } from "@/lib/messages/moderate-message";
 import { createClient } from "@/lib/supabase/server";
 
@@ -66,6 +67,10 @@ export async function sendMessage(input: z.infer<typeof sendMessageSchema>) {
         .eq("id", parsed.data.conversationId);
     }
   }
+
+  await captureServerEvent("message_sent", user.id, {
+    conversationId: parsed.data.conversationId,
+  });
 
   return { ok: true, message: inserted };
 }

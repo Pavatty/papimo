@@ -2,8 +2,10 @@
 
 import { randomUUID } from "node:crypto";
 
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 
+import { captureServerEvent } from "@/lib/analytics/events";
 import { moderateListing } from "@/lib/moderation/listing";
 import { createClient } from "@/lib/supabase/server";
 
@@ -99,6 +101,12 @@ export async function saveDraft(input: SaveDraftInput) {
       );
     }
   }
+
+  await captureServerEvent("publish_started", user.id, {
+    listingId: listing.id,
+  });
+  revalidateTag("listings");
+  revalidateTag(`listing:${listing.id}`);
 
   return { ok: true, id: listing.id, updatedAt: listing.updated_at };
 }
@@ -288,6 +296,13 @@ export async function submitForReview(listingId: string) {
     .eq("owner_id", user.id);
 
   if (error) return { ok: false, error: error.message };
+
+  await captureServerEvent("publish_completed", user.id, {
+    listingId,
+    status: targetStatus,
+  });
+  revalidateTag("listings");
+  revalidateTag(`listing:${listingId}`);
 
   return { ok: true, status: targetStatus, moderation };
 }

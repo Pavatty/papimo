@@ -1,11 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useMemo, useState } from "react";
-import Lightbox from "yet-another-react-lightbox";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import type { SlideImage } from "yet-another-react-lightbox";
 
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
+
+const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
+  ssr: false,
+});
 
 type Props = {
   images: Array<{
@@ -23,7 +29,7 @@ export function ListingGallery({ images }: Props) {
       images.map((img) => ({
         src: img.url,
         alt: img.alt_text ?? "Photo annonce",
-      })),
+      })) as SlideImage[],
     [images],
   );
 
@@ -42,9 +48,12 @@ export function ListingGallery({ images }: Props) {
         className="group relative block w-full overflow-hidden rounded-2xl"
         onClick={() => setOpen(true)}
       >
-        <img
+        <Image
           src={images[0].url}
           alt={images[0].alt_text ?? "Photo principale"}
+          width={1600}
+          height={900}
+          priority
           className="aspect-video w-full object-cover transition duration-300 group-hover:scale-[1.01]"
         />
         <span className="bg-ink/75 absolute right-3 bottom-3 rounded-full px-3 py-1 text-xs text-white">
@@ -63,9 +72,12 @@ export function ListingGallery({ images }: Props) {
               setOpen(true);
             }}
           >
-            <img
+            <Image
               src={image.url}
               alt={image.alt_text ?? "Photo annonce"}
+              width={800}
+              height={450}
+              loading="lazy"
               className="aspect-video w-full object-cover transition hover:opacity-90"
             />
           </button>

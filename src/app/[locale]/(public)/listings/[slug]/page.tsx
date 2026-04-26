@@ -16,7 +16,9 @@ import { ListingSpecs } from "@/components/features/listing/ListingSpecs";
 import { ReportListingDialog } from "@/components/features/listing/ReportListingDialog";
 import type { ListingDetails } from "@/components/features/listing/types";
 import { formatPrice } from "@/lib/listing/format";
+import { buildPageMetadata, buildRealEstateJsonLd } from "@/lib/seo/metadata";
 import { createClient } from "@/lib/supabase/server";
+import { captureServerEvent } from "@/lib/analytics/events";
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -38,10 +40,15 @@ const getListingBySlug = cache(async (slug: string) => {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const listing = await getListingBySlug(slug);
   if (!listing) {
-    return { title: "Annonce introuvable | Papimo" };
+    return buildPageMetadata({
+      locale,
+      pathnameWithoutLocale: `/listings/${slug}`,
+      title: "Annonce introuvable | papimo",
+      description: "Cette annonce n'est plus disponible.",
+    });
   }
 
   const cover =
@@ -49,19 +56,13 @@ export async function generateMetadata({
     listing.listing_images[0];
   const title = `${listing.title} | Papimo`;
   const description = (listing.description ?? "").slice(0, 155);
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-
-  return {
+  return buildPageMetadata({
+    locale,
+    pathnameWithoutLocale: `/listings/${listing.slug}`,
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      url: `${appUrl}/fr/listings/${listing.slug}`,
-      images: cover?.url ? [cover.url] : [],
-    },
-  };
+    ogImage: cover?.url,
+  });
 }
 
 export default async function ListingPage({ params }: PageProps) {
@@ -75,6 +76,10 @@ export default async function ListingPage({ params }: PageProps) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  await captureServerEvent("listing_viewed", user?.id ?? `anon:${listing.id}`, {
+    listingId: listing.id,
+    slug: listing.slug,
+  });
 
   const { data: seller } = await supabase
     .from("profiles")
@@ -148,34 +153,21 @@ export default async function ListingPage({ params }: PageProps) {
     "fr-FR",
   );
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "RealEstateListing",
-    name: listing.title,
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const jsonLd = buildRealEstateJsonLd({
+    title: listing.title,
     description: listing.description,
-    image: listing.listing_images.map((img) => img.url),
+    images: listing.listing_images.map((img) => img.url),
     datePosted: listing.created_at,
-    offers: {
-      "@type": "Offer",
-      price: listing.price,
-      priceCurrency: listing.currency,
-      availability: "https://schema.org/InStock",
-    },
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: listing.country_code,
-      addressLocality: listing.city,
-      streetAddress: listing.address,
-    },
-    geo:
-      listing.latitude && listing.longitude
-        ? {
-            "@type": "GeoCoordinates",
-            latitude: listing.latitude,
-            longitude: listing.longitude,
-          }
-        : undefined,
-  };
+    price: listing.price,
+    currency: listing.currency,
+    countryCode: listing.country_code,
+    city: listing.city,
+    address: listing.address,
+    latitude: listing.latitude,
+    longitude: listing.longitude,
+    url: `${appUrl}/${locale}/listings/${listing.slug}`,
+  });
 
   return (
     <main className="bg-paper min-h-screen">

@@ -34,19 +34,19 @@ export function Header() {
           aria-label={t("a11y.mainMenu")}
         >
           <Link
-            href="/acheter"
+            href="/achat"
             className="text-ink hover:text-bleu focus-visible:ring-bleu/40 transition focus-visible:ring-2 focus-visible:ring-offset-2"
           >
             {t("navigation.buy")}
           </Link>
           <Link
-            href="/louer"
+            href="/location"
             className="text-ink hover:text-bleu focus-visible:ring-bleu/40 transition focus-visible:ring-2 focus-visible:ring-offset-2"
           >
             {t("navigation.rent")}
           </Link>
           <Link
-            href="/estimer"
+            href="/outils/estimation"
             className="text-ink hover:text-bleu focus-visible:ring-bleu/40 transition focus-visible:ring-2 focus-visible:ring-offset-2"
           >
             {t("navigation.estimate")}
@@ -92,7 +92,7 @@ export function Header() {
             })}
           </nav>
           <Link
-            href="/connexion"
+            href="/login"
             className={cn(
               buttonVariants({ variant: "secondary", size: "default" }),
               "text-bleu min-h-9 min-w-[7rem] font-medium",
@@ -101,7 +101,7 @@ export function Header() {
             {t("navigation.login")}
           </Link>
           <Link
-            href="/publier"
+            href="/publish"
             className={cn(
               buttonVariants({ variant: "default", size: "default" }),
               "min-h-9 min-w-0",

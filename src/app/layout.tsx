@@ -21,6 +21,11 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <div className={`${geist.variable} ${manrope.variable}`}>{children}</div>
+    <html
+      lang="fr"
+      className={`${geist.variable} ${manrope.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col">{children}</body>
+    </html>
   );
 }

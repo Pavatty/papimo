@@ -1,6 +1,7 @@
 {
   "common": {
     "brandName": "papimo",
+    "skipToContent": "Skip to main content",
     "tagline": {
       "fr": "L'immobilier entre particuliers",
       "en": "Real estate between private owners",
@@ -28,12 +29,33 @@
   "footer": {
     "columnIndividuals": "Private owners",
     "columnAbout": "About",
-    "columnLanguages": "Languages"
+    "columnLanguages": "Languages",
+    "legalNotice": "Legal notice",
+    "privacy": "Privacy"
   },
   "home": {
     "hero": {
       "headline": "Real estate, <bleu>at home</bleu> and <corail>direct</corail>.",
       "subline": "Listings from owner to owner — no agency, no intermediary."
     }
+  },
+  "cookies": {
+    "title": "Cookie preferences",
+    "description": "We use analytics cookies only with your consent.",
+    "acceptAll": "Accept all",
+    "rejectAll": "Reject all",
+    "customize": "Customize"
+  },
+  "legal": {
+    "cgu": "Terms of use",
+    "cgv": "Terms of sale",
+    "privacy": "Privacy policy",
+    "cookies": "Cookie policy",
+    "notices": "Legal notices"
+  },
+  "seo": {
+    "homeTitle": "papimo | Real estate between private owners",
+    "searchTitle": "Real estate search | papimo",
+    "listingNotFound": "Listing not found | papimo"
   }
 }

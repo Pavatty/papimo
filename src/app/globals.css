@@ -136,3 +136,22 @@
     @apply font-sans;
   }
 }
+
+/* RTL support: logical alignment + icon mirroring helpers */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .rtl-text-start {
+  text-align: right;
+}
+
+[dir="rtl"] .rtl-text-end {
+  text-align: left;
+}
+
+/* Keep focus visibility strong for keyboard navigation (WCAG 2.1 AA) */
+:focus-visible {
+  outline: 2px solid rgb(var(--bleu));
+  outline-offset: 2px;
+}
