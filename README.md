@@ -1,67 +1,91 @@
 # papimo
 
-Plateforme immobiliere entre particuliers, multilingue (fr/ar/en), construite avec Next.js App Router.
+**papimo** est une place de marché immobilière 100 % entre particuliers (sans agence, sans intermédiaire).  
+Slogan : _L'immobilier entre particuliers._ — [papimo.com](https://papimo.com)
 
 ## Stack
 
-- Next.js (App Router, TypeScript strict, Turbopack)
-- Tailwind CSS + shadcn/ui
-- next-intl (fr par defaut, ar RTL, en)
-- Supabase SDK (`@supabase/supabase-js`, `@supabase/ssr`)
-- React Query
-- ESLint + Prettier + Husky + lint-staged
-- Vitest + Testing Library
-- Playwright (smoke E2E)
+- **Next.js** (App Router) + **TypeScript** (mode strict) + **React 19**
+- **Tailwind CSS v4** + **shadcn/ui** (Base UI) + thème papimo (`src/app/globals.css`)
+- **next-intl** : locales `fr` (défaut), `ar` (RTL), `en` — URLs préfixées (`/fr`, `/ar`, `/en`)
+- **Supabase** (à brancher) : base PostgreSQL, auth, storage, Realtime, Edge Functions
+- Qualité : **ESLint** + **Prettier** (Tailwind) + **Husky** + **lint-staged** + **Vitest** + **Playwright** (Chromium)
 
-## Demarrage local
+> Le dépôt est initialisé avec **Next.js 16** et **Turbopack** en `npm run dev` (aligné sur `create-next-app@latest` au moment du bootstrap).
 
-1. Installer les dependances:
-   ```bash
-   npm install
-   ```
-2. Copier les variables d'environnement:
-   ```bash
-   cp .env.local.example .env.local
-   ```
-3. Lancer l'app:
-   ```bash
-   npm run dev
-   ```
-4. Ouvrir [http://localhost:3000/fr](http://localhost:3000/fr)
+## Démarrage local
 
-## Commandes utiles
+```bash
+npm install
+cp .env.local.example .env.local
+# Renseigner au minimum les variables Supabase et NEXT_PUBLIC_APP_URL
+npm run dev
+```
 
-- Lint: `npm run lint`
-- Format: `npm run format`
-- Tests unitaires: `npm run test:run`
-- Tests E2E: `npm run e2e`
-- Build production: `npm run build`
-- Start production: `npm run start`
+Ouvrir [http://localhost:3000](http://localhost:3000) : redirection vers `/fr/`.
 
-## Structure du projet
+## Scripts
 
-- `src/app/[locale]/(public)` pages publiques
-- `src/app/[locale]/(authed)` espace utilisateur authentifie
-- `src/app/[locale]/(admin)` espace administration
-- `src/components/shared` composants de layout (Header, Footer, Logo)
-- `src/config` configuration marque, site, feature flags
-- `src/i18n` routing, request config et messages
-- `src/lib` utilitaires et tests unitaires
-- `tests/e2e` tests Playwright
+| Commande           | Rôle                                   |
+| ------------------ | -------------------------------------- |
+| `npm run dev`      | Dev avec Turbopack                     |
+| `npm run build`    | Build production                       |
+| `npm run start`    | Sert le build                          |
+| `npm run lint`     | ESLint                                 |
+| `npm run format`   | Prettier (écriture)                    |
+| `npm run test`     | Vitest (watch)                         |
+| `npm run test:run` | Vitest une fois                        |
+| `npm run e2e`      | Playwright (démarre le serveur de dev) |
 
-## Palette de marque
+## Structure des dossiers (principale)
 
-- Bleu `#1E5A96`
-- Bleu soft `#DCEAF7`
-- Bleu pale `#EFF5FB`
-- Corail `#E63946`
-- Corail soft `#FDE3E5`
-- Corail pale `#FEF3F4`
-- Creme `#FBF6EC`
-- Creme pale `#FEFCF8`
-- Paper `#FFFFFF`
-- Ink `#1F2937`
-- Ink soft `#6B7280`
-- Line `#E8DDC9`
-- Green `#10B981`
-- Danger `#DC2626`
+```text
+src/
+  app/
+    [locale]/
+      (public)/          # pages accessibles sans compte
+      (authed)/          # espace membre (ex. /dashboard)
+      (admin)/           # administration (ex. /admin)
+    layout.tsx           # layout racine (next-intl)
+    globals.css         # thème + tokens @theme Tailwind v4
+  components/
+    ui/                  # primitives shadcn
+    shared/              # en-tête, pied, logo, etc.
+  config/                # marque, site, feature flags
+  i18n/
+    messages/            # fr.json, ar.json, en.json
+    routing.ts
+    request.ts
+    navigation.ts
+  lib/                   # utilitaires partagés
+  middleware.ts          # détection de locale
+tests/e2e/                # scénarios Playwright
+```
+
+## Route admin
+
+L’espace d’administration de démonstration est exposé sous **`/[locale]/admin`** (et non sur la racine), car deux groupes de routes parallèles ne peuvent pas chacun définir un `page.tsx` pour le même segment.
+
+## Palette de marque (extraits)
+
+| Rôle         | Token / classe | Hex       |
+| ------------ | -------------- | --------- |
+| Bleu (PAP)   | `bleu`         | `#1E5A96` |
+| Corail (IMO) | `corail`       | `#E63946` |
+| Fond crème   | `creme`        | `#FBF6EC` |
+| Encre        | `ink`          | `#1F2937` |
+| Secondaire   | `ink-soft`     | `#6B7280` |
+| Ligne        | `line`         | `#E8DDC9` |
+| Succès       | `green`        | `#10B981` |
+| Erreur       | `danger`       | `#DC2626` |
+
+Polices (via `next/font`) : **Geist** (titres / chiffres), **Manrope** (texte), **JetBrains Mono** (technique / code).
+
+## Tests
+
+- **Unitaires** : `src/lib/tests/example.test.ts` (câblage Vitest)
+- **E2E** : `tests/e2e/home.spec.ts` (titre de page contenant `papimo` sur `/fr/`)
+
+## Licence
+
+Projet privé — droits réservés.
