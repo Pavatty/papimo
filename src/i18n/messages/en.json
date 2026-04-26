@@ -22,6 +22,10 @@
     "legal": "Legal",
     "login": "Log in",
     "signup": "Create account",
+    "profile": "My account",
+    "signOut": "Sign out",
+    "messages": "Messages",
+    "publish": "Publish",
     "publishMyProperty": "List my property",
     "discover": "Browse properties",
     "languages": {
@@ -36,6 +40,7 @@
     "columnHelp": "Help & contact",
     "columnLegal": "Legal",
     "columnAbout": "About",
+    "columnAboutText": "Private sales and rentals in Tunisia and for the diaspora: a clear platform, useful tools, no hidden fees.",
     "columnLanguages": "Languages",
     "faq": "FAQ",
     "contact": "Contact us",
@@ -69,6 +74,13 @@
       "headline": "Real estate, <bleu>at home</bleu> and <corail>direct</corail>.",
       "subline": "Listings from owner to owner — no agency, no intermediary."
     }
+  },
+  "faq": {
+    "pageIntro": "Questions about listings, direct contact, or how papimo works? We’re expanding this page with more answers. In the meantime, email us and we’ll get back to you.",
+    "q1": "How do I publish a listing and get it approved?",
+    "q2": "How do I message buyers or sellers safely?",
+    "q3": "What are the plans and pricing on papimo?",
+    "backHome": "Back to home"
   },
   "cookies": {
     "title": "Cookie preferences",

@@ -4,7 +4,7 @@ import { Link } from "@/i18n/navigation";
 
 import { Logo } from "./Logo";
 
-// Pied de page : navigation complète (découvrir, aide, légal) + cohérent avec le header
+// Pied de page : 4 colonnes (À propos, Découvrir, Aide, Légal) + copyright
 export async function Footer() {
   const t = await getTranslations();
   const locale = await getLocale();
@@ -20,21 +20,18 @@ export async function Footer() {
   return (
     <footer className="border-line bg-creme-pale border-t" role="contentinfo">
       <div className="mx-auto max-w-6xl px-4 py-12 md:px-6">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <span className="sr-only">{t("common.brandName")}</span>
             <Logo className="mb-3" size="md" />
-            <p className="text-ink-soft max-w-xs text-sm leading-relaxed">
+            <p className="text-ink mt-1 text-sm font-semibold">
+              {t("common.brandName")}
+            </p>
+            <p className="text-ink-soft max-w-sm text-sm leading-relaxed">
               {tagline}
             </p>
-            <p className="text-ink-soft mt-2 text-xs">
-              {t("footer.legalHub")} :{" "}
-              <Link
-                className="text-bleu font-medium hover:underline"
-                href="/legal"
-              >
-                papimo.com/legal
-              </Link>
+            <p className="text-ink-soft mt-3 text-xs leading-relaxed">
+              {t("footer.columnAboutText")}
             </p>
           </div>
 
@@ -86,7 +83,7 @@ export async function Footer() {
               <li>
                 <Link
                   className="hover:text-bleu focus-visible:ring-bleu/40 focus-visible:ring-offset-creme-pale rounded-sm focus-visible:ring-2 focus-visible:ring-offset-2"
-                  href="/legal/cgu"
+                  href="/faq"
                 >
                   {t("footer.faq")}
                 </Link>
@@ -162,22 +159,6 @@ export async function Footer() {
                 >
                   {t("legal.notices")}
                 </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="font-heading text-ink mb-3 text-sm font-semibold tracking-wide uppercase">
-              {t("footer.columnAbout")}
-            </h2>
-            <ul className="text-ink-soft space-y-2 text-sm">
-              <li>
-                <a
-                  className="hover:text-bleu focus-visible:ring-bleu/40 focus-visible:ring-offset-creme-pale rounded-sm focus-visible:ring-2 focus-visible:ring-offset-2"
-                  href="https://papimo.com"
-                >
-                  papimo.com
-                </a>
               </li>
             </ul>
             <h3 className="text-ink mt-6 text-xs font-semibold tracking-wide uppercase">

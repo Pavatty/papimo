@@ -15,12 +15,11 @@ export default async function DashboardPage() {
   const { user, profile } = await ensureProfile();
 
   const fullName = profile?.full_name?.trim() || user?.email || "Utilisateur";
-  const firstName = fullName.split(" ")[0] ?? "Utilisateur";
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-8 md:px-6">
       <h1 className="font-display text-ink text-3xl font-bold">
-        Bonjour {firstName}
+        Bonjour {fullName}
       </h1>
       <p className="text-ink-soft mt-2 max-w-2xl">
         Bienvenue dans votre espace papimo. Publiez une annonce, explorez le
@@ -73,18 +72,16 @@ export default async function DashboardPage() {
           </span>
         </Link>
         <Link
-          href="/search"
+          href="/dashboard/listings?favorites=true"
           className="border-line bg-paper hover:border-corail/30 group rounded-2xl border p-5 transition"
         >
           <Heart className="text-corail mb-3 h-6 w-6" />
-          <h2 className="text-ink text-base font-semibold">
-            Parcourir le marché
-          </h2>
+          <h2 className="text-ink text-base font-semibold">Mes favoris</h2>
           <p className="text-ink-soft mt-1 text-sm">
-            Vente et location entre particuliers, partout en Tunisie.
+            Retrouvez les annonces que vous avez enregistrées.
           </p>
           <span className="text-corail mt-3 inline-block text-sm font-medium group-hover:underline">
-            Rechercher →
+            Voir tout →
           </span>
         </Link>
         <Link

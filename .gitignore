@@ -41,5 +41,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local / secrets
+supabase.txt
+.lighthouse-*.json
+
 # typescript
 *.tsbuildinfo

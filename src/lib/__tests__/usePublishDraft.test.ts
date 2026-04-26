@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { SaveDraftInput } from "@/app/[locale]/(authed)/publish/actions";
 import { usePublishDraft } from "@/hooks/usePublishDraft";
 
-const saveDraftMock = vi.fn(async (_input: SaveDraftInput) => ({
+const saveDraftMock = vi.fn(async () => ({
   ok: true,
   id: "draft-id",
 }));
