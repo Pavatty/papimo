@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { type Locale, useLocale, useTranslations } from "next-intl";
+import { UnreadMessagesBadge } from "@/components/features/messages/UnreadMessagesBadge";
 
 import { Logo } from "./Logo";
 
@@ -59,6 +60,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 md:gap-3">
+          <UnreadMessagesBadge locale={locale} />
           <nav
             className="border-line flex items-center gap-1 border-r pr-2 md:pr-3"
             aria-label={t("a11y.languageMenu")}
