@@ -1,5 +1,6 @@
 "use server";
 
+import PDFDocument from "pdfkit";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -437,4 +438,60 @@ export async function startBoostCheckoutAction(formData: FormData) {
     redirect("/fr/checkout/failure");
   }
   redirect(result.paymentUrl);
+}
+
+export async function generateInvoice(transactionId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Unauthorized" };
+
+  const { data: tx } = await supabase
+    .from("transactions")
+    .select("*")
+    .eq("id", transactionId)
+    .eq("user_id", user.id)
+    .single();
+  if (!tx) return { ok: false, error: "Transaction introuvable" };
+
+  const doc = new PDFDocument({ margin: 48 });
+  const chunks: Buffer[] = [];
+  doc.on("data", (chunk) => chunks.push(chunk as Buffer));
+  doc.on("end", () => undefined);
+
+  doc.fontSize(22).fillColor("#1f4fbf").text("papimo", { continued: true });
+  doc.fillColor("#ff6f61").text(" ");
+  doc.fillColor("#111827").fontSize(12).text("Facture");
+  doc.moveDown();
+  doc.text(`Référence: ${tx.id}`);
+  doc.text(`Date: ${new Date(tx.created_at).toLocaleDateString("fr-FR")}`);
+  doc.text(`Client: ${user.email ?? "N/A"}`);
+  doc.moveDown();
+  doc.text(`Ligne: ${tx.type} (${tx.gateway ?? "gateway"})`);
+  doc.text(`Montant HT: ${tx.amount} ${tx.currency}`);
+  doc.text("TVA: 0.00");
+  doc.text(`Total: ${tx.amount} ${tx.currency}`);
+  doc.moveDown();
+  doc.fontSize(10).fillColor("#6b7280").text("Papimo — entité légale TBD");
+  doc.end();
+
+  const pdfBuffer = await new Promise<Buffer>((resolve) => {
+    doc.on("end", () => resolve(Buffer.concat(chunks)));
+  });
+
+  const objectPath = `${user.id}/${tx.id}.pdf`;
+  const upload = await supabase.storage
+    .from("invoices")
+    .upload(objectPath, pdfBuffer, {
+      contentType: "application/pdf",
+      upsert: true,
+    });
+  if (upload.error) return { ok: false, error: upload.error.message };
+
+  const signed = await supabase.storage
+    .from("invoices")
+    .createSignedUrl(objectPath, 60 * 60 * 24);
+  if (signed.error) return { ok: false, error: signed.error.message };
+  return { ok: true, url: signed.data.signedUrl };
 }

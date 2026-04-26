@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { generateInvoice } from "@/lib/payments/actions";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -53,7 +54,21 @@ export default async function BillingPage({ params }: Props) {
                   </td>
                   <td className="px-4 py-3">{transaction.gateway ?? "-"}</td>
                   <td className="px-4 py-3">{transaction.status}</td>
-                  <td className="text-bleu px-4 py-3">PDF (Prompt 8)</td>
+                  <td className="px-4 py-3">
+                    <form
+                      action={async () => {
+                        "use server";
+                        await generateInvoice(transaction.id);
+                      }}
+                    >
+                      <button
+                        type="submit"
+                        className="text-bleu text-xs underline"
+                      >
+                        Générer PDF
+                      </button>
+                    </form>
+                  </td>
                 </tr>
               ))}
             </tbody>
