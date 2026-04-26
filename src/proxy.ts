@@ -90,6 +90,8 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 
+// Next.js 16 : le matcher doit être défini ici (fichier `proxy.ts` unique).
+// Ne pas utiliser un second `src/middleware.ts` qui réexporte `config` depuis ce fichier.
 export const config = {
   matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };
