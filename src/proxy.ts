@@ -20,7 +20,7 @@ function removeLocalePrefix(pathname: string, locale: string) {
   return pathname.replace(new RegExp(`^/${locale}`), "") || "/";
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const response = intlMiddleware(request);
   const locale = getLocaleFromPath(request.nextUrl.pathname);
   const pathWithoutLocale = removeLocalePrefix(
