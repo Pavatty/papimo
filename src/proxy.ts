@@ -22,6 +22,11 @@ function removeLocalePrefix(pathname: string, locale: string) {
 }
 
 export async function proxy(request: NextRequest) {
+  const callbackPathPattern = /^\/(fr|ar|en)\/auth\/callback$/;
+  if (callbackPathPattern.test(request.nextUrl.pathname)) {
+    return NextResponse.next();
+  }
+
   const { url, publishableKey } = getSupabaseEnv();
   const response = intlMiddleware(request);
   const locale = getLocaleFromPath(request.nextUrl.pathname);

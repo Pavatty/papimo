@@ -23,6 +23,15 @@ function getRequesterIp(value: string | null) {
   return value?.split(",")[0]?.trim() ?? "unknown";
 }
 
+function parseUrlSafe(value: string | null) {
+  if (!value) return null;
+  try {
+    return new URL(value);
+  } catch {
+    return null;
+  }
+}
+
 function getPrivilegedClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -55,11 +64,24 @@ export async function sendMagicLink(email: string) {
     return { ok: false, error: parsedEmail.error.issues[0]?.message };
   }
 
+  const referer = requestHeaders.get("referer");
+  const refererUrl = parseUrlSafe(referer);
+  const localeCandidate = refererUrl?.pathname.split("/")[1];
+  const locale =
+    localeCandidate && ["fr", "en", "ar"].includes(localeCandidate)
+      ? localeCandidate
+      : "fr";
+  const redirectToParam = refererUrl?.searchParams.get("redirect_to");
+  const callbackUrl = new URL(`/${locale}/auth/callback`, appUrl);
+  if (redirectToParam?.startsWith("/") && !redirectToParam.startsWith("//")) {
+    callbackUrl.searchParams.set("redirect_to", redirectToParam);
+  }
+
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithOtp({
     email: parsedEmail.data,
     options: {
-      emailRedirectTo: `${appUrl}/fr/auth/callback`,
+      emailRedirectTo: callbackUrl.toString(),
     },
   });
 
