@@ -79,7 +79,7 @@
   --bleu: 30 90 150;
   --bleu-soft: 220 234 247;
   --bleu-pale: 239 245 251;
-  --corail: 230 57 70;
+  --corail: 239 111 80;
   --corail-soft: 253 227 229;
   --corail-pale: 254 243 244;
   --creme: 251 246 236;
@@ -97,7 +97,7 @@
   --card-foreground: #1f2937;
   --popover: #ffffff;
   --popover-foreground: #1f2937;
-  --primary: #e63946;
+  --primary: #ef6f50;
   --primary-foreground: #ffffff;
   --secondary: #ffffff;
   --secondary-foreground: #1e5a96;
@@ -110,7 +110,7 @@
   --input: #e8ddc9;
   --ring: #1e5a96;
   --chart-1: #1e5a96;
-  --chart-2: #e63946;
+  --chart-2: #ef6f50;
   --chart-3: #1f2937;
   --chart-4: #6b7280;
   --chart-5: #e8ddc9;
