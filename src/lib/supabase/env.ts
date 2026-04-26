@@ -15,5 +15,15 @@ export function getSupabaseEnv(): SupabaseEnv {
     throw new Error("Missing NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
   }
 
+  if (!url.startsWith("https://")) {
+    throw new Error("Invalid NEXT_PUBLIC_SUPABASE_URL format");
+  }
+
+  if (publishableKey.startsWith("sb_secret_")) {
+    throw new Error(
+      "Invalid NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: expected publishable key, got secret key",
+    );
+  }
+
   return { url, publishableKey };
 }

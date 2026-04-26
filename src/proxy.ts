@@ -3,6 +3,7 @@ import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 
 import { routing } from "@/i18n/routing";
+import { getSupabaseEnv } from "@/lib/supabase/env";
 import type { Database } from "@/types/database";
 
 const intlMiddleware = createIntlMiddleware(routing);
@@ -21,6 +22,7 @@ function removeLocalePrefix(pathname: string, locale: string) {
 }
 
 export async function proxy(request: NextRequest) {
+  const { url, publishableKey } = getSupabaseEnv();
   const response = intlMiddleware(request);
   const locale = getLocaleFromPath(request.nextUrl.pathname);
   const pathWithoutLocale = removeLocalePrefix(
@@ -28,22 +30,18 @@ export async function proxy(request: NextRequest) {
     locale,
   );
 
-  const supabase = createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options);
-          });
-        },
+  const supabase = createServerClient<Database>(url, publishableKey, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          response.cookies.set(name, value, options);
+        });
       },
     },
-  );
+  });
 
   const {
     data: { user },
