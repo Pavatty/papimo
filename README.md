@@ -1,91 +1,94 @@
 # papimo
 
-**papimo** est une place de marché immobilière 100 % entre particuliers (sans agence, sans intermédiaire).  
-Slogan : _L'immobilier entre particuliers._ — [papimo.com](https://papimo.com)
+Marketplace immobilier entre particuliers, multilingue (`fr`, `ar`, `en`), avec publication d'annonces, messagerie, paiements et administration.
 
-## Stack
-
-- **Next.js** (App Router) + **TypeScript** (mode strict) + **React 19**
-- **Tailwind CSS v4** + **shadcn/ui** (Base UI) + thème papimo (`src/app/globals.css`)
-- **next-intl** : locales `fr` (défaut), `ar` (RTL), `en` — URLs préfixées (`/fr`, `/ar`, `/en`)
-- **Supabase** (à brancher) : base PostgreSQL, auth, storage, Realtime, Edge Functions
-- Qualité : **ESLint** + **Prettier** (Tailwind) + **Husky** + **lint-staged** + **Vitest** + **Playwright** (Chromium)
-
-> Le dépôt est initialisé avec **Next.js 16** et **Turbopack** en `npm run dev` (aligné sur `create-next-app@latest` au moment du bootstrap).
-
-## Démarrage local
+## Local setup
 
 ```bash
 npm install
 cp .env.local.example .env.local
-# Renseigner au minimum les variables Supabase et NEXT_PUBLIC_APP_URL
+# remplir les variables (Supabase minimum)
 npm run dev
 ```
 
-Ouvrir [http://localhost:3000](http://localhost:3000) : redirection vers `/fr/`.
+App locale par défaut: `http://localhost:3000/fr`.
 
-## Scripts
+## Scripts principaux
 
-| Commande           | Rôle                                   |
-| ------------------ | -------------------------------------- |
-| `npm run dev`      | Dev avec Turbopack                     |
-| `npm run build`    | Build production                       |
-| `npm run start`    | Sert le build                          |
-| `npm run lint`     | ESLint                                 |
-| `npm run format`   | Prettier (écriture)                    |
-| `npm run test`     | Vitest (watch)                         |
-| `npm run test:run` | Vitest une fois                        |
-| `npm run e2e`      | Playwright (démarre le serveur de dev) |
+- `npm run dev`: développement Turbopack.
+- `npm run build`: build production.
+- `npm run start`: run build.
+- `npm run lint`: ESLint.
+- `npm run typecheck`: TypeScript strict.
+- `npm run test:run`: tests unitaires.
+- `npm run test:coverage`: unitaires + coverage (seuil min 60%).
+- `npm run e2e`: Playwright end-to-end.
+- `npm run seed`: seed de données démo.
 
-## Structure des dossiers (principale)
+## Architecture
 
-```text
-src/
-  app/
-    [locale]/
-      (public)/          # pages accessibles sans compte
-      (authed)/          # espace membre (ex. /dashboard)
-      (admin)/           # administration (ex. /admin)
-    layout.tsx           # layout racine (next-intl)
-    globals.css         # thème + tokens @theme Tailwind v4
-  components/
-    ui/                  # primitives shadcn
-    shared/              # en-tête, pied, logo, etc.
-  config/                # marque, site, feature flags
-  i18n/
-    messages/            # fr.json, ar.json, en.json
-    routing.ts
-    request.ts
-    navigation.ts
-  lib/                   # utilitaires partagés
-  middleware.ts          # détection de locale
-tests/e2e/                # scénarios Playwright
-```
+- Front: Next.js App Router + React 19 + TypeScript strict.
+- UI: Tailwind v4 + shadcn + design tokens papimo.
+- i18n: `next-intl` + RTL natif arabe.
+- Backend: Supabase Auth/Postgres/Storage/Realtime.
+- Monitoring: Sentry, Posthog, Plausible (conditionnés au consentement cookies).
+- PWA: `manifest`, service worker `next-pwa`.
 
-## Route admin
+Voir `docs/architecture.md` pour les diagrammes de flux.
 
-L’espace d’administration de démonstration est exposé sous **`/[locale]/admin`** (et non sur la racine), car deux groupes de routes parallèles ne peuvent pas chacun définir un `page.tsx` pour le même segment.
+## Qualité & CI/CD
 
-## Palette de marque (extraits)
+- Coverage métier ciblé `lib/` + `hooks/` avec seuil global >= 60%.
+- Hook Git pre-push: exécute `npm run test:coverage`.
+- GitHub Actions:
+  - `ci.yml`: lint + typecheck + tests + e2e.
+  - `preview-deploy.yml`: déploiement Preview Vercel sur PR.
 
-| Rôle         | Token / classe | Hex       |
-| ------------ | -------------- | --------- |
-| Bleu (PAP)   | `bleu`         | `#1E5A96` |
-| Corail (IMO) | `corail`       | `#E63946` |
-| Fond crème   | `creme`        | `#FBF6EC` |
-| Encre        | `ink`          | `#1F2937` |
-| Secondaire   | `ink-soft`     | `#6B7280` |
-| Ligne        | `line`         | `#E8DDC9` |
-| Succès       | `green`        | `#10B981` |
-| Erreur       | `danger`       | `#DC2626` |
+## Déploiement Vercel (production)
 
-Polices (via `next/font`) : **Geist** (titres / chiffres), **Manrope** (texte), **JetBrains Mono** (technique / code).
+1. Créer un projet Vercel lié au repo `Pavatty/papimo` branche `main`.
+2. Ajouter les variables d'environnement (alignées avec `.env.local.example`).
+3. Ajouter secrets GitHub pour CI:
+   - `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`
+   - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+   - clés paiement / analytics / monitoring.
+4. Configurer domaine:
+   - apex `papimo.com` + `www` (redirection `www -> apex` gérée côté app).
+5. Activer Vercel Analytics.
 
-## Tests
+Guide détaillé: `docs/deployment-vercel.md`.
 
-- **Unitaires** : `src/lib/tests/example.test.ts` (câblage Vitest)
-- **E2E** : `tests/e2e/home.spec.ts` (titre de page contenant `papimo` sur `/fr/`)
+## Production operations
 
-## Licence
+- Runbook incident: `docs/operations.md`.
+- Architecture: `docs/architecture.md`.
+- Security discovery:
+  - `/humans.txt`
+  - `/.well-known/security.txt`
+- SEO assets:
+  - `/sitemap.xml`
+  - `/sitemap-images.xml`
+  - `/robots.txt`
 
-Projet privé — droits réservés.
+## Démo seed
+
+`npm run seed` insère:
+
+- 30 annonces réalistes (vente/location, plusieurs villes/catégories),
+- 5 vendeurs démo,
+- 1 admin démo.
+
+Optionnel: définir `UNSPLASH_ACCESS_KEY` pour images via API Unsplash.
+
+## Contribuer
+
+1. Créer une branche feature.
+2. Respecter lint + typecheck + tests.
+3. Ouvrir une PR avec plan de test clair.
+4. Utiliser un message de commit conventionnel `feat|fix|chore(scope): ...`.
+
+## Roadmap court terme
+
+- Renforcer notifications utilisateur (modération, paiements, messages).
+- Compléter les scénarios e2e de charge et résilience.
+- Ajouter export photos vers stockage froid automatisé.

@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/lib/search/**/*.ts",
+    "src/lib/listing/format.ts",
+    "src/lib/listing/property-format.ts",
+    "src/lib/seo/**/*.ts",
+    "src/lib/auth/session.ts",
+    "src/lib/analytics/events.ts",
+    "src/lib/supabase/admin.ts",
+    "scripts/seed-demo.ts",
+    "vitest.config.ts",
+    "tests/e2e/prod-critical.spec.ts"
+  ],
+  "exclude": ["node_modules", "src/app/**/*", "tests/e2e/**/*"]
+}
