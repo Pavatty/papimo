@@ -1,5 +1,8 @@
 import { refundTransactionAction } from "@/app/[locale]/(admin)/admin/actions";
 import { requireAdmin } from "@/lib/admin/guards";
+import type { Database } from "@/types/database";
+
+type TxRow = Database["public"]["Tables"]["transactions"]["Row"];
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -24,9 +27,10 @@ export default async function AdminTransactionsPage({
     .select("id,user_id,amount,currency,status,gateway,type,created_at")
     .order("created_at", { ascending: false })
     .limit(200);
-  if (query.status) req = req.eq("status", query.status);
-  if (query.gateway) req = req.eq("gateway", query.gateway);
-  if (query.type) req = req.eq("type", query.type);
+  if (query.status) req = req.eq("status", query.status as TxRow["status"]);
+  if (query.gateway)
+    req = req.eq("gateway", query.gateway as NonNullable<TxRow["gateway"]>);
+  if (query.type) req = req.eq("type", query.type as TxRow["type"]);
   if (query.from) req = req.gte("created_at", `${query.from}T00:00:00.000Z`);
   if (query.to) req = req.lte("created_at", `${query.to}T23:59:59.999Z`);
 

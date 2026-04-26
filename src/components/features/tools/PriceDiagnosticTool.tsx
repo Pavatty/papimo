@@ -38,9 +38,9 @@ export function PriceDiagnosticTool() {
             }
             setError("");
             setResult({
-              score: res.score,
-              details: res.details,
-              recommendations: res.recommendations,
+              score: res.score ?? 0,
+              details: res.details ?? {},
+              recommendations: res.recommendations ?? [],
             });
           })
         }

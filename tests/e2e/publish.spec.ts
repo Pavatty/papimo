@@ -27,7 +27,11 @@ test("publish stepper flow creates pending listing", async ({ page }) => {
       },
     });
   expect(linkError).toBeNull();
-  await page.goto(linkData!.properties.action_link);
+  const actionUrl = linkData?.properties?.action_link;
+  if (!actionUrl) {
+    throw new Error("Missing magic link action_link");
+  }
+  await page.goto(actionUrl);
   await page.goto("/fr/publish");
 
   await page.getByRole("button", { name: "Vente" }).click();

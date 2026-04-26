@@ -12,7 +12,8 @@ export function generateOtpCode() {
 
   const random = new Uint32Array(1);
   globalThis.crypto.getRandomValues(random);
-  const code = OTP_MIN + (random[0] % (OTP_MAX_EXCLUSIVE - OTP_MIN));
+  const r = random[0] ?? 0;
+  const code = OTP_MIN + (r % (OTP_MAX_EXCLUSIVE - OTP_MIN));
   return String(code);
 }
 

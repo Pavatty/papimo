@@ -44,9 +44,9 @@ export function WhatsAppFlow() {
         return;
       }
 
-      setPhone(result.phone);
-      setGeneratedCode(result.code);
-      setWhatsAppLink(result.whatsappLink);
+      setPhone(result.phone ?? "");
+      setGeneratedCode(result.code ?? "");
+      setWhatsAppLink(result.whatsappLink ?? "");
       setStep(2);
     });
   };

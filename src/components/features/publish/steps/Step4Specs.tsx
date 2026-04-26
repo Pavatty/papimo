@@ -90,24 +90,38 @@ export function Step4Specs({ value, onChange }: Props) {
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        {[
-          ["bedrooms", "Chambres"],
-          ["bathrooms", "Salles de bain"],
-          ["floor", "Étage"],
-          ["total_floors", "Étages total"],
-          ["year_built", "Année de construction"],
-        ].map(([key, label]) => (
+        {(
+          [
+            ["bedrooms", "Chambres"],
+            ["bathrooms", "Salles de bain"],
+            ["floor", "Étage"],
+            ["total_floors", "Étages total"],
+            ["year_built", "Année de construction"],
+          ] as const satisfies ReadonlyArray<
+            readonly [
+              keyof Pick<
+                Props["value"],
+                | "bedrooms"
+                | "bathrooms"
+                | "floor"
+                | "total_floors"
+                | "year_built"
+              >,
+              string,
+            ]
+          >
+        ).map(([key, label]) => (
           <div key={key}>
             <label className="text-ink text-sm font-medium">{label}</label>
             <input
               type="number"
               min={key === "year_built" ? 1900 : undefined}
               max={key === "year_built" ? 2026 : undefined}
-              value={(value as Record<string, number | null>)[key] ?? ""}
+              value={value[key] ?? ""}
               onChange={(event) =>
                 onChange({
                   [key]: event.target.value ? Number(event.target.value) : null,
-                } as Partial<Props["value"]>)
+                })
               }
               className="border-line focus:border-bleu mt-1 w-full rounded-xl border bg-white px-3 py-2.5 outline-none"
             />

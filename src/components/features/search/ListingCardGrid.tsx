@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { formatPrice } from "@/lib/listing/format";
+import type { Enums } from "@/types/database";
 
 type ListingItem = {
   id: string;
@@ -32,7 +33,10 @@ export function ListingCardGrid({ listings }: { listings: ListingItem[] }) {
             {listing.title}
           </h2>
           <p className="text-bleu mt-1 text-sm font-medium">
-            {formatPrice(listing.price, listing.currency)}
+            {formatPrice(
+              listing.price,
+              listing.currency as Enums<"currency_code">,
+            )}
           </p>
           <p className="text-ink-soft mt-1 text-xs">
             {listing.city} • {listing.type} • {listing.category}

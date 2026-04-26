@@ -12,9 +12,13 @@ const adminPrefix = "/admin";
 
 function getLocaleFromPath(pathname: string) {
   const segment = pathname.split("/")[1];
-  return routing.locales.includes(segment as (typeof routing.locales)[number])
-    ? segment
-    : routing.defaultLocale;
+  if (
+    segment &&
+    routing.locales.includes(segment as (typeof routing.locales)[number])
+  ) {
+    return segment;
+  }
+  return routing.defaultLocale;
 }
 
 function removeLocalePrefix(pathname: string, locale: string) {

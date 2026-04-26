@@ -70,7 +70,11 @@ test("create conversation and send message", async ({ page }) => {
     })
     .select("id")
     .single();
-  test.skip(!listing?.id, "Listing creation failed");
+  const listingId = listing?.id;
+  if (!listingId) {
+    test.skip(true, "Listing creation failed");
+    return;
+  }
 
   const magicLink = await admin.auth.admin.generateLink({
     type: "magiclink",
@@ -81,9 +85,7 @@ test("create conversation and send message", async ({ page }) => {
   test.skip(!actionLink, "Magic link generation failed");
 
   await page.goto(actionLink!);
-  await page.goto(
-    `/fr/messages?listing_id=${listing.id}&seller_id=${sellerId}`,
-  );
+  await page.goto(`/fr/messages?listing_id=${listingId}&seller_id=${sellerId}`);
   await expect(page).toHaveURL(/\/fr\/messages\/.*/);
 
   await page

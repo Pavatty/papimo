@@ -23,7 +23,9 @@ export function readConsent(): CookieConsent | null {
     .find((entry) => entry.startsWith(`${COOKIE_KEY}=`));
   if (!match) return null;
   try {
-    return JSON.parse(decodeURIComponent(match.split("=")[1])) as CookieConsent;
+    const raw = match.split("=")[1];
+    if (raw === undefined) return null;
+    return JSON.parse(decodeURIComponent(raw)) as CookieConsent;
   } catch {
     return null;
   }

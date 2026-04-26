@@ -53,17 +53,21 @@ test("listing detail page renders gallery and actions", async ({ page }) => {
     .select("id")
     .single();
 
-  test.skip(!insertedListing?.id, "Could not create listing");
+  const newListingId = insertedListing?.id;
+  if (!newListingId) {
+    test.skip(true, "Could not create listing");
+    return;
+  }
 
   await admin.from("listing_images").insert([
     {
-      listing_id: insertedListing.id,
+      listing_id: newListingId,
       url: "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1600",
       position: 0,
       is_cover: true,
     },
     {
-      listing_id: insertedListing.id,
+      listing_id: newListingId,
       url: "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1600",
       position: 1,
       is_cover: false,
