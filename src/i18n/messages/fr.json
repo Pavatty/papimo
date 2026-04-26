@@ -15,9 +15,13 @@
   "navigation": {
     "buy": "Acheter",
     "rent": "Louer",
+    "search": "Recherche",
     "estimate": "Estimer",
     "tools": "Outils",
+    "pricing": "Tarifs",
+    "legal": "Légal",
     "login": "Connexion",
+    "signup": "Créer un compte",
     "publishMyProperty": "Publier mon bien",
     "discover": "Découvrir les biens",
     "languages": {
@@ -28,12 +32,39 @@
   },
   "footer": {
     "columnIndividuals": "Particuliers",
+    "columnDiscover": "Découvrir",
+    "columnHelp": "Aide & contact",
+    "columnLegal": "Légal",
     "columnAbout": "À propos",
     "columnLanguages": "Langues",
+    "faq": "Questions fréquentes",
+    "contact": "Nous contacter",
+    "pricingLink": "Tarifs & abonnements",
+    "searchLink": "Recherche d’annonces",
+    "legalHub": "Centre légal",
     "legalNotice": "Mentions légales",
     "privacy": "Confidentialité"
   },
   "home": {
+    "howItWorks": {
+      "title": "Comment ça marche ?",
+      "step1Title": "Publiez votre bien",
+      "step1": "Décrivez, photographiez et mettez en ligne votre annonce en quelques minutes.",
+      "step2Title": "Échangez en direct",
+      "step2": "Recevez des messages, planifiez des visites et négociez sans intermédiaire.",
+      "step3Title": "Concluez sereinement",
+      "step3": "Outils, estimation et ressources pour avancer de manière claire, en Tunisie et au-delà."
+    },
+    "tools": {
+      "title": "Outils gratuits",
+      "subtitle": "Simulateurs, estimation, IA pour vos descriptions : tout pour préparer votre projet.",
+      "cta": "Voir les outils"
+    },
+    "sampleListings": {
+      "title": "Exemples d’annonces",
+      "subtitle": "Aperçu de biens (illustration) : explorez toutes les annonces réelles sur la recherche.",
+      "cta": "Parcourir toutes les annonces"
+    },
     "hero": {
       "headline": "L’immobilier, <bleu>chez-vous</bleu> et <corail>directement</corail>.",
       "subline": "Annonces entre particuliers, sans agence, sans intermédiaire."

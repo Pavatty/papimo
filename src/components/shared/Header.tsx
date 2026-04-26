@@ -30,9 +30,15 @@ export function Header() {
         </Link>
 
         <nav
-          className="text-ink hidden flex-1 items-center justify-center gap-6 text-sm font-medium md:flex"
+          className="text-ink hidden max-w-3xl flex-1 flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-medium lg:flex"
           aria-label={t("a11y.mainMenu")}
         >
+          <Link
+            href="/search"
+            className="text-ink hover:text-bleu focus-visible:ring-bleu/40 transition focus-visible:ring-2 focus-visible:ring-offset-2"
+          >
+            {t("navigation.search")}
+          </Link>
           <Link
             href="/achat"
             className="text-ink hover:text-bleu focus-visible:ring-bleu/40 transition focus-visible:ring-2 focus-visible:ring-offset-2"
@@ -56,6 +62,18 @@ export function Header() {
             className="text-ink hover:text-bleu focus-visible:ring-bleu/40 transition focus-visible:ring-2 focus-visible:ring-offset-2"
           >
             {t("navigation.tools")}
+          </Link>
+          <Link
+            href="/pricing"
+            className="text-ink hover:text-bleu focus-visible:ring-bleu/40 transition focus-visible:ring-2 focus-visible:ring-offset-2"
+          >
+            {t("navigation.pricing")}
+          </Link>
+          <Link
+            href="/legal"
+            className="text-ink hover:text-bleu focus-visible:ring-bleu/40 transition focus-visible:ring-2 focus-visible:ring-offset-2"
+          >
+            {t("navigation.legal")}
           </Link>
         </nav>
 
@@ -95,10 +113,16 @@ export function Header() {
             href="/login"
             className={cn(
               buttonVariants({ variant: "secondary", size: "default" }),
-              "text-bleu min-h-9 min-w-[7rem] font-medium",
+              "text-bleu min-h-9 min-w-0 font-medium",
             )}
           >
             {t("navigation.login")}
+          </Link>
+          <Link
+            href="/signup"
+            className="text-ink-soft hover:text-bleu hidden min-h-9 text-sm font-medium underline-offset-4 hover:underline min-[420px]:inline"
+          >
+            {t("navigation.signup")}
           </Link>
           <Link
             href="/publish"
