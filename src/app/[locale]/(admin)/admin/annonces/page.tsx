@@ -9,6 +9,9 @@ import {
   suspendListingAction,
 } from "@/app/[locale]/(admin)/admin/actions";
 import { requireAdmin } from "@/lib/admin/guards";
+import type { Database } from "@/types/database";
+
+type ListingRow = Database["public"]["Tables"]["listings"]["Row"];
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -39,9 +42,11 @@ export default async function AdminListingsPage({
     .order("created_at", { ascending: false })
     .range((page - 1) * pageSize, page * pageSize - 1);
 
-  if (query.status) req = req.eq("status", query.status);
-  if (query.type) req = req.eq("type", query.type);
-  if (query.category) req = req.eq("category", query.category);
+  if (query.status)
+    req = req.eq("status", query.status as ListingRow["status"]);
+  if (query.type) req = req.eq("type", query.type as ListingRow["type"]);
+  if (query.category)
+    req = req.eq("category", query.category as ListingRow["category"]);
   if (query.city) req = req.eq("city", query.city);
   if (query.q) req = req.or(`title.ilike.%${query.q}%,city.ilike.%${query.q}%`);
 

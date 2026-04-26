@@ -47,7 +47,11 @@ test("checkout page renders and starts payment", async ({ page }) => {
     })
     .select("id")
     .single();
-  test.skip(!listing?.id, "Could not create listing");
+  const listingId = listing?.id;
+  if (!listingId) {
+    test.skip(true, "Could not create listing");
+    return;
+  }
 
   const linkRes = await admin.auth.admin.generateLink({
     type: "magiclink",
@@ -58,7 +62,7 @@ test("checkout page renders and starts payment", async ({ page }) => {
   test.skip(!magicLink, "Could not create magic link");
 
   await page.goto(magicLink!);
-  await page.goto(`/fr/checkout?type=listing-pack&listingId=${listing.id}`);
+  await page.goto(`/fr/checkout?type=listing-pack&listingId=${listingId}`);
 
   await expect(page.getByRole("heading", { name: "Checkout" })).toBeVisible();
   await expect(page.getByText("Pack")).toBeVisible();

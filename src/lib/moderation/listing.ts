@@ -54,12 +54,16 @@ export async function moderateListing(
   }
 
   if (listing.city && listing.price && listing.type) {
-    const { data: priceIndex } = await supabase
+    let pi = supabase
       .from("price_index")
       .select("avg_price_m2_sale, avg_price_m2_rent")
       .eq("country_code", listing.country_code)
-      .eq("city", listing.city)
-      .eq("neighborhood", listing.neighborhood)
+      .eq("city", listing.city);
+    pi =
+      listing.neighborhood === null
+        ? pi.is("neighborhood", null)
+        : pi.eq("neighborhood", listing.neighborhood);
+    const { data: priceIndex } = await pi
       .order("period", { ascending: false })
       .limit(1)
       .maybeSingle();

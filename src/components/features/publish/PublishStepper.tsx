@@ -116,13 +116,13 @@ export function PublishStepper({ initialData, preferredCurrency }: Props) {
       <div className="min-h-[420px]">
         {state.currentStep === 1 ? (
           <Step1TransactionType
-            value={state.form.type}
+            value={state.form.type ?? "sale"}
             onChange={(type) => dispatch({ type: "patch", payload: { type } })}
           />
         ) : null}
         {state.currentStep === 2 ? (
           <Step2Category
-            value={state.form.category}
+            value={state.form.category ?? "apartment"}
             onChange={(category) =>
               dispatch({ type: "patch", payload: { category } })
             }
@@ -158,7 +158,7 @@ export function PublishStepper({ initialData, preferredCurrency }: Props) {
         ) : null}
         {state.currentStep === 5 ? (
           <Step5Photos
-            listingId={state.form.id}
+            {...(state.form.id ? { listingId: state.form.id } : {})}
             pack={state.form.pack as ListingPack}
             images={state.form.images}
             onImagesChange={(images) =>
@@ -168,7 +168,7 @@ export function PublishStepper({ initialData, preferredCurrency }: Props) {
         ) : null}
         {state.currentStep === 6 ? (
           <Step6PriceDescription
-            preferredCurrency={preferredCurrency}
+            {...(preferredCurrency ? { preferredCurrency } : {})}
             value={{
               price: state.form.price,
               currency: state.form.currency,
@@ -177,7 +177,7 @@ export function PublishStepper({ initialData, preferredCurrency }: Props) {
               city: state.form.city,
               neighborhood: state.form.neighborhood,
               country_code: state.form.country_code,
-              type: state.form.type,
+              type: state.form.type ?? "sale",
               surface_m2: state.form.surface_m2,
             }}
             onChange={(patch) => dispatch({ type: "patch", payload: patch })}
@@ -186,7 +186,7 @@ export function PublishStepper({ initialData, preferredCurrency }: Props) {
         {state.currentStep === 7 ? (
           <Step7Pack
             value={state.form.pack}
-            listingId={state.form.id}
+            {...(state.form.id ? { listingId: state.form.id } : {})}
             onChange={(pack) => dispatch({ type: "patch", payload: { pack } })}
           />
         ) : null}

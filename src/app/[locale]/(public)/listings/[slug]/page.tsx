@@ -61,7 +61,7 @@ export async function generateMetadata({
     pathnameWithoutLocale: `/listings/${listing.slug}`,
     title,
     description,
-    ogImage: cover?.url,
+    ...(cover?.url ? { ogImage: cover.url } : {}),
   });
 }
 
@@ -123,12 +123,16 @@ export default async function ListingPage({ params }: PageProps) {
       return { ...item, cover_url: cover?.url ?? null };
     }) ?? [];
 
-  const { data: medianRow } = await supabase
+  let medianQuery = supabase
     .from("price_index")
     .select("avg_price_m2_sale, avg_price_m2_rent")
     .eq("country_code", listing.country_code)
-    .eq("city", listing.city)
-    .eq("neighborhood", listing.neighborhood)
+    .eq("city", listing.city);
+  medianQuery =
+    listing.neighborhood === null
+      ? medianQuery.is("neighborhood", null)
+      : medianQuery.eq("neighborhood", listing.neighborhood);
+  const { data: medianRow } = await medianQuery
     .order("period", { ascending: false })
     .limit(1)
     .maybeSingle();

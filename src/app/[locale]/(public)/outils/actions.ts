@@ -12,12 +12,15 @@ export async function estimatePropertyRange(input: {
 }) {
   const supabase = await createClient();
 
-  const neighborhoodRow = await supabase
+  let nq = supabase
     .from("price_index")
     .select("avg_price_m2_sale")
     .eq("country_code", input.countryCode)
-    .eq("city", input.city)
-    .eq("neighborhood", input.neighborhood ?? null)
+    .eq("city", input.city);
+  nq = input.neighborhood
+    ? nq.eq("neighborhood", input.neighborhood)
+    : nq.is("neighborhood", null);
+  const neighborhoodRow = await nq
     .order("period", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -101,12 +104,16 @@ export async function runPriceDiagnostic(input: { listingIdOrSlug: string }) {
   }
 
   const row = listing.data;
-  const priceIndex = await supabase
+  let pq = supabase
     .from("price_index")
     .select("avg_price_m2_sale")
     .eq("country_code", row.country_code)
-    .eq("city", row.city)
-    .eq("neighborhood", row.neighborhood)
+    .eq("city", row.city);
+  pq =
+    row.neighborhood === null
+      ? pq.is("neighborhood", null)
+      : pq.eq("neighborhood", row.neighborhood);
+  const priceIndex = await pq
     .order("period", { ascending: false })
     .limit(1)
     .maybeSingle();

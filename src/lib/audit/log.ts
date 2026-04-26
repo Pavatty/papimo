@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import type { Json } from "@/types/database";
 
 export type LogAuditEventInput = {
   action: string;
@@ -14,8 +15,8 @@ export async function logAuditEvent(input: LogAuditEventInput) {
     p_action: input.action,
     p_target_type: input.targetType,
     p_target_id: input.targetId ?? null,
-    p_before_data: input.beforeData ?? null,
-    p_after_data: input.afterData ?? null,
+    p_before_data: (input.beforeData ?? null) as Json | null,
+    p_after_data: (input.afterData ?? null) as Json | null,
   });
 
   if (error) {

@@ -7,7 +7,7 @@ import { z } from "zod";
 import { captureServerEvent } from "@/lib/analytics/events";
 import { logAuditEvent } from "@/lib/audit/log";
 import { createClient } from "@/lib/supabase/server";
-import type { Enums } from "@/types/database";
+import type { Enums, Json } from "@/types/database";
 
 import { createPayment } from "./konnect";
 import {
@@ -388,7 +388,7 @@ export async function handleStripeWebhook(event: {
     .update({
       status,
       completed_at: completed ? new Date().toISOString() : null,
-      gateway_response: object as unknown as Record<string, unknown>,
+      gateway_response: object as unknown as Json,
     })
     .eq("id", transactionId);
 
@@ -471,7 +471,7 @@ export async function generateInvoice(transactionId: string) {
 
   const doc = new PDFDocument({ margin: 48 });
   const chunks: Buffer[] = [];
-  doc.on("data", (chunk) => chunks.push(chunk as Buffer));
+  doc.on("data", (chunk: Buffer) => chunks.push(chunk));
   doc.on("end", () => undefined);
 
   doc.fontSize(22).fillColor("#1f4fbf").text("papimo", { continued: true });

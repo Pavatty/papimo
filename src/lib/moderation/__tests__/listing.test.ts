@@ -91,6 +91,7 @@ const baseListing: Database["public"]["Tables"]["listings"]["Row"] = {
   type: "sale",
   price: 300000,
   surface_m2: 100,
+  category: "apartment",
 };
 
 describe("moderateListing", () => {

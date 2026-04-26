@@ -7,14 +7,18 @@ import { getSupabaseEnv } from "@/lib/supabase/env";
 import type { Database } from "@/types/database";
 
 const intlMiddleware = createIntlMiddleware(routing);
-const protectedPrefixes = ["/dashboard", "/publish", "/messages"];
+const protectedPrefixes = ["/dashboard", "/publish", "/messages", "/checkout"];
 const adminPrefix = "/admin";
 
 function getLocaleFromPath(pathname: string) {
   const segment = pathname.split("/")[1];
-  return routing.locales.includes(segment as (typeof routing.locales)[number])
-    ? segment
-    : routing.defaultLocale;
+  if (
+    segment &&
+    routing.locales.includes(segment as (typeof routing.locales)[number])
+  ) {
+    return segment;
+  }
+  return routing.defaultLocale;
 }
 
 function removeLocalePrefix(pathname: string, locale: string) {
@@ -90,6 +94,8 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 
+// Next.js 16 : le matcher doit être défini ici (fichier `proxy.ts` unique).
+// Ne pas utiliser un second `src/middleware.ts` qui réexporte `config` depuis ce fichier.
 export const config = {
   matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };
