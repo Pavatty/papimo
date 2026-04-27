@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { ChevronRight, Home } from "lucide-react";
 import { redirect } from "next/navigation";
 
 import { PublishPageWithStepper } from "@/components/features/publish/PublishPageWithStepper";
@@ -39,7 +40,7 @@ type Props = {
 
 export default async function PublishPage({ params }: Props) {
   const { locale } = await params;
-  const tNav = await getTranslations("publishPage");
+  const tPublish = await getTranslations("publish");
   const supabase = await createClient();
   const {
     data: { user },
@@ -112,20 +113,18 @@ export default async function PublishPage({ params }: Props) {
   return (
     <main className="bg-creme min-h-screen">
       <div className="mx-auto w-full max-w-6xl px-6 py-8">
-        <nav aria-label={tNav("breadcrumbNavLabel")} className="mb-4">
-          <ol className="text-ink-soft flex flex-wrap items-center gap-2 text-sm">
-            <li>
-              <Link href="/" className="text-bleu hover:underline">
-                {tNav("breadcrumbHome")}
-              </Link>
-            </li>
-            <li aria-hidden="true" className="select-none">
-              &gt;
-            </li>
-            <li className="text-ink font-semibold" aria-current="page">
-              {tNav("title")}
-            </li>
-          </ol>
+        <nav className="mb-4 flex items-center gap-2 text-sm text-gray-500">
+          <Link
+            href={`/${locale}`}
+            className="hover:text-papimo-blue flex items-center gap-1 transition"
+          >
+            <Home className="h-4 w-4" />
+            <span>{tPublish("breadcrumb.home")}</span>
+          </Link>
+          <ChevronRight className="h-4 w-4" />
+          <span className="font-medium text-gray-900">
+            {tPublish("breadcrumb.publish")}
+          </span>
         </nav>
         <PublishPageWithStepper
           initialData={initial}

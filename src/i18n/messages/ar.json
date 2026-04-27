@@ -96,6 +96,12 @@
     "cookies": "سياسة ملفات الارتباط",
     "notices": "البيانات القانونية"
   },
+  "publish": {
+    "breadcrumb": {
+      "home": "الرئيسية",
+      "publish": "نشر إعلاني"
+    }
+  },
   "publishPage": {
     "breadcrumbNavLabel": "مسار التنقل",
     "breadcrumbHome": "الرئيسية",

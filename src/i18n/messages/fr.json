@@ -96,6 +96,12 @@
     "cookies": "Politique cookies",
     "notices": "Mentions légales"
   },
+  "publish": {
+    "breadcrumb": {
+      "home": "Accueil",
+      "publish": "Publier mon annonce"
+    }
+  },
   "publishPage": {
     "breadcrumbNavLabel": "Fil d'Ariane",
     "breadcrumbHome": "Accueil",

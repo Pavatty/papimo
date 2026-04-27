@@ -96,6 +96,12 @@
     "cookies": "Cookie policy",
     "notices": "Legal notices"
   },
+  "publish": {
+    "breadcrumb": {
+      "home": "Home",
+      "publish": "List my property"
+    }
+  },
   "publishPage": {
     "breadcrumbNavLabel": "Breadcrumb",
     "breadcrumbHome": "Home",
