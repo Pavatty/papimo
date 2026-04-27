@@ -3,7 +3,7 @@
 // Toute version différente déclenche la purge des caches précédents dans
 // `activate` ci-dessous, ce qui force les clients PWA installés à recharger
 // la version live des pages au lieu d'une version périmée.
-const CACHE_NAME = "papimo-v2";
+const CACHE_NAME = "papimo-v3";
 
 // Précacher uniquement les ressources réellement statiques.
 // Ne PAS précacher /fr ou / : le HTML est régénéré en SSR/ISR à chaque release
