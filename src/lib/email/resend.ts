@@ -1,5 +1,12 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY!);
+let cached: Resend | null = null;
 
-export { resend };
+export const resend = new Proxy({} as Resend, {
+  get(_target, prop: keyof Resend) {
+    if (!cached) {
+      cached = new Resend(process.env.RESEND_API_KEY ?? "re_placeholder");
+    }
+    return cached[prop];
+  },
+});

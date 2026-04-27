@@ -90,19 +90,20 @@ export async function sendMessage(input: z.infer<typeof sendMessageSchema>) {
       .maybeSingle(),
   ]);
 
-  let recipient: {
+  type RecipientProfile = {
     email?: string | null;
     full_name?: string | null;
     preferred_language?: string | null;
     notifications_email?: boolean | null;
-  } | null = null;
+  };
+  let recipient: RecipientProfile | null = null;
 
   const { data: richRecipient } = await supabase
     .from("profiles")
     .select("email, full_name, preferred_language, notifications_email")
     .eq("id", recipientId)
     .maybeSingle();
-  recipient = richRecipient;
+  recipient = richRecipient as unknown as RecipientProfile | null;
 
   if (recipient?.email && recipient.notifications_email !== false) {
     const preferredLocale =

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ListingCardGrid } from "@/components/features/search/ListingCardGrid";
+import { SearchResults } from "@/components/features/search/SearchResults";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { createClient } from "@/lib/supabase/server";
 
@@ -36,7 +36,11 @@ export default async function LocationVillaMarsaPage() {
       <p className="text-ink-soft mt-2 text-sm">
         Landing page SEO locale basée sur des filtres de recherche.
       </p>
-      <ListingCardGrid listings={data ?? []} />
+      <SearchResults
+        results={(data ?? []) as never}
+        loading={false}
+        onReset={() => {}}
+      />
     </main>
   );
 }

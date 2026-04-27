@@ -1,9 +1,12 @@
 "use client";
 
 type Props = {
-  min?: number;
-  max?: number;
-  onChange: (next: { min?: number; max?: number }) => void;
+  min?: number | undefined;
+  max?: number | undefined;
+  onChange: (next: {
+    min?: number | undefined;
+    max?: number | undefined;
+  }) => void;
 };
 
 export function PriceRangeSlider({ min, max, onChange }: Props) {

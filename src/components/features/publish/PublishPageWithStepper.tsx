@@ -45,7 +45,7 @@ export function PublishPageWithStepper({
 
       <PublishStepper
         initialData={initialData}
-        preferredCurrency={preferredCurrency}
+        {...(preferredCurrency ? { preferredCurrency } : {})}
         onQuitRequest={openQuit}
       />
 

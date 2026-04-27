@@ -11,14 +11,14 @@ import {
 } from "@/lib/constants/geography";
 
 type Props = {
-  country?: string;
-  region?: string;
-  city?: string;
+  country?: string | undefined;
+  region?: string | undefined;
+  city?: string | undefined;
   neighborhoods: string[];
   onChange: (next: {
-    country?: string;
-    region?: string;
-    city?: string;
+    country?: string | undefined;
+    region?: string | undefined;
+    city?: string | undefined;
     neighborhoods: string[];
   }) => void;
 };
