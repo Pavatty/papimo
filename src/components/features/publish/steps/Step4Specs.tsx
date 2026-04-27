@@ -26,10 +26,7 @@ export function Step4Specs({ value, onChange }: Props) {
 
   const isAmenitySelected = (key: AmenityKey) => {
     if (key === "caretaker") {
-      return (
-        value.amenities.includes("caretaker") ||
-        value.amenities.includes("gardian")
-      );
+      return value.amenities.includes("caretaker");
     }
     return value.amenities.includes(key);
   };
@@ -39,13 +36,10 @@ export function Step4Specs({ value, onChange }: Props) {
     if (key === "caretaker") {
       if (selected) {
         onChange({
-          amenities: value.amenities.filter(
-            (a) => a !== "caretaker" && a !== "gardian",
-          ),
+          amenities: value.amenities.filter((a) => a !== "caretaker"),
         });
       } else {
-        const withoutLegacy = value.amenities.filter((a) => a !== "gardian");
-        onChange({ amenities: [...withoutLegacy, "caretaker"] });
+        onChange({ amenities: [...value.amenities, "caretaker"] });
       }
       return;
     }

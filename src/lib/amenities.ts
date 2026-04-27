@@ -24,5 +24,5 @@ export function isKnownAmenityKey(key: string): key is AmenityKey {
 
 /** Maps legacy DB keys to current canonical keys. */
 export function normalizeAmenityKey(key: string): string {
-  return key === "gardian" ? "caretaker" : key;
+  return key;
 }
