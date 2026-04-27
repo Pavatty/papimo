@@ -96,6 +96,23 @@
     "cookies": "Politique cookies",
     "notices": "Mentions légales"
   },
+  "amenities": {
+    "parking": "Parking",
+    "elevator": "Ascenseur",
+    "balcony": "Balcon",
+    "terrace": "Terrasse",
+    "garden": "Jardin",
+    "pool": "Piscine",
+    "ac": "Climatisation",
+    "heating": "Chauffage",
+    "furnished": "Meublé",
+    "new": "Neuf",
+    "sea_view": "Vue mer",
+    "mountain_view": "Vue montagne",
+    "fiber": "Fibre",
+    "security": "Sécurité",
+    "caretaker": "Gardien"
+  },
   "seo": {
     "homeTitle": "papimo | L'immobilier entre particuliers",
     "searchTitle": "Recherche immobilière | papimo",

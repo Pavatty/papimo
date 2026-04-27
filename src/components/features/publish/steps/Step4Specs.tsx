@@ -1,22 +1,8 @@
 "use client";
 
-const amenities = [
-  "parking",
-  "elevator",
-  "balcony",
-  "terrace",
-  "garden",
-  "pool",
-  "ac",
-  "heating",
-  "furnished",
-  "new",
-  "sea_view",
-  "mountain_view",
-  "fiber",
-  "security",
-  "gardian",
-];
+import { useTranslations } from "next-intl";
+
+import { AMENITY_KEYS, type AmenityKey } from "@/lib/amenities";
 
 type Props = {
   value: {
@@ -33,6 +19,40 @@ type Props = {
 };
 
 export function Step4Specs({ value, onChange }: Props) {
+  const tAmenity = useTranslations("amenities");
+
+  const isAmenitySelected = (key: AmenityKey) => {
+    if (key === "caretaker") {
+      return (
+        value.amenities.includes("caretaker") ||
+        value.amenities.includes("gardian")
+      );
+    }
+    return value.amenities.includes(key);
+  };
+
+  const toggleAmenity = (key: AmenityKey) => {
+    const selected = isAmenitySelected(key);
+    if (key === "caretaker") {
+      if (selected) {
+        onChange({
+          amenities: value.amenities.filter(
+            (a) => a !== "caretaker" && a !== "gardian",
+          ),
+        });
+      } else {
+        const withoutLegacy = value.amenities.filter((a) => a !== "gardian");
+        onChange({ amenities: [...withoutLegacy, "caretaker"] });
+      }
+      return;
+    }
+    onChange({
+      amenities: selected
+        ? value.amenities.filter((it) => it !== key)
+        : [...value.amenities, key],
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2">
@@ -150,24 +170,18 @@ export function Step4Specs({ value, onChange }: Props) {
       <section>
         <h3 className="text-ink mb-2 text-sm font-semibold">Équipements</h3>
         <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-          {amenities.map((amenity) => {
-            const selected = value.amenities.includes(amenity);
+          {AMENITY_KEYS.map((amenity) => {
+            const selected = isAmenitySelected(amenity);
             return (
               <button
                 key={amenity}
                 type="button"
-                onClick={() =>
-                  onChange({
-                    amenities: selected
-                      ? value.amenities.filter((it) => it !== amenity)
-                      : [...value.amenities, amenity],
-                  })
-                }
+                onClick={() => toggleAmenity(amenity)}
                 className={`rounded-lg border px-2 py-2 text-left text-xs ${
                   selected ? "border-bleu bg-bleu-pale" : "border-line bg-white"
                 }`}
               >
-                {amenity}
+                {tAmenity(amenity)}
               </button>
             );
           })}

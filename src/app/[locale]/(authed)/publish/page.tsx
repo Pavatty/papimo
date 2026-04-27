@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import { PublishStepper } from "@/components/features/publish/PublishStepper";
 import type { PublishFormState } from "@/components/features/publish/types";
+import { normalizeAmenityKey } from "@/lib/amenities";
 import { createClient } from "@/lib/supabase/server";
 
 function buildInitialDraft(): PublishFormState {
@@ -101,7 +102,8 @@ export default async function PublishPage({ params }: Props) {
         position: img.position,
         is_cover: img.is_cover,
       })) ?? [];
-    initial.amenities = amenities?.map((a) => a.amenity_key) ?? [];
+    initial.amenities =
+      amenities?.map((a) => normalizeAmenityKey(a.amenity_key)) ?? [];
   }
 
   return (

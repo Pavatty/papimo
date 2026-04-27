@@ -96,6 +96,23 @@
     "cookies": "Cookie policy",
     "notices": "Legal notices"
   },
+  "amenities": {
+    "parking": "Parking",
+    "elevator": "Elevator",
+    "balcony": "Balcony",
+    "terrace": "Terrace",
+    "garden": "Garden",
+    "pool": "Pool",
+    "ac": "Air conditioning",
+    "heating": "Heating",
+    "furnished": "Furnished",
+    "new": "New",
+    "sea_view": "Sea view",
+    "mountain_view": "Mountain view",
+    "fiber": "Fiber",
+    "security": "Security",
+    "caretaker": "Caretaker"
+  },
   "seo": {
     "homeTitle": "papimo | Real estate between private owners",
     "searchTitle": "Real estate search | papimo",

@@ -96,6 +96,23 @@
     "cookies": "سياسة ملفات الارتباط",
     "notices": "البيانات القانونية"
   },
+  "amenities": {
+    "parking": "موقف سيارات",
+    "elevator": "مصعد",
+    "balcony": "شرفة",
+    "terrace": "تراس",
+    "garden": "حديقة",
+    "pool": "مسبح",
+    "ac": "تكييف",
+    "heating": "تدفئة",
+    "furnished": "مفروش",
+    "new": "جديد",
+    "sea_view": "إطلالة بحر",
+    "mountain_view": "إطلالة جبل",
+    "fiber": "ألياف بصرية",
+    "security": "أمن",
+    "caretaker": "حارس"
+  },
   "seo": {
     "homeTitle": "papimo | العقارات بين الخواص",
     "searchTitle": "البحث العقاري | papimo",
