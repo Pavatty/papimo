@@ -36,6 +36,7 @@ export type SearchFiltersState = {
 
 export type SearchResult = {
   id: string;
+  slug: string | null;
   title: string | null;
   price: number | null;
   price_currency: string | null;
@@ -136,7 +137,7 @@ export function SearchPage() {
       supabase
         .from("listings")
         .select(
-          "id,title,price,price_currency,surface_area,rooms_total,bedrooms,city,neighborhood,main_photo,photos,latitude,longitude,property_type,transaction_type,amenities,published_at",
+          "id,slug,title,price,price_currency,surface_area,rooms_total,bedrooms,city,neighborhood,main_photo,photos,latitude,longitude,property_type,transaction_type,amenities,published_at",
           { count: "exact" },
         ) as unknown as AnyQuery
     ).eq("status", "active");

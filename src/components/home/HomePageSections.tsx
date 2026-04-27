@@ -140,7 +140,7 @@ export async function HomePageSections() {
                 listing.price,
                 listing.price_currency,
               );
-              const href = `/listings/${listing.slug ?? listing.id}`;
+              const href = `/annonce/${listing.slug ?? listing.id}`;
               const localityParts = [
                 listing.neighborhood?.trim(),
                 listing.city?.trim(),

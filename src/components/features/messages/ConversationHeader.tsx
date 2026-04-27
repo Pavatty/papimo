@@ -43,7 +43,7 @@ export function ConversationHeader({
           {listingSlug ? (
             <Link
               className="text-bleu text-xs underline-offset-2 hover:underline"
-              href={`/${locale}/listings/${listingSlug}`}
+              href={`/${locale}/annonce/${listingSlug}`}
             >
               Voir l&#39;annonce
             </Link>

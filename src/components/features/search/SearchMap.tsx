@@ -53,7 +53,7 @@ export function SearchMap({ results }: { results: SearchResult[] }) {
           <p class="font-bold text-sm">${listing.title}</p>
           <p class="text-red-500 font-bold">${Number(listing.price).toLocaleString()} ${listing.price_currency}</p>
           <p class="text-xs text-gray-500">${listing.surface_area}m² · ${listing.rooms_total} pièces</p>
-          <a href="/listings/${listing.id}" class="text-blue-600 text-xs underline mt-2 block">Voir l'annonce</a>
+          <a href="/annonce/${listing.slug ?? listing.id}" class="text-blue-600 text-xs underline mt-2 block">Voir l'annonce</a>
         </div>
       `);
 

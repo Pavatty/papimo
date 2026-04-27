@@ -356,7 +356,7 @@ export async function submitForReview(listingId: string) {
       const { subject, html } = listingPublishedEmail({
         recipientName: owner.full_name || owner.email,
         listingTitle: listing.title || "Votre annonce",
-        listingUrl: `${appUrl}/${preferredLocale}/listings/${listingPath}`,
+        listingUrl: `${appUrl}/${preferredLocale}/annonce/${listingPath}`,
         locale: preferredLocale,
       });
       sendEmail({ to: owner.email, subject, html }).catch(console.error);

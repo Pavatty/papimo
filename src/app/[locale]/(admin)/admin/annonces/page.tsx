@@ -147,7 +147,7 @@ export default async function AdminListingsPage({
                 <td className="px-3 py-2">
                   <div className="flex flex-wrap gap-2 text-xs">
                     <Link
-                      href={`/${locale}/listings/${listing.slug}`}
+                      href={`/${locale}/annonce/${listing.slug ?? listing.id}`}
                       className="border-line rounded border bg-white px-2 py-1"
                     >
                       Voir

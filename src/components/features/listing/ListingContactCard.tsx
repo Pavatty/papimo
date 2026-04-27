@@ -27,7 +27,7 @@ export function ListingContactCard({
 }: Props) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const redirectTo = `/${locale}/listings/${listing.slug}`;
+  const redirectTo = `/${locale}/annonce/${listing.slug ?? listing.id}`;
 
   const guardedNavigation = (url: string) => {
     if (!isAuthenticated) {
