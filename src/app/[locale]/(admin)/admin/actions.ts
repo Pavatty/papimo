@@ -4,10 +4,19 @@ import { z } from "zod";
 
 import { requireAdmin } from "@/lib/admin/guards";
 import { logAuditEvent } from "@/lib/audit/log";
+import { sendEmail } from "@/lib/email/send";
+import { type EmailLocale } from "@/lib/email/templates/base";
+import { listingApprovedEmail } from "@/lib/email/templates/listing-approved";
 import type { Enums } from "@/types/database";
 
 export async function approveListingAction(locale: string, listingId: string) {
   const { supabase, user } = await requireAdmin(locale);
+  const { data: listing } = await supabase
+    .from("listings")
+    .select("id, title, slug, owner_id")
+    .eq("id", listingId)
+    .maybeSingle();
+
   await supabase
     .from("listings")
     .update({ status: "active" })
@@ -18,6 +27,31 @@ export async function approveListingAction(locale: string, listingId: string) {
     targetId: listingId,
     afterData: { status: "active", admin_id: user.id },
   });
+
+  if (listing?.owner_id) {
+    const { data: owner } = await supabase
+      .from("profiles")
+      .select("email, full_name, preferred_language, notifications_email")
+      .eq("id", listing.owner_id)
+      .maybeSingle();
+
+    if (owner?.email && owner.notifications_email !== false) {
+      const preferredLocale =
+        owner.preferred_language === "en" || owner.preferred_language === "ar"
+          ? (owner.preferred_language as EmailLocale)
+          : "fr";
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+      const listingPath = listing.slug || listing.id;
+      const { subject, html } = listingApprovedEmail({
+        recipientName: owner.full_name || owner.email,
+        listingTitle: listing.title || "Votre annonce",
+        listingUrl: `${appUrl}/${preferredLocale}/listings/${listingPath}`,
+        locale: preferredLocale,
+      });
+      sendEmail({ to: owner.email, subject, html }).catch(console.error);
+    }
+  }
+
   return { ok: true };
 }
 
