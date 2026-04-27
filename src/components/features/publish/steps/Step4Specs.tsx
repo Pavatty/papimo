@@ -21,6 +21,9 @@ type Props = {
 export function Step4Specs({ value, onChange }: Props) {
   const tAmenity = useTranslations("amenities");
 
+  const clampNumber = (v: number, min: number, max: number) =>
+    Math.max(min, Math.min(max, v));
+
   const isAmenitySelected = (key: AmenityKey) => {
     if (key === "caretaker") {
       return (
@@ -67,14 +70,18 @@ export function Step4Specs({ value, onChange }: Props) {
             id="publish-surface"
             type="number"
             required
+            min={1}
+            max={10000}
             value={value.surface_m2 ?? ""}
-            onChange={(event) =>
-              onChange({
-                surface_m2: event.target.value
-                  ? Number(event.target.value)
-                  : null,
-              })
-            }
+            onChange={(event) => {
+              if (!event.target.value) {
+                onChange({ surface_m2: null });
+                return;
+              }
+              const v = Number(event.target.value);
+              const clamped = clampNumber(v, 1, 10000);
+              onChange({ surface_m2: clamped });
+            }}
             className="border-line focus:border-bleu mt-1 w-full rounded-xl border bg-white px-3 py-2.5 outline-none"
           />
           <input
@@ -136,14 +143,28 @@ export function Step4Specs({ value, onChange }: Props) {
             max?: number;
           } =
             key === "bedrooms" || key === "bathrooms"
-              ? { min: 0 }
+              ? key === "bedrooms"
+                ? { min: 0, max: 50 }
+                : { min: 0, max: 20 }
               : key === "floor"
                 ? { min: -5, max: 100 }
                 : key === "total_floors"
-                  ? { min: 0 }
+                  ? { min: 1, max: 100 }
                   : key === "year_built"
-                    ? { min: 1900, max: 2026 }
+                    ? { min: 1800, max: 2026 }
                     : {};
+          const guardBounds =
+            key === "bedrooms"
+              ? { min: 0, max: 50 }
+              : key === "bathrooms"
+                ? { min: 0, max: 20 }
+                : key === "floor"
+                  ? { min: -5, max: 100 }
+                  : key === "total_floors"
+                    ? { min: 1, max: 100 }
+                    : key === "year_built"
+                      ? { min: 1800, max: 2026 }
+                      : null;
 
           return (
             <div key={key}>
@@ -153,13 +174,23 @@ export function Step4Specs({ value, onChange }: Props) {
                 min={bounds.min}
                 max={bounds.max}
                 value={value[key] ?? ""}
-                onChange={(event) =>
-                  onChange({
-                    [key]: event.target.value
-                      ? Number(event.target.value)
-                      : null,
-                  })
-                }
+                onChange={(event) => {
+                  if (!event.target.value) {
+                    onChange({ [key]: null });
+                    return;
+                  }
+                  const v = Number(event.target.value);
+                  if (!guardBounds) {
+                    onChange({ [key]: v });
+                    return;
+                  }
+                  const clamped = clampNumber(
+                    v,
+                    guardBounds.min,
+                    guardBounds.max,
+                  );
+                  onChange({ [key]: clamped });
+                }}
                 className="border-line focus:border-bleu mt-1 w-full rounded-xl border bg-white px-3 py-2.5 outline-none"
               />
             </div>
