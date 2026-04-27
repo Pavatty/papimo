@@ -6,15 +6,14 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
 import { sendWhatsAppCode, verifyWhatsAppCode } from "@/lib/auth/actions";
-import { buildWhatsAppLink, generateOtpCode } from "@/lib/auth/whatsapp";
 
-type Step = 1 | 2 | 3;
+type Step = 1 | 2;
 
 export function WhatsAppFlow() {
+  const isWhatsAppEnabled =
+    process.env.NEXT_PUBLIC_WHATSAPP_OTP_ENABLED === "true";
   const [step, setStep] = useState<Step>(1);
   const [phone, setPhone] = useState<string>("");
-  const [generatedCode, setGeneratedCode] = useState("");
-  const [whatsAppLink, setWhatsAppLink] = useState("");
   const [otpDigits, setOtpDigits] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState<string | null>(null);
   const [attemptsRemaining, setAttemptsRemaining] = useState<number | null>(
@@ -29,24 +28,11 @@ export function WhatsAppFlow() {
     startTransition(async () => {
       const result = await sendWhatsAppCode(phone);
       if (!result.ok) {
-        const fallbackCode = generateOtpCode();
-        const fallbackPhone = phone.replace(/\s+/g, "");
-        const businessNumber =
-          process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS_NUMBER ?? "";
-        setPhone(fallbackPhone);
-        setGeneratedCode(fallbackCode);
-        setWhatsAppLink(buildWhatsAppLink(businessNumber, fallbackCode, "fr"));
-        setError(
-          result.error ??
-            "Mode dégradé actif : vérification locale uniquement.",
-        );
-        setStep(2);
+        setError(result.error ?? "Impossible d'envoyer le code OTP WhatsApp.");
         return;
       }
 
       setPhone(result.phone ?? "");
-      setGeneratedCode(result.code ?? "");
-      setWhatsAppLink(result.whatsappLink ?? "");
       setStep(2);
     });
   };
@@ -60,7 +46,8 @@ export function WhatsAppFlow() {
         setAttemptsRemaining(result.attemptsRemaining ?? null);
         return;
       }
-      window.location.href = "/fr/dashboard";
+      const locale = window.location.pathname.split("/")[1] || "fr";
+      window.location.href = `/${locale}/dashboard`;
     });
   };
 
@@ -69,6 +56,11 @@ export function WhatsAppFlow() {
       <h3 className="font-display text-ink text-lg font-semibold">
         Continuer avec WhatsApp
       </h3>
+      {!isWhatsAppEnabled ? (
+        <p className="text-ink-soft mt-2 text-sm">
+          Connexion WhatsApp momentanement indisponible.
+        </p>
+      ) : null}
 
       {step === 1 ? (
         <div className="mt-4 space-y-3">
@@ -92,7 +84,7 @@ export function WhatsAppFlow() {
           <button
             type="button"
             onClick={onSendCode}
-            disabled={isPending || phone.length < 8}
+            disabled={!isWhatsAppEnabled || isPending || phone.length < 8}
             className="border-line text-ink inline-flex w-full items-center justify-center rounded-xl border bg-white px-4 py-3 text-sm font-medium disabled:opacity-50"
           >
             {isPending ? (
@@ -106,42 +98,9 @@ export function WhatsAppFlow() {
       ) : null}
 
       {step === 2 ? (
-        <div className="mt-4 space-y-4">
-          <p className="text-ink-soft text-sm">
-            Copie ce code puis ouvre WhatsApp pour l&#39;envoyer manuellement.
-          </p>
-          <div className="flex justify-center gap-2">
-            {generatedCode.split("").map((digit, index) => (
-              <div
-                key={`${digit}-${index}`}
-                className="border-line bg-creme-pale text-ink rounded-lg border px-3 py-2 font-mono text-2xl font-semibold"
-              >
-                {digit}
-              </div>
-            ))}
-          </div>
-          <a
-            href={whatsAppLink}
-            target="_blank"
-            rel="noreferrer"
-            className="bg-corail inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold text-white"
-          >
-            Ouvrir WhatsApp
-          </a>
-          <button
-            type="button"
-            onClick={() => setStep(3)}
-            className="border-line text-ink w-full rounded-xl border bg-white px-4 py-3 text-sm"
-          >
-            J&#39;ai envoyé le code, vérifier
-          </button>
-        </div>
-      ) : null}
-
-      {step === 3 ? (
         <div className="mt-4 space-y-3">
           <p className="text-ink-soft text-sm">
-            Saisis le code reçu pour valider.
+            Saisis le code OTP recu sur WhatsApp pour valider.
           </p>
           <div className="flex justify-center gap-2">
             {otpDigits.map((digit, index) => (
