@@ -1,9 +1,14 @@
-import { CreditCard, LayoutGrid, LogOut, Search } from "lucide-react";
+import {
+  CreditCard,
+  LayoutGrid,
+  LogOut,
+  MessageSquare,
+  Search,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
 import { buttonVariants } from "@/components/ui/button";
-import { UnreadMessagesBadge } from "@/components/features/messages/UnreadMessagesBadge";
 import { Logo } from "@/components/shared/Logo";
 import { Link } from "@/i18n/navigation";
 import { getCurrentUser } from "@/lib/auth/session";
@@ -71,7 +76,16 @@ export default async function AuthedLayout({ children, params }: Props) {
               <LayoutGrid className="h-3.5 w-3.5" />
               Mes annonces
             </Link>
-            <UnreadMessagesBadge locale={locale} />
+            <Link
+              href="/messages"
+              className={cn(
+                buttonVariants({ variant: "secondary", size: "sm" }),
+                "text-ink gap-1 border px-2.5",
+              )}
+            >
+              <MessageSquare className="h-3.5 w-3.5" />
+              Messages
+            </Link>
             <Link
               href="/dashboard/billing"
               className={cn(
