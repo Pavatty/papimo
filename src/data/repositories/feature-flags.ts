@@ -1,10 +1,10 @@
 import { unstable_cache } from "next/cache";
 
-import { createClient } from "@/data/supabase/server";
+import { createAnonClient } from "@/data/supabase/server";
 
 export const getFeatureFlags = unstable_cache(
   async (): Promise<Record<string, boolean>> => {
-    const supabase = await createClient();
+    const supabase = createAnonClient();
     const { data } = await supabase
       .from("feature_flags")
       .select("key, enabled");

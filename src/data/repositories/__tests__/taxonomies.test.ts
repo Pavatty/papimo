@@ -7,6 +7,7 @@ vi.mock("next/cache", () => ({
 const fromMock = vi.fn();
 vi.mock("@/data/supabase/server", () => ({
   createClient: () => ({ from: fromMock }),
+  createAnonClient: () => ({ from: fromMock }),
 }));
 
 function makeBuilder<T>(rows: T[] | null) {
