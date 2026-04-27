@@ -110,23 +110,41 @@ export function Step4Specs({ value, onChange }: Props) {
               string,
             ]
           >
-        ).map(([key, label]) => (
-          <div key={key}>
-            <label className="text-ink text-sm font-medium">{label}</label>
-            <input
-              type="number"
-              min={key === "year_built" ? 1900 : undefined}
-              max={key === "year_built" ? 2026 : undefined}
-              value={value[key] ?? ""}
-              onChange={(event) =>
-                onChange({
-                  [key]: event.target.value ? Number(event.target.value) : null,
-                })
-              }
-              className="border-line focus:border-bleu mt-1 w-full rounded-xl border bg-white px-3 py-2.5 outline-none"
-            />
-          </div>
-        ))}
+        ).map(([key, label]) => {
+          const bounds: {
+            min?: number;
+            max?: number;
+          } =
+            key === "bedrooms" || key === "bathrooms"
+              ? { min: 0 }
+              : key === "floor"
+                ? { min: -5, max: 100 }
+                : key === "total_floors"
+                  ? { min: 0 }
+                  : key === "year_built"
+                    ? { min: 1900, max: 2026 }
+                    : {};
+
+          return (
+            <div key={key}>
+              <label className="text-ink text-sm font-medium">{label}</label>
+              <input
+                type="number"
+                min={bounds.min}
+                max={bounds.max}
+                value={value[key] ?? ""}
+                onChange={(event) =>
+                  onChange({
+                    [key]: event.target.value
+                      ? Number(event.target.value)
+                      : null,
+                  })
+                }
+                className="border-line focus:border-bleu mt-1 w-full rounded-xl border bg-white px-3 py-2.5 outline-none"
+              />
+            </div>
+          );
+        })}
       </div>
 
       <section>
