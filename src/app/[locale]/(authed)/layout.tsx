@@ -1,10 +1,4 @@
-import {
-  CreditCard,
-  LayoutGrid,
-  LogOut,
-  MessageSquare,
-  Search,
-} from "lucide-react";
+import { CreditCard, LayoutGrid, LogOut, Search } from "lucide-react";
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
@@ -37,10 +31,7 @@ export default async function AuthedLayout({ children, params }: Props) {
       <header className="border-line bg-paper border-b">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6">
           <div className="flex min-w-0 items-center justify-between gap-3 md:justify-start">
-            <Link
-              href="/dashboard"
-              className="inline-flex shrink-0 items-center"
-            >
+            <Link href="/" className="inline-flex shrink-0 items-center">
               <Logo size="md" />
             </Link>
             <p className="text-ink-soft truncate text-right text-xs md:hidden">
@@ -79,16 +70,6 @@ export default async function AuthedLayout({ children, params }: Props) {
             >
               <LayoutGrid className="h-3.5 w-3.5" />
               Mes annonces
-            </Link>
-            <Link
-              href="/messages"
-              className={cn(
-                buttonVariants({ variant: "secondary", size: "sm" }),
-                "text-ink gap-1 border px-2.5",
-              )}
-            >
-              <MessageSquare className="h-3.5 w-3.5" />
-              Messages
             </Link>
             <UnreadMessagesBadge locale={locale} />
             <Link
