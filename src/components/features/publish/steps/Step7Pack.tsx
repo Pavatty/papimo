@@ -3,7 +3,10 @@
 import { useTransition } from "react";
 import { usePathname } from "next/navigation";
 
-import { submitForReview } from "@/app/[locale]/(authed)/publish/actions";
+import {
+  submitForReview,
+  submitListingDirectly,
+} from "@/app/[locale]/(authed)/publish/actions";
 
 import type { ListingPack } from "../types";
 
@@ -49,18 +52,25 @@ export function Step7Pack({ value, listingId, onChange }: Props) {
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || "fr";
+  const betaMode = (process.env.NEXT_PUBLIC_BETA_MODE ?? "true") === "true";
 
   return (
     <div className="space-y-5">
+      {betaMode ? (
+        <div className="rounded-xl border border-orange-300 bg-orange-50 px-3 py-2 text-sm text-orange-800">
+          Mode beta - tous les packs sont gratuits actuellement
+        </div>
+      ) : null}
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {packs.map((pack) => {
           const selected = value === pack.id;
+          const soonOverlay = betaMode && pack.id !== "free";
           return (
             <button
               key={pack.id}
               type="button"
               onClick={() => onChange(pack.id)}
-              className={`rounded-2xl border p-4 text-left ${
+              className={`relative rounded-2xl border p-4 text-left ${
                 selected
                   ? "border-corail bg-corail-pale"
                   : "border-line bg-white"
@@ -80,6 +90,11 @@ export function Step7Pack({ value, listingId, onChange }: Props) {
                   <li key={feature}>• {feature}</li>
                 ))}
               </ul>
+              {soonOverlay ? (
+                <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-white/70 p-3 text-center text-xs font-semibold text-orange-700">
+                  Disponible bientot - actuellement gratuit en mode beta
+                </div>
+              ) : null}
             </button>
           );
         })}
@@ -91,6 +106,14 @@ export function Step7Pack({ value, listingId, onChange }: Props) {
         onClick={() =>
           startTransition(async () => {
             if (!listingId) return;
+            if (betaMode && value === "free") {
+              const result = await submitListingDirectly(listingId, locale);
+              if (result.success) {
+                window.alert("Annonce publiee avec succes");
+                window.location.href = `/${locale}/listings/${result.slug}?welcome=true`;
+              }
+              return;
+            }
             if (value === "free") {
               const result = await submitForReview(listingId);
               if (result.ok) {

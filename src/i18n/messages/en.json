@@ -148,5 +148,8 @@
     "homeTitle": "papimo | Real estate between private owners",
     "searchTitle": "Real estate search | papimo",
     "listingNotFound": "Listing not found | papimo"
+  },
+  "beta": {
+    "banner": "🚀 papimo is in beta — All features are free during this period."
   }
 }
