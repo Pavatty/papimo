@@ -168,7 +168,11 @@ export function SearchPage() {
         params.set(urlKey, String(value));
       }
     });
-    if (!("page" in updates)) params.set("page", "1");
+    if (!("page" in updates)) {
+      params.delete("page");
+    } else if ((updates.page ?? 1) <= 1) {
+      params.delete("page");
+    }
 
     setLoading(true);
     startTransition(() => {
