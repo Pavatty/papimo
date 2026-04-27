@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import {
@@ -9,6 +9,8 @@ import {
 import { type ReactNode } from "react";
 
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { InstallPrompt } from "@/components/pwa/InstallPrompt";
+import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
 import { BRAND } from "@/config/brand";
 import { routing } from "@/i18n/routing";
 import { getCurrentUser } from "@/lib/auth/session";
@@ -23,6 +25,13 @@ const localeDirs: Record<string, "ltr" | "rtl"> = {
 export function generateStaticParams() {
   return routing.locales.map((loc) => ({ locale: loc }));
 }
+
+export const viewport: Viewport = {
+  themeColor: "#1E5A96",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 type LocaleLayoutProps = {
   children: ReactNode;
@@ -55,6 +64,19 @@ export async function generateMetadata(
       title: `${BRAND.name} — ${tagline}`,
       description: tagline,
     },
+    manifest: "/manifest.webmanifest",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "default",
+      title: "papimo",
+    },
+    icons: {
+      icon: [
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: "/apple-touch-icon.png",
+    },
   };
 }
 
@@ -86,6 +108,8 @@ export default async function LocaleLayout({
       <NextIntlClientProvider locale={locale} messages={messages}>
         <AuthProvider initialUser={user} initialProfile={profile}>
           {children}
+          <InstallPrompt />
+          <ServiceWorkerRegistration />
         </AuthProvider>
       </NextIntlClientProvider>
     </div>
