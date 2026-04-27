@@ -36,21 +36,21 @@ export type SearchFiltersState = {
 
 export type SearchResult = {
   id: string;
-  title: string;
-  price: number;
-  price_currency: string;
-  surface_area: number;
-  rooms_total: number;
-  bedrooms: number;
-  city: string;
-  neighborhood: string;
-  main_photo: string;
-  photos: string[];
-  latitude: number;
-  longitude: number;
-  property_type: string;
-  transaction_type: string;
-  amenities?: string[];
+  title: string | null;
+  price: number | null;
+  price_currency: string | null;
+  surface_area: number | null;
+  rooms_total: number | null;
+  bedrooms: number | null;
+  city: string | null;
+  neighborhood: string | null;
+  main_photo: string | null;
+  photos: string[] | null;
+  latitude: number | null;
+  longitude: number | null;
+  property_type: string | null;
+  transaction_type: string | null;
+  amenities?: string[] | null;
 };
 
 export function SearchPage() {
@@ -71,7 +71,7 @@ export function SearchPage() {
       transaction_type: searchParams.get("transaction") ?? undefined,
       property_types:
         searchParams.get("property_types")?.split(",").filter(Boolean) ?? [],
-      country: searchParams.get("country") ?? "TN",
+      country: searchParams.get("country") ?? undefined,
       region: searchParams.get("region") ?? undefined,
       city: searchParams.get("city") ?? undefined,
       neighborhoods:
@@ -109,44 +109,101 @@ export function SearchPage() {
     const currentFilters = parseFilters();
     let cancelled = false;
     const supabase = createClient();
+    const pageSize = 20;
+    const offset = (currentFilters.page - 1) * pageSize;
 
-    const rpcFilters: Record<string, unknown> = {
-      transaction_type: currentFilters.transaction_type,
-      property_types: currentFilters.property_types,
-      country: currentFilters.country,
-      region: currentFilters.region,
-      city: currentFilters.city,
-      neighborhoods: currentFilters.neighborhoods,
-      price_min: currentFilters.price_min,
-      price_max: currentFilters.price_max,
-      surface_min: currentFilters.surface_min,
-      surface_max: currentFilters.surface_max,
-      rooms_min: currentFilters.rooms_min,
-      bedrooms_min: currentFilters.bedrooms_min,
-      amenities: currentFilters.amenities,
-      sort: currentFilters.sort,
-      page: currentFilters.page,
-      page_size: 20,
+    type AnyQuery = {
+      eq: (column: string, value: unknown) => AnyQuery;
+      in: (column: string, values: unknown[]) => AnyQuery;
+      gte: (column: string, value: unknown) => AnyQuery;
+      lte: (column: string, value: unknown) => AnyQuery;
+      contains: (column: string, value: unknown) => AnyQuery;
+      order: (
+        column: string,
+        opts: { ascending: boolean; nullsFirst?: boolean },
+      ) => AnyQuery;
+      range: (
+        from: number,
+        to: number,
+      ) => Promise<{
+        data: unknown[] | null;
+        count: number | null;
+        error: { message: string } | null;
+      }>;
     };
 
-    Object.keys(rpcFilters).forEach((key) => {
-      if (rpcFilters[key] === undefined) delete rpcFilters[key];
-    });
+    let query = (
+      supabase
+        .from("listings")
+        .select(
+          "id,title,price,price_currency,surface_area,rooms_total,bedrooms,city,neighborhood,main_photo,photos,latitude,longitude,property_type,transaction_type,amenities,published_at",
+          { count: "exact" },
+        ) as unknown as AnyQuery
+    ).eq("status", "active");
 
-    supabase
-      .rpc("search_listings", { filters: rpcFilters as never })
-      .then(({ data, error }) => {
+    if (currentFilters.transaction_type) {
+      query = query.eq("transaction_type", currentFilters.transaction_type);
+    }
+    if (currentFilters.property_types.length > 0) {
+      query = query.in("property_type", currentFilters.property_types);
+    }
+    if (currentFilters.country)
+      query = query.eq("country", currentFilters.country);
+    if (currentFilters.region)
+      query = query.eq("region", currentFilters.region);
+    if (currentFilters.city) query = query.eq("city", currentFilters.city);
+    if (currentFilters.neighborhoods.length > 0) {
+      query = query.in("neighborhood", currentFilters.neighborhoods);
+    }
+    if (currentFilters.price_min !== undefined) {
+      query = query.gte("price", currentFilters.price_min);
+    }
+    if (currentFilters.price_max !== undefined) {
+      query = query.lte("price", currentFilters.price_max);
+    }
+    if (currentFilters.surface_min !== undefined) {
+      query = query.gte("surface_area", currentFilters.surface_min);
+    }
+    if (currentFilters.surface_max !== undefined) {
+      query = query.lte("surface_area", currentFilters.surface_max);
+    }
+    if (currentFilters.rooms_min !== undefined) {
+      query = query.gte("rooms_total", currentFilters.rooms_min);
+    }
+    if (currentFilters.bedrooms_min !== undefined) {
+      query = query.gte("bedrooms", currentFilters.bedrooms_min);
+    }
+    if (currentFilters.amenities.length > 0) {
+      query = query.contains("amenities", currentFilters.amenities);
+    }
+
+    if (currentFilters.sort === "price_asc") {
+      query = query.order("price", { ascending: true, nullsFirst: false });
+    } else if (currentFilters.sort === "price_desc") {
+      query = query.order("price", { ascending: false, nullsFirst: false });
+    } else if (currentFilters.sort === "surface_desc") {
+      query = query.order("surface_area", {
+        ascending: false,
+        nullsFirst: false,
+      });
+    } else {
+      query = query.order("published_at", {
+        ascending: false,
+        nullsFirst: false,
+      });
+    }
+
+    query
+      .range(offset, offset + pageSize - 1)
+      .then(({ data, count, error }) => {
         if (cancelled) return;
         if (error) {
           console.error("Search error", error);
           setResults([]);
           setTotalCount(0);
         } else {
-          const rows = (data ?? []) as unknown as Array<
-            SearchResult & { total_count: number }
-          >;
-          setResults(rows);
-          setTotalCount(rows[0]?.total_count ?? 0);
+          setResults((data ?? []) as SearchResult[]);
+          setTotalCount(count ?? 0);
         }
         setLoading(false);
       });

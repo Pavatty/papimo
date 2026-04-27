@@ -6,7 +6,10 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 import type { SearchResult } from "./SearchPage";
 
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? "";
+if (MAPBOX_TOKEN) {
+  mapboxgl.accessToken = MAPBOX_TOKEN;
+}
 
 export function SearchMap({ results }: { results: SearchResult[] }) {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -14,7 +17,7 @@ export function SearchMap({ results }: { results: SearchResult[] }) {
   const markers = useRef<mapboxgl.Marker[]>([]);
 
   useEffect(() => {
-    if (!mapContainer.current || map.current) return;
+    if (!mapContainer.current || map.current || !MAPBOX_TOKEN) return;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v12",
@@ -64,6 +67,14 @@ export function SearchMap({ results }: { results: SearchResult[] }) {
       map.current.fitBounds(bounds, { padding: 60, maxZoom: 14 });
     }
   }, [results]);
+
+  if (!MAPBOX_TOKEN) {
+    return (
+      <div className="border-line text-ink-soft flex h-full min-h-[500px] w-full items-center justify-center rounded-xl border bg-white p-6 text-center text-sm">
+        Carte indisponible — token Mapbox non configuré.
+      </div>
+    );
+  }
 
   return (
     <div
