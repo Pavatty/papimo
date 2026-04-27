@@ -4,6 +4,7 @@ import { useEffect, useMemo, useReducer } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { usePublishDraft } from "@/hooks/usePublishDraft";
+import { IS_BETA } from "@/lib/beta";
 
 import { Step1TransactionType } from "./steps/Step1TransactionType";
 import { Step2Category } from "./steps/Step2Category";
@@ -39,15 +40,17 @@ function reducer(state: State, action: Action): State {
   return state;
 }
 
-const steps = [
-  "Transaction",
-  "Catégorie",
-  "Localisation",
-  "Caractéristiques",
-  "Photos",
-  "Prix & description",
-  "Pack",
-];
+const ALL_STEPS = [
+  { id: "transaction", label: "Transaction" },
+  { id: "category", label: "Catégorie" },
+  { id: "location", label: "Localisation" },
+  { id: "specs", label: "Caractéristiques" },
+  { id: "photos", label: "Photos" },
+  { id: "price", label: "Prix & description" },
+  { id: "pack", label: "Pack" },
+] as const;
+
+const STEPS = IS_BETA ? ALL_STEPS.filter((s) => s.id !== "pack") : ALL_STEPS;
 
 export function PublishStepper({
   initialData,
@@ -95,15 +98,20 @@ export function PublishStepper({
       dispatch({ type: "patch", payload: { id: savedId } });
     }
   }, [savedId, state.form.id]);
-  const progress = (state.currentStep / steps.length) * 100;
+  const totalSteps = STEPS.length;
+  const progress = (state.currentStep / totalSteps) * 100;
+  const currentStepDef = STEPS[state.currentStep - 1];
+  const isLastStep = state.currentStep === totalSteps;
 
   return (
     <section className="border-line bg-paper rounded-3xl border p-5 md:p-8">
       <div className="mb-5 flex items-center justify-between">
         <div className="w-full">
           <div className="mb-2 flex justify-between text-xs text-gray-500">
-            <span>{t("stepProgress", { current: state.currentStep })}</span>
-            <span>{steps[state.currentStep - 1]}</span>
+            <span>
+              {t("stepProgress", { current: state.currentStep })} / {totalSteps}
+            </span>
+            <span>{currentStepDef?.label}</span>
           </div>
           <div className="bg-bleu-soft h-2 rounded">
             <div
@@ -187,13 +195,18 @@ export function PublishStepper({
               city: state.form.city,
               neighborhood: state.form.neighborhood,
               country_code: state.form.country_code,
-              type: state.form.type ?? "sale",
+              type:
+                state.form.type === "rent" ||
+                state.form.type === "seasonal_rent" ||
+                state.form.type === "colocation"
+                  ? "rent"
+                  : "sale",
               surface_m2: state.form.surface_m2,
             }}
             onChange={(patch) => dispatch({ type: "patch", payload: patch })}
           />
         ) : null}
-        {state.currentStep === 7 ? (
+        {!IS_BETA && state.currentStep === 7 ? (
           <Step7Pack
             value={state.form.pack}
             {...(state.form.id ? { listingId: state.form.id } : {})}
@@ -227,13 +240,17 @@ export function PublishStepper({
           onClick={() =>
             dispatch({
               type: "setStep",
-              payload: Math.min(7, state.currentStep + 1),
+              payload: Math.min(totalSteps, state.currentStep + 1),
             })
           }
-          disabled={state.currentStep === 7}
-          className="bg-corail rounded-xl px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+          disabled={state.currentStep === totalSteps}
+          className={
+            isLastStep
+              ? "bg-corail hover:bg-corail-hover rounded-control w-full px-4 py-3 text-sm font-medium text-white transition disabled:opacity-50 sm:w-auto"
+              : "bg-corail hover:bg-corail-hover rounded-control px-4 py-2.5 text-sm font-semibold text-white transition disabled:opacity-50"
+          }
         >
-          {t("next")}
+          {isLastStep && IS_BETA ? "Publier mon annonce" : t("next")}
         </button>
       </div>
     </section>

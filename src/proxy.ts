@@ -3,12 +3,15 @@ import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 
 import { routing } from "@/i18n/routing";
+import { IS_BETA } from "@/lib/beta";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import type { Database } from "@/types/database";
 
 const intlMiddleware = createIntlMiddleware(routing);
 const protectedPrefixes = ["/dashboard", "/publish", "/messages", "/checkout"];
 const adminPrefix = "/admin";
+const betaBlockedPattern =
+  /^\/(fr|ar|en)\/(pricing|checkout|billing|facturation)(\/|$)/;
 
 function getLocaleFromPath(pathname: string) {
   const segment = pathname.split("/")[1];
@@ -29,6 +32,11 @@ export async function proxy(request: NextRequest) {
   const callbackPathPattern = /^\/(fr|ar|en)\/auth\/callback$/;
   if (callbackPathPattern.test(request.nextUrl.pathname)) {
     return NextResponse.next();
+  }
+
+  if (IS_BETA && betaBlockedPattern.test(request.nextUrl.pathname)) {
+    const locale = getLocaleFromPath(request.nextUrl.pathname);
+    return NextResponse.redirect(new URL(`/${locale}`, request.url));
   }
 
   const { url, publishableKey } = getSupabaseEnv();

@@ -1,4 +1,4 @@
-export type TransactionType = "sale" | "rent";
+export type TransactionType = "sale" | "rent" | "seasonal_rent" | "colocation";
 export type ListingCategory =
   | "apartment"
   | "villa"

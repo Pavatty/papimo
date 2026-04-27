@@ -1,6 +1,6 @@
 "use client";
 
-import { KeyRound, Tag } from "lucide-react";
+import { CalendarDays, KeyRound, Tag, Users } from "lucide-react";
 
 import type { TransactionType } from "../types";
 
@@ -9,13 +9,21 @@ type Props = {
   onChange: (value: TransactionType) => void;
 };
 
+const OPTIONS: ReadonlyArray<{
+  id: TransactionType;
+  title: string;
+  icon: typeof Tag;
+}> = [
+  { id: "sale", title: "Vente", icon: Tag },
+  { id: "rent", title: "Location", icon: KeyRound },
+  { id: "seasonal_rent", title: "Location saisonnière", icon: CalendarDays },
+  { id: "colocation", title: "Colocation", icon: Users },
+];
+
 export function Step1TransactionType({ value, onChange }: Props) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      {[
-        { id: "sale" as const, title: "Vente", icon: Tag },
-        { id: "rent" as const, title: "Location", icon: KeyRound },
-      ].map((option) => {
+      {OPTIONS.map((option) => {
         const Icon = option.icon;
         const selected = value === option.id;
         return (

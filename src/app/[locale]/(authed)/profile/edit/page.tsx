@@ -40,6 +40,12 @@ export default async function ProfileEditPage({ params }: Props) {
             verified_email?: boolean | null;
             verified_phone?: boolean | null;
             member_since?: string | null;
+            company_name?: string | null;
+            tax_id?: string | null;
+            sector?: string | null;
+            pro_address?: string | null;
+            pro_rib?: string | null;
+            country_code?: string | null;
           }) ?? {}
         }
       />

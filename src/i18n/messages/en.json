@@ -66,9 +66,10 @@
       "cta": "View tools"
     },
     "sampleListings": {
-      "title": "Sample listings",
-      "subtitle": "Illustrative properties — see real stock on the search page.",
-      "cta": "Browse all listings"
+      "title": "Latest listings",
+      "subtitle": "Recent properties published by private owners on papimo.",
+      "cta": "Browse all listings",
+      "fallback": "Discover all listings on the search page."
     },
     "hero": {
       "headline": "Real estate, <bleu>at home</bleu> and <corail>direct</corail>.",

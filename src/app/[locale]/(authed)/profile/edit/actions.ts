@@ -13,6 +13,8 @@ export async function updateProfile(formData: FormData) {
   } = await supabase.auth.getUser();
   if (authError || !user) redirect("/fr/login");
 
+  const accountType = (formData.get("account_type") as string) || "individual";
+  const isPro = accountType === "professional";
   const updates = {
     full_name: formData.get("full_name") as string,
     phone: formData.get("phone") as string,
@@ -20,7 +22,16 @@ export async function updateProfile(formData: FormData) {
     preferred_language: formData.get("preferred_language") as string,
     notifications_email: formData.get("notifications_email") === "on",
     notifications_push: formData.get("notifications_push") === "on",
-    account_type: formData.get("account_type") as string,
+    account_type: accountType,
+    company_name: isPro
+      ? ((formData.get("company_name") as string) ?? null)
+      : null,
+    tax_id: isPro ? ((formData.get("tax_id") as string) ?? null) : null,
+    sector: isPro ? ((formData.get("sector") as string) ?? null) : null,
+    pro_address: isPro
+      ? ((formData.get("pro_address") as string) ?? null)
+      : null,
+    pro_rib: isPro ? ((formData.get("pro_rib") as string) ?? null) : null,
     updated_at: new Date().toISOString(),
   };
 

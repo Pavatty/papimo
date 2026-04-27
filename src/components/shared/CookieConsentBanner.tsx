@@ -79,7 +79,7 @@ export function CookieConsentBanner() {
       <div className="mt-4 flex flex-wrap gap-2">
         <button
           onClick={() => save({ analytics: true, productAnalytics: true })}
-          className="bg-bleu rounded px-3 py-1.5 text-xs text-white"
+          className="bg-corail hover:bg-corail-hover rounded-control px-3 py-1.5 text-xs font-medium text-white transition"
         >
           {t("acceptAll")}
         </button>

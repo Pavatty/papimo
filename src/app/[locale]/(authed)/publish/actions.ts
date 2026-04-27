@@ -16,7 +16,7 @@ import type { TablesInsert } from "@/types/database";
 const publishDraftSchema = z.object({
   id: z.string().uuid().optional(),
   owner_id: z.string().uuid().optional(),
-  type: z.enum(["sale", "rent"]).optional(),
+  type: z.enum(["sale", "rent", "seasonal_rent", "colocation"]).optional(),
   category: z
     .enum([
       "apartment",
@@ -72,10 +72,16 @@ export async function saveDraft(input: SaveDraftInput) {
 
   const draftId = parsed.data.id ?? randomUUID();
   const d = parsed.data;
+  const legacyType: "sale" | "rent" =
+    d.type === "sale" || d.type === "rent"
+      ? d.type
+      : d.type === "seasonal_rent" || d.type === "colocation"
+        ? "rent"
+        : "sale";
   const payload: TablesInsert<"listings"> = {
     id: draftId,
     owner_id: user.id,
-    type: d.type ?? "sale",
+    type: legacyType,
     category: d.category ?? "apartment",
     title: d.title?.trim() ? d.title : "Brouillon",
     price: d.price && d.price > 0 ? d.price : 1,
