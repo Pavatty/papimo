@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
-import { useRouter } from "@/i18n/navigation";
+import { useRouter } from "next/navigation";
 
 import { PublishStepper } from "./PublishStepper";
 import type { PublishFormState } from "./types";
@@ -17,27 +17,29 @@ export function PublishPageWithStepper({
   initialData,
   preferredCurrency,
 }: Props) {
-  const t = useTranslations("publishPage");
+  const t = useTranslations("publish");
+  const tPage = useTranslations("publishPage");
+  const locale = useLocale();
   const router = useRouter();
-  const [quitOpen, setQuitOpen] = useState(false);
+  const [showQuitModal, setShowQuitModal] = useState(false);
 
-  const openQuit = () => setQuitOpen(true);
+  const openQuit = () => setShowQuitModal(true);
 
   return (
     <>
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+      <div className="relative mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <div className="min-w-0">
           <h1 className="font-display text-ink text-3xl font-bold">
-            {t("title")}
+            {t("breadcrumb.publish")}
           </h1>
-          <p className="text-ink-soft mt-1 text-sm">{t("subtitle")}</p>
+          <p className="text-ink-soft mt-1 text-sm">{tPage("subtitle")}</p>
         </div>
         <button
           type="button"
           onClick={openQuit}
-          className="border-line text-ink shrink-0 rounded-xl border bg-white px-4 py-2.5 text-sm"
+          className="hover:border-papimo-coral hover:text-papimo-coral absolute top-4 right-4 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-600 transition"
         >
-          {t("cancelAndLeave")}
+          {t("cancelAndQuit")}
         </button>
       </div>
 
@@ -47,38 +49,31 @@ export function PublishPageWithStepper({
         onQuitRequest={openQuit}
       />
 
-      {quitOpen ? (
+      {showQuitModal ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="publish-quit-title"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          onClick={() => setShowQuitModal(false)}
         >
-          <div className="border-line w-full max-w-md rounded-2xl border bg-white p-5 shadow-lg">
-            <h2
-              id="publish-quit-title"
-              className="text-ink mb-2 text-lg font-semibold"
-            >
-              {t("modalTitle")}
-            </h2>
-            <p className="text-ink-soft mb-6 text-sm">{t("modalBody")}</p>
-            <div className="flex flex-col gap-2 sm:flex-row sm:justify-end sm:gap-3">
+          <div
+            className="mx-4 max-w-md rounded-2xl bg-white p-8 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="mb-3 text-xl font-bold">{t("quitModal.title")}</h3>
+            <p className="mb-6 text-gray-600">{t("quitModal.message")}</p>
+            <div className="flex justify-end gap-3">
               <button
                 type="button"
-                onClick={() => {
-                  setQuitOpen(false);
-                  router.push("/");
-                }}
-                className="border-line text-ink rounded-xl border bg-white px-4 py-2.5 text-sm font-medium"
+                onClick={() => setShowQuitModal(false)}
+                className="bg-papimo-coral hover:bg-papimo-coral-dark rounded-xl px-5 py-2.5 font-semibold text-white transition"
               >
-                {t("quit")}
+                {t("quitModal.continue")}
               </button>
               <button
                 type="button"
-                onClick={() => setQuitOpen(false)}
-                className="bg-corail rounded-xl px-4 py-2.5 text-sm font-semibold text-white"
+                onClick={() => router.push(`/${locale}`)}
+                className="rounded-xl border-2 border-gray-300 px-5 py-2.5 font-semibold text-gray-700 transition hover:border-gray-400"
               >
-                {t("continuePublish")}
+                {t("quitModal.quit")}
               </button>
             </div>
           </div>

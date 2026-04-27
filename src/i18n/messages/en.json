@@ -100,6 +100,13 @@
     "breadcrumb": {
       "home": "Home",
       "publish": "List my property"
+    },
+    "cancelAndQuit": "Cancel and quit",
+    "quitModal": {
+      "title": "Are you sure?",
+      "message": "Your draft is saved. You can resume later.",
+      "continue": "Continue publishing",
+      "quit": "Quit"
     }
   },
   "publishPage": {
