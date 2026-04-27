@@ -15,6 +15,7 @@ import { Logo } from "@/components/shared/Logo";
 import { Link } from "@/i18n/navigation";
 import { getCurrentUser } from "@/lib/auth/session";
 import { signOut } from "@/lib/auth/actions";
+import { IS_BETA } from "@/lib/beta";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -88,16 +89,18 @@ export default async function AuthedLayout({ children, params }: Props) {
               <MessageSquare className="h-3.5 w-3.5" />
               Messages
             </Link>
-            <Link
-              href="/dashboard/billing"
-              className={cn(
-                buttonVariants({ variant: "ghost", size: "sm" }),
-                "text-ink gap-1 px-2",
-              )}
-            >
-              <CreditCard className="h-3.5 w-3.5" />
-              Facturation
-            </Link>
+            {!IS_BETA ? (
+              <Link
+                href="/dashboard/billing"
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "sm" }),
+                  "text-ink gap-1 px-2",
+                )}
+              >
+                <CreditCard className="h-3.5 w-3.5" />
+                Facturation
+              </Link>
+            ) : null}
             <details className="relative">
               <summary className="border-line text-ink flex cursor-pointer list-none items-center gap-2 rounded-lg border bg-white px-2.5 py-1.5 text-sm">
                 {profile?.avatar_url ? (
@@ -126,12 +129,14 @@ export default async function AuthedLayout({ children, params }: Props) {
                 >
                   Mes annonces
                 </Link>
-                <Link
-                  href="/dashboard/billing"
-                  className="hover:bg-creme-pale block rounded-md px-2 py-1.5 text-sm"
-                >
-                  Facturation
-                </Link>
+                {!IS_BETA ? (
+                  <Link
+                    href="/dashboard/billing"
+                    className="hover:bg-creme-pale block rounded-md px-2 py-1.5 text-sm"
+                  >
+                    Facturation
+                  </Link>
+                ) : null}
                 <form action={signOut} className="mt-1">
                   <button
                     type="submit"

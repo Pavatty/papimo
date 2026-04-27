@@ -33,13 +33,18 @@ export function SearchMap({ results }: { results: SearchResult[] }) {
     markers.current.forEach((marker) => marker.remove());
     markers.current = [];
 
-    const validResults = results.filter(
-      (item) => Number(item.latitude) && Number(item.longitude),
-    );
+    const validResults = results.filter((item) => {
+      const lat = Number(item.latitude);
+      const lng = Number(item.longitude);
+      return (
+        Number.isFinite(lat) && Number.isFinite(lng) && lat !== 0 && lng !== 0
+      );
+    });
     validResults.forEach((listing) => {
       const el = document.createElement("div");
       el.className =
-        "bg-corail text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg cursor-pointer hover:opacity-90 transition";
+        "papimo-price-marker bg-corail text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg cursor-pointer hover:opacity-90 transition whitespace-nowrap";
+      el.style.willChange = "transform";
       el.textContent = `${(Number(listing.price) / 1000).toFixed(0)}k`;
 
       const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
@@ -52,7 +57,7 @@ export function SearchMap({ results }: { results: SearchResult[] }) {
         </div>
       `);
 
-      const marker = new mapboxgl.Marker(el)
+      const marker = new mapboxgl.Marker({ element: el, anchor: "center" })
         .setLngLat([Number(listing.longitude), Number(listing.latitude)])
         .setPopup(popup)
         .addTo(map.current!);

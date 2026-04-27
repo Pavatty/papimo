@@ -183,3 +183,9 @@
   outline: 2px solid rgb(var(--bleu));
   outline-offset: 2px;
 }
+
+/* Mapbox markers : forcer LTR pour éviter le décalage en mode RTL (locale ar) */
+.mapboxgl-marker.papimo-price-marker,
+.mapboxgl-marker {
+  direction: ltr;
+}

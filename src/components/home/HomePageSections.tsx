@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   ArrowRight,
   CheckCircle2,
@@ -6,35 +6,62 @@ import {
   MessageCircle,
   Sparkles,
 } from "lucide-react";
+import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
 
-const MOCK_LISTINGS = [
-  {
-    title: "Villa avec jardin — La Marsa",
-    meta: "Vente · 4 pièces · Jardin",
-    price: "1 250 000 TND",
-    tag: "Exemple",
-  },
-  {
-    title: "S+2 meublé — Centre-ville Tunis",
-    meta: "Location · 2 chambres · Meublé",
-    price: "1 200 TND / mois",
-    tag: "Exemple",
-  },
-  {
-    title: "Terrain constructible — Hammamet",
-    meta: "Terrain · 400 m² · Viabilisé",
-    price: "420 000 TND",
-    tag: "Exemple",
-  },
-] as const;
+type LatestListing = {
+  id: string;
+  slug: string | null;
+  title: string;
+  price: number | null;
+  price_currency: string | null;
+  city: string | null;
+  neighborhood: string | null;
+  photos: string[] | null;
+  main_photo: string | null;
+  transaction_type: string | null;
+  surface_area: number | null;
+  rooms_total: number | null;
+};
 
-// Sections marketing sous le hero : parcours, extraits, outils — tout en liens vers des routes réelles
+const TRANSACTION_BADGE: Record<string, string> = {
+  sale: "Vente",
+  rent: "Location",
+  seasonal_rent: "Saisonnier",
+  colocation: "Colocation",
+};
+
+function formatPrice(price: number | null, currency: string | null) {
+  if (!price) return null;
+  return `${Math.round(price).toLocaleString("fr-FR")} ${currency ?? "TND"}`;
+}
+
+async function fetchLatestListings(): Promise<LatestListing[]> {
+  try {
+    const supabase = (await createClient()) as unknown as SupabaseClient;
+    const { data } = await supabase
+      .from("listings")
+      .select(
+        "id, slug, title, price, price_currency, city, neighborhood, photos, main_photo, transaction_type, surface_area, rooms_total",
+      )
+      .eq("status", "active")
+      .order("published_at", { ascending: false, nullsFirst: false })
+      .limit(4);
+    return (data ?? []) as LatestListing[];
+  } catch {
+    return [];
+  }
+}
+
+// Sections marketing sous le hero : parcours, dernières annonces, outils
 export async function HomePageSections() {
   const t = await getTranslations("home");
+  const listings = await fetchLatestListings();
 
   return (
     <>
@@ -93,29 +120,79 @@ export async function HomePageSections() {
       >
         <h2
           id="listings-heading"
-          className="font-heading text-ink text-2xl font-bold tracking-tight md:text-3xl"
+          className="text-encre font-serif text-3xl md:text-4xl"
         >
           {t("sampleListings.title")}
         </h2>
-        <p className="text-ink-soft mt-2 max-w-2xl text-sm md:text-base">
+        <p className="text-muted mt-2 max-w-2xl text-sm md:text-base">
           {t("sampleListings.subtitle")}
         </p>
-        <ul className="mt-8 grid gap-4 md:grid-cols-3">
-          {MOCK_LISTINGS.map((item) => (
-            <li
-              key={item.title}
-              className="border-line bg-paper flex flex-col rounded-2xl border p-4"
-            >
-              <span className="text-ink-soft text-[11px] font-medium uppercase">
-                {item.tag}
-              </span>
-              <p className="text-ink mt-1 font-semibold">{item.title}</p>
-              <p className="text-ink-soft mt-1 text-sm">{item.meta}</p>
-              <p className="text-corail mt-3 text-sm font-bold">{item.price}</p>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-6 flex justify-center">
+
+        {listings.length > 0 ? (
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {listings.map((listing) => {
+              const photo = listing.main_photo ?? listing.photos?.[0] ?? null;
+              const badge = listing.transaction_type
+                ? (TRANSACTION_BADGE[listing.transaction_type] ??
+                  listing.transaction_type)
+                : null;
+              const priceLabel = formatPrice(
+                listing.price,
+                listing.price_currency,
+              );
+              const href = `/listings/${listing.slug ?? listing.id}`;
+              const localityParts = [
+                listing.neighborhood?.trim(),
+                listing.city?.trim(),
+              ].filter(Boolean);
+              const locality = localityParts.join(" · ");
+              return (
+                <li key={listing.id} className="flex">
+                  <Link
+                    href={href}
+                    className="border-bordurewarm-tertiary bg-blanc-casse rounded-card shadow-card hover:shadow-card-hover flex w-full flex-col overflow-hidden border transition"
+                  >
+                    <div className="bg-creme-foncee relative aspect-[4/3] w-full overflow-hidden">
+                      {photo ? (
+                        <Image
+                          src={photo}
+                          alt={listing.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          className="object-cover"
+                        />
+                      ) : null}
+                      {badge ? (
+                        <span className="bg-corail rounded-control absolute top-2 left-2 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-white uppercase">
+                          {badge}
+                        </span>
+                      ) : null}
+                    </div>
+                    <div className="flex flex-1 flex-col gap-1 p-4">
+                      <p className="text-encre line-clamp-2 text-sm font-semibold">
+                        {listing.title}
+                      </p>
+                      {locality ? (
+                        <p className="text-muted text-xs">{locality}</p>
+                      ) : null}
+                      {priceLabel ? (
+                        <p className="text-corail mt-2 font-serif text-lg">
+                          {priceLabel}
+                        </p>
+                      ) : null}
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p className="text-muted mt-8 text-sm">
+            {t("sampleListings.fallback")}
+          </p>
+        )}
+
+        <div className="mt-8 flex justify-center">
           <Link
             href="/search"
             className={cn(

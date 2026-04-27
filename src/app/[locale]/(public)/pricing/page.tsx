@@ -1,37 +1,52 @@
+import { Check } from "lucide-react";
+
 import { PRO_PLANS } from "@/lib/payments/pricing";
 
 export default function PricingPage() {
   return (
     <main className="bg-creme min-h-screen px-6 py-10">
       <div className="mx-auto max-w-6xl">
-        <h1 className="font-display text-ink text-3xl font-bold">
-          Tarifs papimo
-        </h1>
-        <p className="text-ink-soft mt-2 text-sm">
-          Konnect pour la Tunisie, Stripe pour l&#39;international.
+        <h1 className="text-encre font-serif text-4xl">Tarifs papimo</h1>
+        <p className="text-muted mt-2 text-sm">
+          Quatre packs immobiliers pour vendre ou louer en toute simplicité,
+          sans commission cachée. Konnect en Tunisie, Stripe à
+          l&apos;international.
         </p>
 
-        <section className="mt-8 grid gap-4 md:grid-cols-3">
+        <section className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {PRO_PLANS.map((plan, index) => (
             <article
               key={plan.id}
-              className={`border-line rounded-2xl border bg-white p-5 ${
-                index === 1 ? "border-corail shadow-sm" : ""
+              className={`rounded-card shadow-card border bg-white p-6 ${
+                index === 2
+                  ? "border-corail shadow-card-hover"
+                  : "border-bordurewarm-tertiary"
               }`}
             >
-              {index === 1 ? (
-                <span className="bg-corail mb-3 inline-flex rounded-full px-2 py-1 text-[11px] text-white">
+              {index === 2 ? (
+                <span className="bg-corail rounded-control mb-3 inline-flex px-2 py-1 text-[11px] font-semibold tracking-wide text-white uppercase">
                   Recommandé
                 </span>
               ) : null}
-              <h2 className="text-ink text-xl font-semibold">{plan.title}</h2>
-              <p className="text-bleu mt-2 text-2xl font-bold">
+              <h2 className="text-encre text-xl font-semibold">{plan.title}</h2>
+              <p className="text-corail mt-2 font-serif text-3xl">
                 {plan.priceLabel}
               </p>
-              <p className="text-ink-soft mt-1 text-sm">{plan.description}</p>
-              <p className="bg-bleu-pale text-bleu mt-4 rounded-full px-2 py-1 text-xs">
-                Économisez 20% sur abonnement annuel
-              </p>
+              <p className="text-muted mt-1 text-sm">{plan.description}</p>
+              <ul className="mt-5 space-y-2 text-sm">
+                {plan.features.map((feature) => (
+                  <li
+                    key={feature}
+                    className="text-encre flex items-start gap-2"
+                  >
+                    <Check
+                      className="text-corail mt-0.5 h-4 w-4 shrink-0"
+                      aria-hidden
+                    />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
             </article>
           ))}
         </section>

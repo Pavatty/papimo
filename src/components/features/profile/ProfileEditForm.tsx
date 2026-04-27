@@ -22,7 +22,29 @@ type ProfileShape = {
   verified_email?: boolean | null;
   verified_phone?: boolean | null;
   member_since?: string | null;
+  company_name?: string | null;
+  tax_id?: string | null;
+  sector?: string | null;
+  pro_address?: string | null;
+  pro_rib?: string | null;
+  country_code?: string | null;
 };
+
+const TAX_ID_LABEL_BY_COUNTRY: Record<string, string> = {
+  TN: "Matricule fiscal Tunisie",
+  FR: "SIRET",
+  MA: "ICE",
+  DZ: "NIF",
+};
+
+const PRO_SECTORS = [
+  "Immobilier",
+  "Promoteur",
+  "Constructeur",
+  "Architecte",
+  "Notaire",
+  "Autre",
+] as const;
 
 type Props = {
   profile: ProfileShape;
@@ -38,6 +60,12 @@ export function ProfileEditForm({ profile }: Props) {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(
     profile.avatar_url ?? null,
   );
+  const [accountType, setAccountType] = useState<string>(
+    profile.account_type ?? "individual",
+  );
+  const taxIdLabel =
+    TAX_ID_LABEL_BY_COUNTRY[(profile.country_code ?? "TN").toUpperCase()] ??
+    "Identifiant fiscal";
 
   const memberSince = useMemo(() => {
     if (!profile.member_since) return null;
@@ -195,9 +223,8 @@ export function ProfileEditForm({ profile }: Props) {
                 type="radio"
                 name="account_type"
                 value="individual"
-                defaultChecked={
-                  (profile.account_type ?? "individual") === "individual"
-                }
+                checked={accountType === "individual"}
+                onChange={() => setAccountType("individual")}
               />
               {t("individual")}
             </label>
@@ -206,10 +233,72 @@ export function ProfileEditForm({ profile }: Props) {
                 type="radio"
                 name="account_type"
                 value="professional"
-                defaultChecked={profile.account_type === "professional"}
+                checked={accountType === "professional"}
+                onChange={() => setAccountType("professional")}
               />
               {t("professional")}
             </label>
+
+            {accountType === "professional" ? (
+              <div className="border-bordurewarm-tertiary rounded-card bg-creme-pale/40 mt-2 space-y-3 border p-4">
+                <div>
+                  <label className="text-ink mb-1 block text-sm">
+                    Raison sociale
+                  </label>
+                  <input
+                    name="company_name"
+                    required
+                    defaultValue={profile.company_name ?? ""}
+                    className="border-line focus-visible:ring-bleu/30 w-full rounded-xl border px-3 py-2 outline-none focus-visible:ring-2"
+                  />
+                </div>
+                <div>
+                  <label className="text-ink mb-1 block text-sm">
+                    {taxIdLabel}
+                  </label>
+                  <input
+                    name="tax_id"
+                    defaultValue={profile.tax_id ?? ""}
+                    className="border-line focus-visible:ring-bleu/30 w-full rounded-xl border px-3 py-2 outline-none focus-visible:ring-2"
+                  />
+                </div>
+                <div>
+                  <label className="text-ink mb-1 block text-sm">
+                    Secteur d&apos;activité
+                  </label>
+                  <select
+                    name="sector"
+                    defaultValue={profile.sector ?? ""}
+                    className="border-line focus-visible:ring-bleu/30 w-full rounded-xl border px-3 py-2 outline-none focus-visible:ring-2"
+                  >
+                    <option value="">—</option>
+                    {PRO_SECTORS.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-ink mb-1 block text-sm">
+                    Adresse pro
+                  </label>
+                  <textarea
+                    name="pro_address"
+                    defaultValue={profile.pro_address ?? ""}
+                    className="border-line focus-visible:ring-bleu/30 h-20 w-full rounded-xl border px-3 py-2 outline-none focus-visible:ring-2"
+                  />
+                </div>
+                <div>
+                  <label className="text-ink mb-1 block text-sm">RIB pro</label>
+                  <input
+                    name="pro_rib"
+                    defaultValue={profile.pro_rib ?? ""}
+                    className="border-line focus-visible:ring-bleu/30 w-full rounded-xl border px-3 py-2 outline-none focus-visible:ring-2"
+                  />
+                </div>
+              </div>
+            ) : null}
           </section>
 
           <hr className="border-line" />
@@ -278,7 +367,7 @@ export function ProfileEditForm({ profile }: Props) {
             <button
               type="submit"
               disabled={isPending}
-              className="bg-bleu w-full rounded-xl px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
+              className="bg-corail hover:bg-corail-hover rounded-control w-full px-4 py-3 text-sm font-medium text-white transition disabled:opacity-60"
             >
               {t("save")}
             </button>

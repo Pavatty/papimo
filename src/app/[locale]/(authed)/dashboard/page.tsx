@@ -14,12 +14,19 @@ import { cn } from "@/lib/utils";
 export default async function DashboardPage() {
   const { user, profile } = await ensureProfile();
 
-  const fullName = profile?.full_name?.trim() || user?.email || "Utilisateur";
+  const profileWithFirst = profile as
+    | (typeof profile & { first_name?: string | null })
+    | null;
+  const displayName =
+    profile?.full_name?.trim() ||
+    profileWithFirst?.first_name?.trim() ||
+    (user?.email ? user.email.split("@")[0] : null) ||
+    "vous";
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-8 md:px-6">
       <h1 className="font-display text-ink text-3xl font-bold">
-        Bonjour {fullName}
+        Bonjour {displayName}
       </h1>
       <p className="text-ink-soft mt-2 max-w-2xl">
         Bienvenue dans votre espace papimo. Publiez une annonce, explorez le

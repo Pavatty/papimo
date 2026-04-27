@@ -66,9 +66,10 @@
       "cta": "Voir les outils"
     },
     "sampleListings": {
-      "title": "Exemples d’annonces",
-      "subtitle": "Aperçu de biens (illustration) : explorez toutes les annonces réelles sur la recherche.",
-      "cta": "Parcourir toutes les annonces"
+      "title": "Dernières annonces",
+      "subtitle": "Les biens publiés récemment par les particuliers sur papimo.",
+      "cta": "Parcourir toutes les annonces",
+      "fallback": "Découvrez les annonces sur la recherche."
     },
     "hero": {
       "headline": "L’immobilier, <bleu>chez-vous</bleu> et <corail>directement</corail>.",

@@ -1,10 +1,10 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
+import { IS_BETA } from "@/lib/beta";
 import { cn } from "@/lib/utils";
 
-const PRICING_HIDDEN =
-  process.env.NEXT_PUBLIC_BETA_DISABLE_MONETIZATION === "true";
+const PRICING_HIDDEN = IS_BETA;
 
 function BrandWordmark({ className }: { className?: string }) {
   return (
