@@ -9,7 +9,6 @@ import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
 import { buttonVariants } from "@/components/ui/button";
-import { UnreadMessagesBadge } from "@/components/features/messages/UnreadMessagesBadge";
 import { Logo } from "@/components/shared/Logo";
 import { Link } from "@/i18n/navigation";
 import { getCurrentUser } from "@/lib/auth/session";
@@ -37,10 +36,7 @@ export default async function AuthedLayout({ children, params }: Props) {
       <header className="border-line bg-paper border-b">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6">
           <div className="flex min-w-0 items-center justify-between gap-3 md:justify-start">
-            <Link
-              href="/dashboard"
-              className="inline-flex shrink-0 items-center"
-            >
+            <Link href="/" className="inline-flex shrink-0 items-center">
               <Logo size="md" />
             </Link>
             <p className="text-ink-soft truncate text-right text-xs md:hidden">
@@ -90,7 +86,6 @@ export default async function AuthedLayout({ children, params }: Props) {
               <MessageSquare className="h-3.5 w-3.5" />
               Messages
             </Link>
-            <UnreadMessagesBadge locale={locale} />
             <Link
               href="/dashboard/billing"
               className={cn(

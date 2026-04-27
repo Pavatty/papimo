@@ -1,22 +1,8 @@
 "use client";
 
-const amenities = [
-  "parking",
-  "elevator",
-  "balcony",
-  "terrace",
-  "garden",
-  "pool",
-  "ac",
-  "heating",
-  "furnished",
-  "new",
-  "sea_view",
-  "mountain_view",
-  "fiber",
-  "security",
-  "gardian",
-];
+import { useTranslations } from "next-intl";
+
+import { AMENITY_KEYS, type AmenityKey } from "@/lib/amenities";
 
 type Props = {
   value: {
@@ -33,6 +19,37 @@ type Props = {
 };
 
 export function Step4Specs({ value, onChange }: Props) {
+  const tAmenity = useTranslations("amenities");
+
+  const clampNumber = (v: number, min: number, max: number) =>
+    Math.max(min, Math.min(max, v));
+
+  const isAmenitySelected = (key: AmenityKey) => {
+    if (key === "caretaker") {
+      return value.amenities.includes("caretaker");
+    }
+    return value.amenities.includes(key);
+  };
+
+  const toggleAmenity = (key: AmenityKey) => {
+    const selected = isAmenitySelected(key);
+    if (key === "caretaker") {
+      if (selected) {
+        onChange({
+          amenities: value.amenities.filter((a) => a !== "caretaker"),
+        });
+      } else {
+        onChange({ amenities: [...value.amenities, "caretaker"] });
+      }
+      return;
+    }
+    onChange({
+      amenities: selected
+        ? value.amenities.filter((it) => it !== key)
+        : [...value.amenities, key],
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2">
@@ -47,14 +64,18 @@ export function Step4Specs({ value, onChange }: Props) {
             id="publish-surface"
             type="number"
             required
+            min={1}
+            max={10000}
             value={value.surface_m2 ?? ""}
-            onChange={(event) =>
-              onChange({
-                surface_m2: event.target.value
-                  ? Number(event.target.value)
-                  : null,
-              })
-            }
+            onChange={(event) => {
+              if (!event.target.value) {
+                onChange({ surface_m2: null });
+                return;
+              }
+              const v = Number(event.target.value);
+              const clamped = clampNumber(v, 1, 10000);
+              onChange({ surface_m2: clamped });
+            }}
             className="border-line focus:border-bleu mt-1 w-full rounded-xl border bg-white px-3 py-2.5 outline-none"
           />
           <input
@@ -110,46 +131,82 @@ export function Step4Specs({ value, onChange }: Props) {
               string,
             ]
           >
-        ).map(([key, label]) => (
-          <div key={key}>
-            <label className="text-ink text-sm font-medium">{label}</label>
-            <input
-              type="number"
-              min={key === "year_built" ? 1900 : undefined}
-              max={key === "year_built" ? 2026 : undefined}
-              value={value[key] ?? ""}
-              onChange={(event) =>
-                onChange({
-                  [key]: event.target.value ? Number(event.target.value) : null,
-                })
-              }
-              className="border-line focus:border-bleu mt-1 w-full rounded-xl border bg-white px-3 py-2.5 outline-none"
-            />
-          </div>
-        ))}
+        ).map(([key, label]) => {
+          const bounds: {
+            min?: number;
+            max?: number;
+          } =
+            key === "bedrooms" || key === "bathrooms"
+              ? key === "bedrooms"
+                ? { min: 0, max: 50 }
+                : { min: 0, max: 20 }
+              : key === "floor"
+                ? { min: -5, max: 100 }
+                : key === "total_floors"
+                  ? { min: 1, max: 100 }
+                  : key === "year_built"
+                    ? { min: 1800, max: 2026 }
+                    : {};
+          const guardBounds =
+            key === "bedrooms"
+              ? { min: 0, max: 50 }
+              : key === "bathrooms"
+                ? { min: 0, max: 20 }
+                : key === "floor"
+                  ? { min: -5, max: 100 }
+                  : key === "total_floors"
+                    ? { min: 1, max: 100 }
+                    : key === "year_built"
+                      ? { min: 1800, max: 2026 }
+                      : null;
+
+          return (
+            <div key={key}>
+              <label className="text-ink text-sm font-medium">{label}</label>
+              <input
+                type="number"
+                min={bounds.min}
+                max={bounds.max}
+                value={value[key] ?? ""}
+                onChange={(event) => {
+                  if (!event.target.value) {
+                    onChange({ [key]: null });
+                    return;
+                  }
+                  const v = Number(event.target.value);
+                  if (!guardBounds) {
+                    onChange({ [key]: v });
+                    return;
+                  }
+                  const clamped = clampNumber(
+                    v,
+                    guardBounds.min,
+                    guardBounds.max,
+                  );
+                  onChange({ [key]: clamped });
+                }}
+                className="border-line focus:border-bleu mt-1 w-full rounded-xl border bg-white px-3 py-2.5 outline-none"
+              />
+            </div>
+          );
+        })}
       </div>
 
       <section>
         <h3 className="text-ink mb-2 text-sm font-semibold">Équipements</h3>
         <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-          {amenities.map((amenity) => {
-            const selected = value.amenities.includes(amenity);
+          {AMENITY_KEYS.map((amenity) => {
+            const selected = isAmenitySelected(amenity);
             return (
               <button
                 key={amenity}
                 type="button"
-                onClick={() =>
-                  onChange({
-                    amenities: selected
-                      ? value.amenities.filter((it) => it !== amenity)
-                      : [...value.amenities, amenity],
-                  })
-                }
+                onClick={() => toggleAmenity(amenity)}
                 className={`rounded-lg border px-2 py-2 text-left text-xs ${
                   selected ? "border-bleu bg-bleu-pale" : "border-line bg-white"
                 }`}
               >
-                {amenity}
+                {tAmenity(amenity)}
               </button>
             );
           })}

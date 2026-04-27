@@ -1,7 +1,11 @@
+import { getTranslations } from "next-intl/server";
+import { ChevronRight, Home } from "lucide-react";
 import { redirect } from "next/navigation";
 
-import { PublishStepper } from "@/components/features/publish/PublishStepper";
+import { PublishPageWithStepper } from "@/components/features/publish/PublishPageWithStepper";
 import type { PublishFormState } from "@/components/features/publish/types";
+import { Link } from "@/i18n/navigation";
+import { normalizeAmenityKey } from "@/lib/amenities";
 import { createClient } from "@/lib/supabase/server";
 
 function buildInitialDraft(): PublishFormState {
@@ -36,6 +40,7 @@ type Props = {
 
 export default async function PublishPage({ params }: Props) {
   const { locale } = await params;
+  const tPublish = await getTranslations("publish");
   const supabase = await createClient();
   const {
     data: { user },
@@ -101,20 +106,27 @@ export default async function PublishPage({ params }: Props) {
         position: img.position,
         is_cover: img.is_cover,
       })) ?? [];
-    initial.amenities = amenities?.map((a) => a.amenity_key) ?? [];
+    initial.amenities =
+      amenities?.map((a) => normalizeAmenityKey(a.amenity_key)) ?? [];
   }
 
   return (
     <main className="bg-creme min-h-screen">
       <div className="mx-auto w-full max-w-6xl px-6 py-8">
-        <h1 className="font-display text-ink mb-1 text-3xl font-bold">
-          Publier mon annonce
-        </h1>
-        <p className="text-ink-soft mb-6 text-sm">
-          Créez votre annonce en 7 étapes, le brouillon est sauvegardé
-          automatiquement.
-        </p>
-        <PublishStepper
+        <nav className="mb-4 flex items-center gap-2 text-sm text-gray-500">
+          <Link
+            href={`/${locale}`}
+            className="hover:text-papimo-blue flex items-center gap-1 transition"
+          >
+            <Home className="h-4 w-4" />
+            <span>{tPublish("breadcrumb.home")}</span>
+          </Link>
+          <ChevronRight className="h-4 w-4" />
+          <span className="font-medium text-gray-900">
+            {tPublish("breadcrumb.publish")}
+          </span>
+        </nav>
+        <PublishPageWithStepper
           initialData={initial}
           preferredCurrency={profile?.preferred_currency ?? "TND"}
         />

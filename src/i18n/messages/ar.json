@@ -96,6 +96,54 @@
     "cookies": "سياسة ملفات الارتباط",
     "notices": "البيانات القانونية"
   },
+  "publish": {
+    "breadcrumb": {
+      "home": "الرئيسية",
+      "publish": "نشر إعلاني"
+    },
+    "cancelAndQuit": "إلغاء والخروج",
+    "quitModal": {
+      "title": "هل أنت متأكد؟",
+      "message": "تم حفظ المسودة، يمكنك المتابعة لاحقاً.",
+      "continue": "متابعة النشر",
+      "quit": "خروج"
+    }
+  },
+  "publishPage": {
+    "breadcrumbNavLabel": "مسار التنقل",
+    "breadcrumbHome": "الرئيسية",
+    "title": "نشر إعلاني",
+    "subtitle": "أنشئ إعلانك في 7 خطوات؛ يُحفظ المسودة تلقائياً.",
+    "cancelAndLeave": "إلغاء والخروج",
+    "modalTitle": "هل أنت متأكد؟",
+    "modalBody": "المسودة محفوظة ويمكنك المتابعة لاحقاً.",
+    "continuePublish": "متابعة النشر",
+    "quit": "خروج",
+    "cancelStep1": "إلغاء",
+    "previous": "السابق",
+    "next": "التالي",
+    "stepProgress": "الخطوة {current} / 7",
+    "draftSaving": "جاري حفظ المسودة…",
+    "draftSaved": "حُفظت المسودة في {time}",
+    "draftUnsaved": "لم تُحفظ المسودة"
+  },
+  "amenities": {
+    "parking": "موقف سيارات",
+    "elevator": "مصعد",
+    "balcony": "شرفة",
+    "terrace": "تراس",
+    "garden": "حديقة",
+    "pool": "حمام سباحة",
+    "ac": "تكييف",
+    "heating": "تدفئة",
+    "furnished": "مفروش",
+    "new": "جديد",
+    "sea_view": "إطلالة على البحر",
+    "mountain_view": "إطلالة على الجبل",
+    "fiber": "ألياف بصرية",
+    "security": "أمن",
+    "caretaker": "حارس"
+  },
   "seo": {
     "homeTitle": "papimo | العقارات بين الخواص",
     "searchTitle": "البحث العقاري | papimo",

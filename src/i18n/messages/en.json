@@ -96,6 +96,54 @@
     "cookies": "Cookie policy",
     "notices": "Legal notices"
   },
+  "publish": {
+    "breadcrumb": {
+      "home": "Home",
+      "publish": "List my property"
+    },
+    "cancelAndQuit": "Cancel and quit",
+    "quitModal": {
+      "title": "Are you sure?",
+      "message": "Your draft is saved. You can resume later.",
+      "continue": "Continue publishing",
+      "quit": "Quit"
+    }
+  },
+  "publishPage": {
+    "breadcrumbNavLabel": "Breadcrumb",
+    "breadcrumbHome": "Home",
+    "title": "Publish my listing",
+    "subtitle": "Create your ad in 7 steps; your draft is saved automatically.",
+    "cancelAndLeave": "Cancel and leave",
+    "modalTitle": "Are you sure?",
+    "modalBody": "Your draft is saved; you can continue later.",
+    "continuePublish": "Continue listing",
+    "quit": "Leave",
+    "cancelStep1": "Cancel",
+    "previous": "Back",
+    "next": "Next",
+    "stepProgress": "Step {current} / 7",
+    "draftSaving": "Saving draft…",
+    "draftSaved": "Draft saved at {time}",
+    "draftUnsaved": "Draft not saved"
+  },
+  "amenities": {
+    "parking": "Parking",
+    "elevator": "Elevator",
+    "balcony": "Balcony",
+    "terrace": "Terrace",
+    "garden": "Garden",
+    "pool": "Pool",
+    "ac": "Air conditioning",
+    "heating": "Heating",
+    "furnished": "Furnished",
+    "new": "New",
+    "sea_view": "Sea view",
+    "mountain_view": "Mountain view",
+    "fiber": "Fiber",
+    "security": "Security",
+    "caretaker": "Caretaker"
+  },
   "seo": {
     "homeTitle": "papimo | Real estate between private owners",
     "searchTitle": "Real estate search | papimo",
