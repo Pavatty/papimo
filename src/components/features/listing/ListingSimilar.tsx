@@ -28,7 +28,7 @@ export function ListingSimilar({ locale, listings }: Props) {
         {listings.map((listing) => (
           <Link
             key={listing.id}
-            href={`/${locale}/listings/${listing.slug}`}
+            href={`/${locale}/annonce/${listing.slug ?? listing.id}`}
             className="border-line bg-paper overflow-hidden rounded-xl border transition hover:shadow-sm"
           >
             {listing.cover_url ? (

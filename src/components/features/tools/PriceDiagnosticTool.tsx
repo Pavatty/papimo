@@ -27,8 +27,13 @@ export function PriceDiagnosticTool() {
         className="bg-corail mt-3 rounded-xl px-4 py-2 text-sm font-semibold text-white"
         onClick={() =>
           startTransition(async () => {
-            const idOrSlug = value.includes("/listings/")
-              ? (value.split("/listings/")[1]?.split("?")[0] ?? value)
+            const marker = value.includes("/annonce/")
+              ? "/annonce/"
+              : value.includes("/listings/")
+                ? "/listings/"
+                : null;
+            const idOrSlug = marker
+              ? (value.split(marker)[1]?.split("?")[0] ?? value)
               : value;
             const res = await runPriceDiagnostic({ listingIdOrSlug: idOrSlug });
             if (!res.ok) {

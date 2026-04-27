@@ -76,7 +76,7 @@ export default async function DashboardListingsPage({ searchParams }: Props) {
                   </p>
                   <Link
                     className="text-bleu mt-2 inline-block text-sm font-medium"
-                    href={`/listings/${listing.slug}`}
+                    href={`/annonce/${listing.slug ?? listing.id}`}
                   >
                     Voir l’annonce →
                   </Link>

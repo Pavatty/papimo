@@ -59,12 +59,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const listingEntries: MetadataRoute.Sitemap = (listings ?? []).flatMap(
     (listing) =>
       BRAND.supportedLocales.map((locale) => ({
-        url: `${ORIGIN}/${locale}/listings/${listing.slug}`,
+        url: `${ORIGIN}/${locale}/annonce/${listing.slug}`,
         lastModified: new Date(listing.updated_at),
         alternates: {
           languages: Object.fromEntries(
             BRAND.supportedLocales.map(
-              (l) => [l, `${ORIGIN}/${l}/listings/${listing.slug}`] as const,
+              (l) => [l, `${ORIGIN}/${l}/annonce/${listing.slug}`] as const,
             ),
           ),
         },

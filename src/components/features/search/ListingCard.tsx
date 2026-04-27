@@ -82,7 +82,7 @@ export function ListingCard({ listing }: Props) {
           ))}
         </div>
         <Link
-          href={`/${locale}/listings/${listing.id}`}
+          href={`/${locale}/annonce/${listing.slug ?? listing.id}`}
           className="text-bleu inline-flex text-sm font-medium hover:underline"
         >
           Voir l&apos;annonce

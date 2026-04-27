@@ -24,7 +24,7 @@ export async function GET() {
       if (!listing) return null;
       return `
   <url>
-    <loc>${ORIGIN}/fr/listings/${listing.slug}</loc>
+    <loc>${ORIGIN}/fr/annonce/${listing.slug}</loc>
     <lastmod>${new Date(listing.updated_at).toISOString()}</lastmod>
     <image:image>
       <image:loc>${row.url}</image:loc>
