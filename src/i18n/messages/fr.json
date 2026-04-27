@@ -148,5 +148,8 @@
     "homeTitle": "papimo | L'immobilier entre particuliers",
     "searchTitle": "Recherche immobilière | papimo",
     "listingNotFound": "Annonce introuvable | papimo"
+  },
+  "beta": {
+    "banner": "🚀 papimo est en bêta — Toutes les fonctionnalités sont gratuites pendant cette période."
   }
 }

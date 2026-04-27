@@ -85,6 +85,9 @@ export default async function LocaleLayout({
       </a>
       <NextIntlClientProvider locale={locale} messages={messages}>
         <AuthProvider initialUser={user} initialProfile={profile}>
+          <div className="bg-papimo-coral px-4 py-2 text-center text-sm font-medium text-white">
+            {t("beta.banner")}
+          </div>
           {children}
         </AuthProvider>
       </NextIntlClientProvider>

@@ -148,5 +148,8 @@
     "homeTitle": "papimo | العقارات بين الخواص",
     "searchTitle": "البحث العقاري | papimo",
     "listingNotFound": "الإعلان غير موجود | papimo"
+  },
+  "beta": {
+    "banner": "🚀 papimo في النسخة التجريبية - جميع الميزات مجانية خلال هذه الفترة."
   }
 }
