@@ -1,6 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
+import { usePathname } from "next/navigation";
 
 import { submitForReview } from "@/app/[locale]/(authed)/publish/actions";
 
@@ -46,6 +47,8 @@ const packs: Array<{
 
 export function Step7Pack({ value, listingId, onChange }: Props) {
   const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
 
   return (
     <div className="space-y-5">
@@ -91,11 +94,11 @@ export function Step7Pack({ value, listingId, onChange }: Props) {
             if (value === "free") {
               const result = await submitForReview(listingId);
               if (result.ok) {
-                window.location.href = `/fr/dashboard?published=${result.status}`;
+                window.location.href = `/${locale}/dashboard?published=${result.status}`;
               }
               return;
             }
-            window.location.href = `/fr/checkout?type=listing-pack&listingId=${listingId}`;
+            window.location.href = `/${locale}/checkout?type=listing-pack&listingId=${listingId}`;
           })
         }
         className="bg-corail w-full rounded-xl px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"

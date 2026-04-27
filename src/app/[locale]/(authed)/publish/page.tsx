@@ -30,14 +30,19 @@ function buildInitialDraft(): PublishFormState {
   };
 }
 
-export default async function PublishPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function PublishPage({ params }: Props) {
+  const { locale } = await params;
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/fr/login");
+    redirect(`/${locale}/login`);
   }
 
   const { data: profile } = await supabase
