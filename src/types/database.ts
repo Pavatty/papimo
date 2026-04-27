@@ -71,6 +71,80 @@ export type Database = {
         };
         Relationships: [];
       };
+      amenities: {
+        Row: {
+          category: string;
+          code: string;
+          created_at: string;
+          icon_name: string | null;
+          id: string;
+          is_active: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          category: string;
+          code: string;
+          created_at?: string;
+          icon_name?: string | null;
+          id?: string;
+          is_active?: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Update: {
+          category?: string;
+          code?: string;
+          created_at?: string;
+          icon_name?: string | null;
+          id?: string;
+          is_active?: boolean;
+          label_ar?: string;
+          label_en?: string;
+          label_fr?: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      app_settings: {
+        Row: {
+          description: string | null;
+          key: string;
+          updated_at: string;
+          updated_by: string | null;
+          value: Json;
+        };
+        Insert: {
+          description?: string | null;
+          key: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          value?: Json;
+        };
+        Update: {
+          description?: string | null;
+          key?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          value?: Json;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "app_settings_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       audit_log: {
         Row: {
           action: string;
@@ -283,6 +357,192 @@ export type Database = {
             columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      feature_flags: {
+        Row: {
+          description: string | null;
+          enabled: boolean;
+          key: string;
+          rollout_pct: number;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          description?: string | null;
+          enabled?: boolean;
+          key: string;
+          rollout_pct?: number;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          description?: string | null;
+          enabled?: boolean;
+          key?: string;
+          rollout_pct?: number;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "feature_flags_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      geo_cities: {
+        Row: {
+          code: string;
+          created_at: string;
+          id: string;
+          is_active: boolean;
+          label_ar: string | null;
+          label_en: string | null;
+          label_fr: string;
+          latitude: number | null;
+          longitude: number | null;
+          region_id: string;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          code: string;
+          created_at?: string;
+          id?: string;
+          is_active?: boolean;
+          label_ar?: string | null;
+          label_en?: string | null;
+          label_fr: string;
+          latitude?: number | null;
+          longitude?: number | null;
+          region_id: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Update: {
+          code?: string;
+          created_at?: string;
+          id?: string;
+          is_active?: boolean;
+          label_ar?: string | null;
+          label_en?: string | null;
+          label_fr?: string;
+          latitude?: number | null;
+          longitude?: number | null;
+          region_id?: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "geo_cities_region_id_fkey";
+            columns: ["region_id"];
+            isOneToOne: false;
+            referencedRelation: "geo_regions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      geo_countries: {
+        Row: {
+          code: string;
+          created_at: string;
+          flag_emoji: string | null;
+          id: string;
+          is_active: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          level1_label_fr: string;
+          level2_label_fr: string | null;
+          level3_label_fr: string | null;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          code: string;
+          created_at?: string;
+          flag_emoji?: string | null;
+          id?: string;
+          is_active?: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          level1_label_fr: string;
+          level2_label_fr?: string | null;
+          level3_label_fr?: string | null;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Update: {
+          code?: string;
+          created_at?: string;
+          flag_emoji?: string | null;
+          id?: string;
+          is_active?: boolean;
+          label_ar?: string;
+          label_en?: string;
+          label_fr?: string;
+          level1_label_fr?: string;
+          level2_label_fr?: string | null;
+          level3_label_fr?: string | null;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      geo_regions: {
+        Row: {
+          code: string;
+          country_id: string;
+          created_at: string;
+          id: string;
+          is_active: boolean;
+          label_ar: string | null;
+          label_en: string | null;
+          label_fr: string;
+          level: number;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          code: string;
+          country_id: string;
+          created_at?: string;
+          id?: string;
+          is_active?: boolean;
+          label_ar?: string | null;
+          label_en?: string | null;
+          label_fr: string;
+          level?: number;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Update: {
+          code?: string;
+          country_id?: string;
+          created_at?: string;
+          id?: string;
+          is_active?: boolean;
+          label_ar?: string | null;
+          label_en?: string | null;
+          label_fr?: string;
+          level?: number;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "geo_regions_country_id_fkey";
+            columns: ["country_id"];
+            isOneToOne: false;
+            referencedRelation: "geo_countries";
             referencedColumns: ["id"];
           },
         ];
@@ -738,6 +998,63 @@ export type Database = {
         };
         Relationships: [];
       };
+      pricing_packs: {
+        Row: {
+          active_days: number;
+          code: string;
+          created_at: string;
+          features: Json;
+          id: string;
+          is_active: boolean;
+          is_recommended: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          max_active_listings: number;
+          max_photos_per_listing: number;
+          price_monthly_tnd: number;
+          price_yearly_tnd: number;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          active_days?: number;
+          code: string;
+          created_at?: string;
+          features?: Json;
+          id?: string;
+          is_active?: boolean;
+          is_recommended?: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          max_active_listings?: number;
+          max_photos_per_listing?: number;
+          price_monthly_tnd?: number;
+          price_yearly_tnd?: number;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Update: {
+          active_days?: number;
+          code?: string;
+          created_at?: string;
+          features?: Json;
+          id?: string;
+          is_active?: boolean;
+          is_recommended?: boolean;
+          label_ar?: string;
+          label_en?: string;
+          label_fr?: string;
+          max_active_listings?: number;
+          max_photos_per_listing?: number;
+          price_monthly_tnd?: number;
+          price_yearly_tnd?: number;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       profiles: {
         Row: {
           account_type: string;
@@ -825,6 +1142,48 @@ export type Database = {
           updated_at?: string;
           verified_email?: boolean;
           verified_phone?: boolean;
+        };
+        Relationships: [];
+      };
+      property_types: {
+        Row: {
+          category: string;
+          code: string;
+          created_at: string;
+          icon_name: string | null;
+          id: string;
+          is_active: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          category?: string;
+          code: string;
+          created_at?: string;
+          icon_name?: string | null;
+          id?: string;
+          is_active?: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Update: {
+          category?: string;
+          code?: string;
+          created_at?: string;
+          icon_name?: string | null;
+          id?: string;
+          is_active?: boolean;
+          label_ar?: string;
+          label_en?: string;
+          label_fr?: string;
+          sort_order?: number;
+          updated_at?: string;
         };
         Relationships: [];
       };
@@ -1032,6 +1391,45 @@ export type Database = {
             referencedColumns: ["id"];
           },
         ];
+      };
+      transaction_types: {
+        Row: {
+          badge_color: string;
+          code: string;
+          created_at: string;
+          id: string;
+          is_active: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          badge_color?: string;
+          code: string;
+          created_at?: string;
+          id?: string;
+          is_active?: boolean;
+          label_ar: string;
+          label_en: string;
+          label_fr: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Update: {
+          badge_color?: string;
+          code?: string;
+          created_at?: string;
+          id?: string;
+          is_active?: boolean;
+          label_ar?: string;
+          label_en?: string;
+          label_fr?: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
       };
       transactions: {
         Row: {

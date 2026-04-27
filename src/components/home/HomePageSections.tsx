@@ -6,50 +6,30 @@ import {
   Sparkles,
 } from "lucide-react";
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { buttonVariants } from "@/components/ui/button";
+import { getLatestActiveListings } from "@/data/repositories/listings";
+import {
+  getTransactionTypes,
+  getTaxonomyLabel,
+  type LocaleKey,
+} from "@/data/repositories/taxonomies";
 import { Link } from "@/i18n/navigation";
-import { formatPrice, getTransactionBadge } from "@/lib/listing/format";
-import { createClient } from "@/data/supabase/server";
+import { formatPrice } from "@/lib/listing/format";
 import { cn } from "@/lib/utils";
-
-type LatestListing = {
-  id: string;
-  slug: string | null;
-  title: string;
-  price: number | null;
-  price_currency: string | null;
-  city: string | null;
-  neighborhood: string | null;
-  photos: string[] | null;
-  main_photo: string | null;
-  transaction_type: string | null;
-  surface_area: number | null;
-  rooms_total: number | null;
-};
-
-async function fetchLatestListings(): Promise<LatestListing[]> {
-  try {
-    const supabase = await createClient();
-    const { data } = await supabase
-      .from("listings")
-      .select(
-        "id, slug, title, price, price_currency, city, neighborhood, photos, main_photo, transaction_type, surface_area, rooms_total",
-      )
-      .eq("status", "active")
-      .order("published_at", { ascending: false, nullsFirst: false })
-      .limit(4);
-    return (data ?? []) as LatestListing[];
-  } catch {
-    return [];
-  }
-}
 
 // Sections marketing sous le hero : parcours, dernières annonces, outils
 export async function HomePageSections() {
   const t = await getTranslations("home");
-  const listings = await fetchLatestListings();
+  const locale = await getLocale();
+  const localeKey: LocaleKey =
+    locale === "ar" || locale === "en" ? (locale as LocaleKey) : "fr";
+  const [listings, transactionTypes] = await Promise.all([
+    getLatestActiveListings(4),
+    getTransactionTypes(),
+  ]);
+  const txByCode = new Map(transactionTypes.map((t) => [t.code, t]));
 
   return (
     <>
@@ -119,15 +99,20 @@ export async function HomePageSections() {
         {listings.length > 0 ? (
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {listings.map((listing) => {
-              const photo = listing.main_photo ?? listing.photos?.[0] ?? null;
-              const badge = getTransactionBadge(listing.transaction_type);
+              const photo = listing.mainPhoto ?? listing.photos[0] ?? null;
+              const txItem = listing.transactionType
+                ? txByCode.get(listing.transactionType)
+                : undefined;
+              const badge = txItem
+                ? getTaxonomyLabel(txItem, localeKey)
+                : (listing.transactionType ?? null);
               const priceLabel =
                 listing.price == null
                   ? null
                   : formatPrice(
                       listing.price,
-                      listing.price_currency,
-                      listing.transaction_type,
+                      listing.priceCurrency,
+                      listing.transactionType,
                     );
               const href = `/annonce/${listing.slug ?? listing.id}`;
               const localityParts = [
