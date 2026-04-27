@@ -96,6 +96,24 @@
     "cookies": "سياسة ملفات الارتباط",
     "notices": "البيانات القانونية"
   },
+  "publishPage": {
+    "breadcrumbNavLabel": "مسار التنقل",
+    "breadcrumbHome": "الرئيسية",
+    "title": "نشر إعلاني",
+    "subtitle": "أنشئ إعلانك في 7 خطوات؛ يُحفظ المسودة تلقائياً.",
+    "cancelAndLeave": "إلغاء والخروج",
+    "modalTitle": "هل أنت متأكد؟",
+    "modalBody": "المسودة محفوظة ويمكنك المتابعة لاحقاً.",
+    "continuePublish": "متابعة النشر",
+    "quit": "خروج",
+    "cancelStep1": "إلغاء",
+    "previous": "السابق",
+    "next": "التالي",
+    "stepProgress": "الخطوة {current} / 7",
+    "draftSaving": "جاري حفظ المسودة…",
+    "draftSaved": "حُفظت المسودة في {time}",
+    "draftUnsaved": "لم تُحفظ المسودة"
+  },
   "amenities": {
     "parking": "موقف سيارات",
     "elevator": "مصعد",

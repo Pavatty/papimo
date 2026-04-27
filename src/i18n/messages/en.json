@@ -96,6 +96,24 @@
     "cookies": "Cookie policy",
     "notices": "Legal notices"
   },
+  "publishPage": {
+    "breadcrumbNavLabel": "Breadcrumb",
+    "breadcrumbHome": "Home",
+    "title": "Publish my listing",
+    "subtitle": "Create your ad in 7 steps; your draft is saved automatically.",
+    "cancelAndLeave": "Cancel and leave",
+    "modalTitle": "Are you sure?",
+    "modalBody": "Your draft is saved; you can continue later.",
+    "continuePublish": "Continue listing",
+    "quit": "Leave",
+    "cancelStep1": "Cancel",
+    "previous": "Back",
+    "next": "Next",
+    "stepProgress": "Step {current} / 7",
+    "draftSaving": "Saving draft…",
+    "draftSaved": "Draft saved at {time}",
+    "draftUnsaved": "Draft not saved"
+  },
   "amenities": {
     "parking": "Parking",
     "elevator": "Elevator",

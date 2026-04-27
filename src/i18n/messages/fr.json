@@ -96,6 +96,24 @@
     "cookies": "Politique cookies",
     "notices": "Mentions légales"
   },
+  "publishPage": {
+    "breadcrumbNavLabel": "Fil d'Ariane",
+    "breadcrumbHome": "Accueil",
+    "title": "Publier mon annonce",
+    "subtitle": "Créez votre annonce en 7 étapes, le brouillon est sauvegardé automatiquement.",
+    "cancelAndLeave": "Annuler et quitter",
+    "modalTitle": "Êtes-vous sûr ?",
+    "modalBody": "Le brouillon est sauvegardé, vous pourrez reprendre plus tard.",
+    "continuePublish": "Continuer la publication",
+    "quit": "Quitter",
+    "cancelStep1": "Annuler",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "stepProgress": "Étape {current} / 7",
+    "draftSaving": "Brouillon en sauvegarde…",
+    "draftSaved": "Brouillon sauvegardé à {time}",
+    "draftUnsaved": "Brouillon non sauvegardé"
+  },
   "amenities": {
     "parking": "Parking",
     "elevator": "Ascenseur",

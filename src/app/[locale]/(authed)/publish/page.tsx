@@ -1,7 +1,9 @@
+import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { PublishStepper } from "@/components/features/publish/PublishStepper";
 import type { PublishFormState } from "@/components/features/publish/types";
+import { Link } from "@/i18n/navigation";
 import { normalizeAmenityKey } from "@/lib/amenities";
 import { createClient } from "@/lib/supabase/server";
 
@@ -37,6 +39,7 @@ type Props = {
 
 export default async function PublishPage({ params }: Props) {
   const { locale } = await params;
+  const t = await getTranslations("publishPage");
   const supabase = await createClient();
   const {
     data: { user },
@@ -109,13 +112,25 @@ export default async function PublishPage({ params }: Props) {
   return (
     <main className="bg-creme min-h-screen">
       <div className="mx-auto w-full max-w-6xl px-6 py-8">
+        <nav aria-label={t("breadcrumbNavLabel")} className="mb-4">
+          <ol className="text-ink-soft flex flex-wrap items-center gap-2 text-sm">
+            <li>
+              <Link href="/" className="text-bleu hover:underline">
+                {t("breadcrumbHome")}
+              </Link>
+            </li>
+            <li aria-hidden="true" className="select-none">
+              &gt;
+            </li>
+            <li className="text-ink font-semibold" aria-current="page">
+              {t("title")}
+            </li>
+          </ol>
+        </nav>
         <h1 className="font-display text-ink mb-1 text-3xl font-bold">
-          Publier mon annonce
+          {t("title")}
         </h1>
-        <p className="text-ink-soft mb-6 text-sm">
-          Créez votre annonce en 7 étapes, le brouillon est sauvegardé
-          automatiquement.
-        </p>
+        <p className="text-ink-soft mb-6 text-sm">{t("subtitle")}</p>
         <PublishStepper
           initialData={initial}
           preferredCurrency={profile?.preferred_currency ?? "TND"}
