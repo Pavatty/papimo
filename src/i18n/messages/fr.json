@@ -193,5 +193,31 @@
     "homeTitle": "papimo | L'immobilier entre particuliers",
     "searchTitle": "Recherche immobilière | papimo",
     "listingNotFound": "Annonce introuvable | papimo"
+  },
+  "profile": {
+    "edit": {
+      "title": "Modifier mon profil",
+      "avatar": "Photo de profil",
+      "changeAvatar": "Changer ma photo",
+      "personalInfo": "Informations personnelles",
+      "fullName": "Nom complet",
+      "phone": "Téléphone",
+      "phonePlaceholder": "+216 22 162 261",
+      "bio": "À propos de moi",
+      "bioPlaceholder": "Quelques mots pour vous présenter (max 500 caractères)",
+      "accountType": "Type de compte",
+      "individual": "Particulier",
+      "professional": "Professionnel",
+      "preferences": "Préférences",
+      "language": "Langue préférée",
+      "emailNotifications": "Recevoir des notifications par email",
+      "pushNotifications": "Recevoir des notifications push",
+      "save": "Enregistrer les modifications",
+      "saved": "Profil mis à jour avec succès",
+      "error": "Une erreur est survenue",
+      "dangerZone": "Zone de danger",
+      "changeEmail": "Changer mon email",
+      "deleteAccount": "Supprimer mon compte"
+    }
   }
 }
