@@ -70,14 +70,15 @@ function SortablePhoto({
       style={style}
       {...attributes}
       {...listeners}
-      className="border-line group relative overflow-hidden rounded-xl border bg-white"
+      className="border-line group relative aspect-[4/3] overflow-hidden rounded-xl border bg-white"
     >
       <Image
         src={image.url}
         alt=""
         width={640}
-        height={320}
-        className="h-40 w-full object-cover"
+        height={480}
+        loading="lazy"
+        className="h-full w-full object-cover"
       />
       <div className="absolute top-2 right-2 flex gap-2">
         <button

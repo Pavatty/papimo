@@ -24,6 +24,7 @@ export function ListingSeller({ seller }: Props) {
               alt={seller.full_name ?? "Vendeur"}
               width={48}
               height={48}
+              loading="lazy"
               className="h-full w-full object-cover"
             />
           ) : null}

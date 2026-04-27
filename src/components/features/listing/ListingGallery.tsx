@@ -47,7 +47,7 @@ export function ListingGallery({ images }: Props) {
     <>
       <button
         type="button"
-        className="group relative block w-full overflow-hidden rounded-2xl"
+        className="group relative block aspect-video w-full overflow-hidden rounded-2xl"
         onClick={() => setOpen(true)}
       >
         <Image
@@ -56,7 +56,7 @@ export function ListingGallery({ images }: Props) {
           width={1600}
           height={900}
           priority
-          className="aspect-video w-full object-cover transition duration-300 group-hover:scale-[1.01]"
+          className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.01]"
         />
         <span className="bg-ink/75 absolute right-3 bottom-3 rounded-full px-3 py-1 text-xs text-white">
           {images.length} photos
@@ -68,7 +68,7 @@ export function ListingGallery({ images }: Props) {
           <button
             key={image.id}
             type="button"
-            className="overflow-hidden rounded-lg"
+            className="aspect-video overflow-hidden rounded-lg"
             onClick={() => {
               setIndex(idx + 1);
               setOpen(true);
