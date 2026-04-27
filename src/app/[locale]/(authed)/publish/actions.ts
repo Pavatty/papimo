@@ -328,11 +328,17 @@ export async function submitForReview(listingId: string) {
   revalidateTag(`listing:${listingId}`, "default");
 
   if (targetStatus === "active") {
-    const { data: owner } = await supabase
+    const { data: ownerData } = await supabase
       .from("profiles")
       .select("email, full_name, preferred_language, notifications_email")
       .eq("id", user.id)
       .maybeSingle();
+    const owner = ownerData as {
+      email: string | null;
+      full_name: string | null;
+      preferred_language: string | null;
+      notifications_email: boolean | null;
+    } | null;
 
     if (owner?.email && owner.notifications_email !== false) {
       const preferredLocale =

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ListingCardGrid } from "@/components/features/search/ListingCardGrid";
+import { SearchResults } from "@/components/features/search/SearchResults";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { createClient } from "@/lib/supabase/server";
 
@@ -34,7 +34,11 @@ export default async function LocationPage() {
       <p className="text-ink-soft mt-2 text-sm">
         Résultats préfiltrés de biens à louer, optimisés SEO.
       </p>
-      <ListingCardGrid listings={data ?? []} />
+      <SearchResults
+        results={(data ?? []) as never}
+        loading={false}
+        onReset={() => {}}
+      />
     </main>
   );
 }

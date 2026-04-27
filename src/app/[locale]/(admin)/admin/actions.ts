@@ -29,11 +29,17 @@ export async function approveListingAction(locale: string, listingId: string) {
   });
 
   if (listing?.owner_id) {
-    const { data: owner } = await supabase
+    const { data: ownerData } = await supabase
       .from("profiles")
       .select("email, full_name, preferred_language, notifications_email")
       .eq("id", listing.owner_id)
       .maybeSingle();
+    const owner = ownerData as {
+      email: string | null;
+      full_name: string | null;
+      preferred_language: string | null;
+      notifications_email: boolean | null;
+    } | null;
 
     if (owner?.email && owner.notifications_email !== false) {
       const preferredLocale =

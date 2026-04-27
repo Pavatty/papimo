@@ -17,18 +17,18 @@ import { SearchMap } from "./SearchMap";
 import { SearchResults } from "./SearchResults";
 
 export type SearchFiltersState = {
-  transaction_type?: string;
+  transaction_type?: string | undefined;
   property_types: string[];
-  country?: string;
-  region?: string;
-  city?: string;
+  country?: string | undefined;
+  region?: string | undefined;
+  city?: string | undefined;
   neighborhoods: string[];
-  price_min?: number;
-  price_max?: number;
-  surface_min?: number;
-  surface_max?: number;
-  rooms_min?: number;
-  bedrooms_min?: number;
+  price_min?: number | undefined;
+  price_max?: number | undefined;
+  surface_min?: number | undefined;
+  surface_max?: number | undefined;
+  rooms_min?: number | undefined;
+  bedrooms_min?: number | undefined;
   amenities: string[];
   sort: string;
   page: number;
@@ -134,7 +134,7 @@ export function SearchPage() {
     });
 
     supabase
-      .rpc("search_listings", { filters: rpcFilters })
+      .rpc("search_listings", { filters: rpcFilters as never })
       .then(({ data, error }) => {
         if (cancelled) return;
         if (error) {
@@ -142,7 +142,7 @@ export function SearchPage() {
           setResults([]);
           setTotalCount(0);
         } else {
-          const rows = (data ?? []) as Array<
+          const rows = (data ?? []) as unknown as Array<
             SearchResult & { total_count: number }
           >;
           setResults(rows);
