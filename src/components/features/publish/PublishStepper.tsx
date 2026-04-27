@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useReducer } from "react";
+import { useLocale, useTranslations } from "next-intl";
 
 import { usePublishDraft } from "@/hooks/usePublishDraft";
 
@@ -16,6 +17,7 @@ import type { ListingPack, PublishFormState } from "./types";
 type Props = {
   initialData: PublishFormState;
   preferredCurrency?: "TND" | "EUR" | "USD" | "MAD" | "DZD";
+  onQuitRequest?: () => void;
 };
 
 type Action =
@@ -47,7 +49,13 @@ const steps = [
   "Pack",
 ];
 
-export function PublishStepper({ initialData, preferredCurrency }: Props) {
+export function PublishStepper({
+  initialData,
+  preferredCurrency,
+  onQuitRequest,
+}: Props) {
+  const t = useTranslations("publishPage");
+  const locale = useLocale();
   const [state, dispatch] = useReducer(reducer, {
     currentStep: 1,
     form: initialData,
@@ -94,7 +102,7 @@ export function PublishStepper({ initialData, preferredCurrency }: Props) {
       <div className="mb-5 flex items-center justify-between">
         <div className="w-full">
           <div className="mb-2 flex justify-between text-xs text-gray-500">
-            <span>Étape {state.currentStep} / 7</span>
+            <span>{t("stepProgress", { current: state.currentStep })}</span>
             <span>{steps[state.currentStep - 1]}</span>
           </div>
           <div className="bg-bleu-soft h-2 rounded">
@@ -106,10 +114,12 @@ export function PublishStepper({ initialData, preferredCurrency }: Props) {
         </div>
         <p className="ml-4 text-right font-mono text-xs text-gray-500">
           {isSaving
-            ? "Brouillon en sauvegarde…"
+            ? t("draftSaving")
             : lastSavedAt
-              ? `Brouillon sauvegardé à ${lastSavedAt.toLocaleTimeString("fr-FR")}`
-              : "Brouillon non sauvegardé"}
+              ? t("draftSaved", {
+                  time: lastSavedAt.toLocaleTimeString(locale),
+                })
+              : t("draftUnsaved")}
         </p>
       </div>
 
@@ -195,16 +205,22 @@ export function PublishStepper({ initialData, preferredCurrency }: Props) {
       <div className="mt-8 flex items-center justify-between">
         <button
           type="button"
-          onClick={() =>
+          onClick={() => {
+            if (state.currentStep === 1 && onQuitRequest) {
+              onQuitRequest();
+              return;
+            }
             dispatch({
               type: "setStep",
               payload: Math.max(1, state.currentStep - 1),
-            })
-          }
-          disabled={state.currentStep === 1}
+            });
+          }}
+          disabled={state.currentStep === 1 && !onQuitRequest}
           className="border-line text-ink rounded-xl border bg-white px-4 py-2.5 text-sm disabled:opacity-50"
         >
-          Précédent
+          {state.currentStep === 1 && onQuitRequest
+            ? t("cancelStep1")
+            : t("previous")}
         </button>
         <button
           type="button"
@@ -217,7 +233,7 @@ export function PublishStepper({ initialData, preferredCurrency }: Props) {
           disabled={state.currentStep === 7}
           className="bg-corail rounded-xl px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
         >
-          Suivant
+          {t("next")}
         </button>
       </div>
     </section>
