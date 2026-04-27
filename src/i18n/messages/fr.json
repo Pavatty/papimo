@@ -144,6 +144,51 @@
     "security": "Sécurité",
     "caretaker": "Gardien"
   },
+  "search": {
+    "title": "Recherche d'annonces",
+    "results": "annonces",
+    "filters": {
+      "transactionType": "Type de transaction",
+      "propertyType": "Type de bien",
+      "location": "Localisation",
+      "budget": "Budget",
+      "surfaceAndRooms": "Surface et pièces",
+      "amenities": "Équipements",
+      "moreCriteria": "Plus de critères",
+      "country": "Pays",
+      "region": "Région",
+      "city": "Ville",
+      "neighborhoods": "Quartiers",
+      "priceMin": "Prix min",
+      "priceMax": "Prix max",
+      "surfaceMin": "Surface min",
+      "surfaceMax": "Surface max",
+      "rooms": "Pièces",
+      "bedrooms": "Chambres",
+      "reset": "Réinitialiser les filtres",
+      "save": "Sauvegarder cette recherche"
+    },
+    "sort": {
+      "recent": "Plus récent",
+      "priceAsc": "Prix croissant",
+      "priceDesc": "Prix décroissant",
+      "surfaceDesc": "Surface décroissante",
+      "pricePerSqmAsc": "Prix au m² croissant"
+    },
+    "amenityCategories": {
+      "comfort": "Confort",
+      "exterior": "Extérieur",
+      "building": "Immeuble",
+      "views": "Vues",
+      "security": "Sécurité"
+    },
+    "emptyState": {
+      "title": "Aucune annonce ne correspond à vos critères",
+      "message": "Essayez d'élargir votre recherche ou réinitialisez les filtres",
+      "reset": "Réinitialiser"
+    },
+    "loading": "Chargement..."
+  },
   "seo": {
     "homeTitle": "papimo | L'immobilier entre particuliers",
     "searchTitle": "Recherche immobilière | papimo",
