@@ -13,11 +13,20 @@ const LOCALES: Locale[] = ["fr", "ar", "en"];
 
 const PRICING_HIDDEN = IS_BETA;
 
-function BrandWordmark({ className }: { className?: string }) {
+function BrandWordmark({
+  className,
+  size = "header",
+}: {
+  className?: string;
+  size?: "header" | "footer";
+}) {
+  const sizeClasses =
+    size === "footer" ? "text-4xl md:text-5xl" : "text-3xl md:text-4xl";
   return (
     <span
       className={cn(
-        "inline-flex font-serif text-2xl leading-none select-none",
+        "inline-flex font-serif leading-none font-medium tracking-tight select-none",
+        sizeClasses,
         className,
       )}
     >

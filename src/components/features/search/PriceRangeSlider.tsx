@@ -15,11 +15,15 @@ export function PriceRangeSlider({ min, max, onChange }: Props) {
       <div className="grid grid-cols-2 gap-2">
         <input
           type="number"
+          min={0}
+          step={1}
           placeholder="Min"
           value={min ?? ""}
           onChange={(event) =>
             onChange({
-              min: event.target.value ? Number(event.target.value) : undefined,
+              min: event.target.value
+                ? Math.max(0, Number(event.target.value))
+                : undefined,
               max,
             })
           }
@@ -27,12 +31,16 @@ export function PriceRangeSlider({ min, max, onChange }: Props) {
         />
         <input
           type="number"
+          min={0}
+          step={1}
           placeholder="Max"
           value={max ?? ""}
           onChange={(event) =>
             onChange({
               min,
-              max: event.target.value ? Number(event.target.value) : undefined,
+              max: event.target.value
+                ? Math.max(0, Number(event.target.value))
+                : undefined,
             })
           }
           className="border-line rounded-lg border px-2 py-1.5 text-sm"
