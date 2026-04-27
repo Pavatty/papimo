@@ -1,23 +1,20 @@
 "use server";
 
-import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { headers } from "next/headers";
 import { z } from "zod";
 
 import { createClient } from "@/lib/supabase/server";
-import type { Database } from "@/types/database";
 
 import { checkRateLimit, RATE_LIMITS } from "./rateLimit";
-import {
-  buildWhatsAppLink,
-  formatPhoneE164,
-  generateOtpCode,
-} from "./whatsapp";
+import { formatPhoneE164 } from "./whatsapp";
 
 const emailSchema = z.string().email("Email invalide");
 const otpSchema = z.string().regex(/^\d{6}$/, "Code OTP invalide");
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+const whatsAppOtpEnabled =
+  process.env.NEXT_PUBLIC_WHATSAPP_OTP_ENABLED === "true";
+const enabledLocales = ["fr", "en", "ar"] as const;
 
 function getRequesterIp(value: string | null) {
   return value?.split(",")[0]?.trim() ?? "unknown";
@@ -32,17 +29,16 @@ function parseUrlSafe(value: string | null) {
   }
 }
 
-function getPrivilegedClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+function detectLocaleFromReferer(referer: string | null) {
+  const refererUrl = parseUrlSafe(referer);
+  const localeCandidate = refererUrl?.pathname.split("/")[1];
+  const locale = enabledLocales.includes(
+    localeCandidate as (typeof enabledLocales)[number],
+  )
+    ? localeCandidate
+    : "fr";
 
-  if (!url || !serviceRoleKey) {
-    throw new Error("Supabase service role is not configured");
-  }
-
-  return createAdminClient<Database>(url, serviceRoleKey, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
+  return { locale, refererUrl };
 }
 
 export async function sendMagicLink(email: string) {
@@ -65,12 +61,7 @@ export async function sendMagicLink(email: string) {
   }
 
   const referer = requestHeaders.get("referer");
-  const refererUrl = parseUrlSafe(referer);
-  const localeCandidate = refererUrl?.pathname.split("/")[1];
-  const locale =
-    localeCandidate && ["fr", "en", "ar"].includes(localeCandidate)
-      ? localeCandidate
-      : "fr";
+  const { locale, refererUrl } = detectLocaleFromReferer(referer);
   const redirectToParam = refererUrl?.searchParams.get("redirect_to");
   const callbackUrl = new URL(`/${locale}/auth/callback`, appUrl);
   if (redirectToParam?.startsWith("/") && !redirectToParam.startsWith("//")) {
@@ -95,11 +86,20 @@ export async function sendMagicLink(email: string) {
 export async function signInWithGoogleAction() {
   "use server";
 
+  const requestHeaders = await headers();
+  const referer = requestHeaders.get("referer");
+  const { locale, refererUrl } = detectLocaleFromReferer(referer);
+  const redirectToParam = refererUrl?.searchParams.get("redirect_to");
+  const callbackUrl = new URL(`/${locale}/auth/callback`, appUrl);
+  if (redirectToParam?.startsWith("/") && !redirectToParam.startsWith("//")) {
+    callbackUrl.searchParams.set("redirect_to", redirectToParam);
+  }
+
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${appUrl}/fr/auth/callback`,
+      redirectTo: callbackUrl.toString(),
     },
   });
 
@@ -113,9 +113,12 @@ export async function signInWithGoogleAction() {
 export async function sendWhatsAppCode(phone: string) {
   "use server";
 
+  if (!whatsAppOtpEnabled) {
+    return { ok: false, error: "Connexion WhatsApp indisponible." };
+  }
+
   const requestHeaders = await headers();
   const ip = getRequesterIp(requestHeaders.get("x-forwarded-for"));
-  const userAgent = requestHeaders.get("user-agent");
   const limit = checkRateLimit({
     key: `wa-send:${ip}`,
     ...RATE_LIMITS.whatsappSendPerIpPerHour,
@@ -132,30 +135,25 @@ export async function sendWhatsAppCode(phone: string) {
     return { ok: false, error: (error as Error).message };
   }
 
-  const code = generateOtpCode();
-  const privileged = getPrivilegedClient();
-  const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
-
-  const { error } = await privileged.from("auth_otp").insert({
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signInWithOtp({
     phone: normalizedPhone,
-    code,
-    expires_at: expiresAt,
-    ip,
-    user_agent: userAgent,
-  } as never);
+    options: { channel: "whatsapp" },
+  });
 
   if (error) {
     return { ok: false, error: error.message };
   }
 
-  const businessNumber = process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS_NUMBER ?? "";
-  const whatsappLink = buildWhatsAppLink(businessNumber, code, "fr");
-
-  return { ok: true, code, whatsappLink, phone: normalizedPhone };
+  return { ok: true, phone: normalizedPhone };
 }
 
 export async function verifyWhatsAppCode(phone: string, code: string) {
   "use server";
+
+  if (!whatsAppOtpEnabled) {
+    return { ok: false, error: "Connexion WhatsApp indisponible." };
+  }
 
   const parsedCode = otpSchema.safeParse(code);
   if (!parsedCode.success) {
@@ -178,65 +176,19 @@ export async function verifyWhatsAppCode(phone: string, code: string) {
     return { ok: false, error: "Trop de tentatives. Réessaie plus tard." };
   }
 
-  const privileged = getPrivilegedClient();
-  const nowIso = new Date().toISOString();
-  const { data: otpRows, error: otpError } = await privileged
-    .from("auth_otp")
-    .select("id, code, attempts, used, expires_at")
-    .eq("phone", normalizedPhone)
-    .eq("used", false)
-    .order("created_at", { ascending: false })
-    .limit(1);
-
-  if (otpError) {
-    return { ok: false, error: otpError.message };
-  }
-
-  const otpRow = otpRows?.[0];
-  const isValid =
-    otpRow !== undefined &&
-    otpRow.code === parsedCode.data &&
-    !otpRow.used &&
-    otpRow.expires_at > nowIso;
-
-  if (!isValid) {
-    if (otpRow?.id) {
-      await privileged
-        .from("auth_otp")
-        .update({ attempts: (otpRow.attempts ?? 0) + 1 } as never)
-        .eq("id", otpRow.id);
-    }
-    return {
-      ok: false,
-      error: "Code incorrect ou expire",
-      attemptsRemaining: verifyLimit.remaining,
-    };
-  }
-
-  if (!otpRow) {
-    return {
-      ok: false,
-      error: "Code incorrect ou expire",
-      attemptsRemaining: verifyLimit.remaining,
-    };
-  }
-
-  await privileged
-    .from("auth_otp")
-    .update({ used: true } as never)
-    .eq("id", otpRow.id);
-
-  const { error: createUserError } = await privileged.auth.admin.createUser({
+  const supabase = await createClient();
+  const { error } = await supabase.auth.verifyOtp({
     phone: normalizedPhone,
-    phone_confirm: true,
-    user_metadata: { auth_method: "whatsapp_click_to_chat" },
+    token: parsedCode.data,
+    type: "sms",
   });
 
-  if (
-    createUserError &&
-    !createUserError.message.toLowerCase().includes("already")
-  ) {
-    return { ok: false, error: createUserError.message };
+  if (error) {
+    return {
+      ok: false,
+      error: error.message || "Code incorrect ou expire",
+      attemptsRemaining: verifyLimit.remaining,
+    };
   }
 
   return { ok: true };
@@ -245,4 +197,9 @@ export async function verifyWhatsAppCode(phone: string, code: string) {
 export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
+}
+
+export async function isWhatsAppOtpEnabled() {
+  "use server";
+  return { ok: true, enabled: whatsAppOtpEnabled };
 }

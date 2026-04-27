@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import type { EmailOtpType } from "@supabase/supabase-js";
 
+import { upsertProfileForUser } from "@/lib/auth/session";
 import type { Database } from "@/types/database";
 
 function sanitizeRedirectPath(value: string | null, fallback: string) {
@@ -18,7 +19,11 @@ export async function GET(
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
   const tokenHash = requestUrl.searchParams.get("token_hash");
-  const tokenType = requestUrl.searchParams.get("type") as EmailOtpType | null;
+  const tokenTypeRaw = requestUrl.searchParams.get("type");
+  const tokenType =
+    tokenTypeRaw === "magiclink" || tokenTypeRaw === "email"
+      ? (tokenTypeRaw as EmailOtpType)
+      : null;
   const redirectTo =
     requestUrl.searchParams.get("redirect_to") ??
     requestUrl.searchParams.get("next");
@@ -71,6 +76,9 @@ export async function GET(
       error: error?.message ?? null,
     });
     if (!error) {
+      if (data.user) {
+        await upsertProfileForUser(supabase, data.user);
+      }
       console.info("[auth/callback] success_redirect", {
         finalRedirect: new URL(next, request.url).toString(),
       });
@@ -89,6 +97,9 @@ export async function GET(
       error: error?.message ?? null,
     });
     if (!error) {
+      if (data.user) {
+        await upsertProfileForUser(supabase, data.user);
+      }
       console.info("[auth/callback] success_redirect", {
         finalRedirect: new URL(next, request.url).toString(),
       });
