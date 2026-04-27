@@ -109,7 +109,10 @@ export function PublishStepper({
         <div className="w-full">
           <div className="mb-2 flex justify-between text-xs text-gray-500">
             <span>
-              {t("stepProgress", { current: state.currentStep })} / {totalSteps}
+              {t("stepProgress", {
+                current: state.currentStep,
+                total: totalSteps,
+              })}
             </span>
             <span>{currentStepDef?.label}</span>
           </div>

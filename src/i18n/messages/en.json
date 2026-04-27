@@ -123,7 +123,7 @@
     "cancelStep1": "Cancel",
     "previous": "Back",
     "next": "Next",
-    "stepProgress": "Step {current} / 7",
+    "stepProgress": "Step {current} / {total}",
     "draftSaving": "Saving draft…",
     "draftSaved": "Draft saved at {time}",
     "draftUnsaved": "Draft not saved"

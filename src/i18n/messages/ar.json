@@ -123,7 +123,7 @@
     "cancelStep1": "إلغاء",
     "previous": "السابق",
     "next": "التالي",
-    "stepProgress": "الخطوة {current} / 7",
+    "stepProgress": "الخطوة {current} / {total}",
     "draftSaving": "جاري حفظ المسودة…",
     "draftSaved": "حُفظت المسودة في {time}",
     "draftUnsaved": "لم تُحفظ المسودة"

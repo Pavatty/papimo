@@ -152,12 +152,14 @@ export function SearchFilters({ filters, onChange, onReset }: Props) {
           <div className="grid grid-cols-2 gap-2">
             <input
               type="number"
+              min={0}
+              step={1}
               placeholder={t("filters.surfaceMin")}
               value={filters.surface_min ?? ""}
               onChange={(event) =>
                 onChange({
                   surface_min: event.target.value
-                    ? Number(event.target.value)
+                    ? Math.max(0, Number(event.target.value))
                     : undefined,
                 })
               }
@@ -165,12 +167,14 @@ export function SearchFilters({ filters, onChange, onReset }: Props) {
             />
             <input
               type="number"
+              min={0}
+              step={1}
               placeholder={t("filters.surfaceMax")}
               value={filters.surface_max ?? ""}
               onChange={(event) =>
                 onChange({
                   surface_max: event.target.value
-                    ? Number(event.target.value)
+                    ? Math.max(0, Number(event.target.value))
                     : undefined,
                 })
               }
@@ -283,6 +287,9 @@ export function SearchFilters({ filters, onChange, onReset }: Props) {
           </select>
           <input
             type="number"
+            min={1800}
+            max={2030}
+            step={1}
             placeholder="Construction year min"
             className="border-line w-full rounded-lg border px-2 py-1.5 text-sm"
           />
