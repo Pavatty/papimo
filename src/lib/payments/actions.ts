@@ -1,6 +1,7 @@
 "use server";
 
 import PDFDocument from "pdfkit";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -28,6 +29,31 @@ function detectGateway(
     return { gateway: "stripe" as const, currency: "USD" as const };
   }
   return { gateway: "stripe" as const, currency: "EUR" as const };
+}
+
+const enabledLocales = ["fr", "en", "ar"] as const;
+
+async function detectLocaleFromRequest() {
+  const requestHeaders = await headers();
+  const referer = requestHeaders.get("referer");
+
+  if (!referer) return "fr";
+
+  try {
+    const refererUrl = new URL(referer);
+    const localeCandidate = refererUrl.pathname.split("/")[1];
+    if (
+      enabledLocales.includes(
+        localeCandidate as (typeof enabledLocales)[number],
+      )
+    ) {
+      return localeCandidate;
+    }
+  } catch {
+    // Ignore invalid referer values and fallback to FR.
+  }
+
+  return "fr";
 }
 
 export async function activateListingPack(
@@ -129,8 +155,9 @@ export async function initiateListingPackPayment(
     return { ok: false, error: txError?.message ?? "Transaction error" };
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-  const successUrl = `${appUrl}/fr/checkout/success?ref=${transaction.id}`;
-  const cancelUrl = `${appUrl}/fr/checkout/failure?ref=${transaction.id}`;
+  const locale = await detectLocaleFromRequest();
+  const successUrl = `${appUrl}/${locale}/checkout/success?ref=${transaction.id}`;
+  const cancelUrl = `${appUrl}/${locale}/checkout/failure?ref=${transaction.id}`;
   const webhookUrlKonnect = `${appUrl}/api/webhooks/konnect`;
 
   if (gatewayData.gateway === "konnect") {
@@ -235,8 +262,9 @@ export async function initiateBoostPayment(
   if (!transaction) return { ok: false, error: "Transaction error" };
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-  const successUrl = `${appUrl}/fr/checkout/success?ref=${transaction.id}`;
-  const cancelUrl = `${appUrl}/fr/checkout/failure?ref=${transaction.id}`;
+  const locale = await detectLocaleFromRequest();
+  const successUrl = `${appUrl}/${locale}/checkout/success?ref=${transaction.id}`;
+  const cancelUrl = `${appUrl}/${locale}/checkout/failure?ref=${transaction.id}`;
 
   if (gatewayData.gateway === "konnect") {
     const payment = await createPayment({
@@ -435,9 +463,10 @@ export async function startListingPackCheckoutAction(formData: FormData) {
     | "essential"
     | "comfort"
     | "premium";
+  const locale = await detectLocaleFromRequest();
   const result = await initiateListingPackPayment(listingId, pack);
   if (!result.ok || !result.paymentUrl) {
-    redirect(`/fr/checkout/failure?ref=${result.transactionId ?? ""}`);
+    redirect(`/${locale}/checkout/failure?ref=${result.transactionId ?? ""}`);
   }
   redirect(result.paymentUrl);
 }
@@ -447,9 +476,10 @@ export async function startBoostCheckoutAction(formData: FormData) {
   const boostType = String(
     formData.get("boostType") ?? "",
   ) as Enums<"boost_type">;
+  const locale = await detectLocaleFromRequest();
   const result = await initiateBoostPayment(listingId, boostType);
   if (!result.ok || !result.paymentUrl) {
-    redirect("/fr/checkout/failure");
+    redirect(`/${locale}/checkout/failure`);
   }
   redirect(result.paymentUrl);
 }
