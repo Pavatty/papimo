@@ -2,7 +2,7 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 export async function estimatePropertyRange(input: {
   countryCode: string;

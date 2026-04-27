@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import type { SupabaseClient } from "@supabase/supabase-js";
 
 import type { SearchResult } from "@/components/features/search/SearchPage";
 import { SearchResults } from "@/components/features/search/SearchResults";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export const revalidate = 900;
 
 export default async function LocationPage() {
-  const supabase = (await createClient()) as unknown as SupabaseClient;
+  const supabase = await createClient();
   const { data } = await supabase
     .from("listings")
     .select(

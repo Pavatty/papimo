@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { Database } from "@/types/database";
 import { moderateListing } from "@/lib/moderation/listing";
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/data/supabase/server", () => ({
   createClient: vi.fn(async () => ({
     from: (table: string) => {
       if (table === "settings") {

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { BRAND } from "@/config/brand";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient } from "@/data/supabase/admin";
 
 const ORIGIN = process.env.NEXT_PUBLIC_APP_URL ?? BRAND.url;
 

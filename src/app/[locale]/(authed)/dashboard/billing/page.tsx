@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 import { generateInvoice } from "@/lib/payments/actions";
 
 type Props = {

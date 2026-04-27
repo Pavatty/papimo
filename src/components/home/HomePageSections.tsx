@@ -1,4 +1,3 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   ArrowRight,
   CheckCircle2,
@@ -11,7 +10,8 @@ import { getTranslations } from "next-intl/server";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { formatPrice, getTransactionBadge } from "@/lib/listing/format";
+import { createClient } from "@/data/supabase/server";
 import { cn } from "@/lib/utils";
 
 type LatestListing = {
@@ -29,21 +29,9 @@ type LatestListing = {
   rooms_total: number | null;
 };
 
-const TRANSACTION_BADGE: Record<string, string> = {
-  sale: "Vente",
-  rent: "Location",
-  seasonal_rent: "Saisonnier",
-  colocation: "Colocation",
-};
-
-function formatPrice(price: number | null, currency: string | null) {
-  if (!price) return null;
-  return `${Math.round(price).toLocaleString("fr-FR")} ${currency ?? "TND"}`;
-}
-
 async function fetchLatestListings(): Promise<LatestListing[]> {
   try {
-    const supabase = (await createClient()) as unknown as SupabaseClient;
+    const supabase = await createClient();
     const { data } = await supabase
       .from("listings")
       .select(
@@ -132,14 +120,15 @@ export async function HomePageSections() {
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {listings.map((listing) => {
               const photo = listing.main_photo ?? listing.photos?.[0] ?? null;
-              const badge = listing.transaction_type
-                ? (TRANSACTION_BADGE[listing.transaction_type] ??
-                  listing.transaction_type)
-                : null;
-              const priceLabel = formatPrice(
-                listing.price,
-                listing.price_currency,
-              );
+              const badge = getTransactionBadge(listing.transaction_type);
+              const priceLabel =
+                listing.price == null
+                  ? null
+                  : formatPrice(
+                      listing.price,
+                      listing.price_currency,
+                      listing.transaction_type,
+                    );
               const href = `/annonce/${listing.slug ?? listing.id}`;
               const localityParts = [
                 listing.neighborhood?.trim(),

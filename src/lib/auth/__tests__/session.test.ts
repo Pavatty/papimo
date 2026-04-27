@@ -14,7 +14,7 @@ const hoisted = vi.hoisted(() => {
   return { getUser, upsert, select, eq, single, from, createClient };
 });
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/data/supabase/server", () => ({
   createClient: hoisted.createClient,
 }));
 

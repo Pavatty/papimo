@@ -10,7 +10,7 @@ import {
 } from "react";
 import type { User } from "@supabase/supabase-js";
 
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/data/supabase/client";
 import type { Database } from "@/types/database";
 
 type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];

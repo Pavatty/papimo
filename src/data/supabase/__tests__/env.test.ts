@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { getSupabaseEnv } from "@/lib/supabase/env";
+import { getSupabaseEnv } from "@/data/supabase/env";
 
 describe("getSupabaseEnv", () => {
   it("returns url and publishable key when present", () => {

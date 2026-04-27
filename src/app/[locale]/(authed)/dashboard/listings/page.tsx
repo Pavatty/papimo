@@ -1,6 +1,6 @@
 import { startBoostCheckoutAction } from "@/lib/payments/actions";
 import { BOOST_CONFIG } from "@/lib/payments/pricing";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 import type { Enums } from "@/types/database";
 
 import { Link } from "@/i18n/navigation";

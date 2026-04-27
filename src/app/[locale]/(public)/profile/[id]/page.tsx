@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 type Props = { params: Promise<{ locale: string; id: string }> };
 

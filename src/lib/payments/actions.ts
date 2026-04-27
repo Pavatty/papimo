@@ -7,7 +7,7 @@ import { z } from "zod";
 
 import { captureServerEvent } from "@/lib/analytics/events";
 import { logAuditEvent } from "@/lib/audit/log";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 import type { Enums, Json } from "@/types/database";
 
 import { createPayment } from "./konnect";

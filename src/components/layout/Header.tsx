@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { type Locale, useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
+import { BrandWordmark } from "@/components/layout/BrandWordmark";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { Link, usePathname } from "@/i18n/navigation";
 import { IS_BETA } from "@/lib/beta";
@@ -12,33 +13,6 @@ import { cn } from "@/lib/utils";
 const LOCALES: Locale[] = ["fr", "ar", "en"];
 
 const PRICING_HIDDEN = IS_BETA;
-
-function BrandWordmark({
-  className,
-  size = "header",
-}: {
-  className?: string;
-  size?: "header" | "footer";
-}) {
-  const sizeClasses =
-    size === "footer" ? "text-4xl md:text-5xl" : "text-3xl md:text-4xl";
-  return (
-    <span
-      className={cn(
-        "inline-flex font-serif leading-none font-medium tracking-tight select-none",
-        sizeClasses,
-        className,
-      )}
-    >
-      <span className="text-bleu" aria-hidden>
-        pap
-      </span>
-      <span className="text-corail" aria-hidden>
-        imo
-      </span>
-    </span>
-  );
-}
 
 export function Header() {
   const t = useTranslations();
@@ -60,7 +34,7 @@ export function Header() {
           aria-label={t("common.brandName")}
           className="focus-visible:ring-bleu/40 focus-visible:ring-offset-creme inline-flex items-center rounded focus-visible:ring-2 focus-visible:ring-offset-2"
         >
-          <BrandWordmark />
+          <BrandWordmark size="header" />
         </Link>
 
         <nav

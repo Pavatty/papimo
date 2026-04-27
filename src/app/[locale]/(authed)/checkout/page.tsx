@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { startListingPackCheckoutAction } from "@/lib/payments/actions";
 import { LISTING_PACK_PRICES_TND } from "@/lib/payments/pricing";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 type Props = {
   params: Promise<{ locale: string }>;

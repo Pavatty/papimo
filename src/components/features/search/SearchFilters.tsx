@@ -27,7 +27,7 @@ import {
   TRANSACTION_TYPE_LABELS,
   getLabel,
 } from "@/lib/constants/listing-labels";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/data/supabase/client";
 
 import type { SearchFiltersState } from "./SearchPage";
 import { AmenitiesGrid } from "./AmenitiesGrid";

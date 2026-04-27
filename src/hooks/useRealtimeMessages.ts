@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/data/supabase/client";
 import type { Tables } from "@/types/database";
 
 type MessageRow = Tables<"messages">;
