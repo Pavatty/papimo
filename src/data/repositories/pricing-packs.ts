@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 
-import { createClient } from "@/data/supabase/server";
+import { createAnonClient } from "@/data/supabase/server";
 import type { Database } from "@/types/database";
 
 export type PricingPackRow =
@@ -8,7 +8,7 @@ export type PricingPackRow =
 
 export const getPricingPacks = unstable_cache(
   async (): Promise<PricingPackRow[]> => {
-    const supabase = await createClient();
+    const supabase = createAnonClient();
     const { data } = await supabase
       .from("pricing_packs")
       .select("*")

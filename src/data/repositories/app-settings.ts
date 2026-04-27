@@ -1,10 +1,10 @@
 import { unstable_cache } from "next/cache";
 
-import { createClient } from "@/data/supabase/server";
+import { createAnonClient } from "@/data/supabase/server";
 
 const fetchAppSetting = unstable_cache(
   async (key: string): Promise<unknown | null> => {
-    const supabase = await createClient();
+    const supabase = createAnonClient();
     const { data } = await supabase
       .from("app_settings")
       .select("value")

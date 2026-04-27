@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 
-import { createClient } from "@/data/supabase/server";
+import { createAnonClient } from "@/data/supabase/server";
 import type { Database } from "@/types/database";
 
 type TransactionType = Database["public"]["Tables"]["transaction_types"]["Row"];
@@ -9,7 +9,7 @@ type Amenity = Database["public"]["Tables"]["amenities"]["Row"];
 
 export const getTransactionTypes = unstable_cache(
   async (): Promise<TransactionType[]> => {
-    const supabase = await createClient();
+    const supabase = createAnonClient();
     const { data } = await supabase
       .from("transaction_types")
       .select("*")
@@ -23,7 +23,7 @@ export const getTransactionTypes = unstable_cache(
 
 export const getPropertyTypes = unstable_cache(
   async (): Promise<PropertyType[]> => {
-    const supabase = await createClient();
+    const supabase = createAnonClient();
     const { data } = await supabase
       .from("property_types")
       .select("*")
@@ -37,7 +37,7 @@ export const getPropertyTypes = unstable_cache(
 
 export const getAmenities = unstable_cache(
   async (): Promise<Amenity[]> => {
-    const supabase = await createClient();
+    const supabase = createAnonClient();
     const { data } = await supabase
       .from("amenities")
       .select("*")

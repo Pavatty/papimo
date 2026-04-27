@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 
-import { createClient } from "@/data/supabase/server";
+import { createAnonClient, createClient } from "@/data/supabase/server";
 import { listingFromRow, type ListingDTO } from "@/domain/listing/types";
 import type { ListingDetails } from "@/components/features/listing/types";
 
@@ -47,7 +47,7 @@ export async function getActiveListingById(
 
 export const getLatestActiveListings = unstable_cache(
   async (limit = 4): Promise<ListingDTO[]> => {
-    const supabase = await createClient();
+    const supabase = createAnonClient();
     const { data } = await supabase
       .from("listings")
       .select("*")
