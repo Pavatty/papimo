@@ -3,6 +3,7 @@
 import { randomUUID } from "node:crypto";
 
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { captureServerEvent } from "@/lib/analytics/events";
@@ -284,6 +285,52 @@ export async function improveDescription(text: string) {
 
   // Placeholder until Anthropic integration is wired.
   return { improvedText: text };
+}
+
+export async function submitListingDirectly(draftId: string, locale: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect(`/${locale}/login`);
+
+  const { data: draft, error: fetchError } = await supabase
+    .from("listings")
+    .select("*")
+    .eq("id", draftId)
+    .eq("owner_id", user.id)
+    .single();
+
+  if (fetchError || !draft) {
+    return { success: false, error: "Brouillon introuvable" };
+  }
+
+  const baseSlug = (draft.title || "annonce")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 50);
+  const slug = `${baseSlug}-${draftId.slice(0, 8)}`;
+
+  const { error: updateError } = await supabase
+    .from("listings")
+    .update({
+      status: "active",
+      slug,
+      pack_type: "free",
+      published_at: new Date().toISOString(),
+      expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", draftId);
+
+  if (updateError) {
+    return { success: false, error: updateError.message };
+  }
+
+  return { success: true, slug };
 }
 
 export async function submitForReview(listingId: string) {
