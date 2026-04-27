@@ -8,27 +8,46 @@
 @theme inline {
   /* Couleurs de marque (accès sémantique Tailwind v4) */
   --color-bleu: rgb(var(--bleu));
+  --color-bleu-hover: #174a7e;
   --color-bleu-soft: rgb(var(--bleu-soft));
   --color-bleu-pale: rgb(var(--bleu-pale));
   --color-corail: rgb(var(--corail));
+  --color-corail-hover: #dd5c3d;
   --color-corail-soft: rgb(var(--corail-soft));
   --color-corail-pale: rgb(var(--corail-pale));
   --color-creme: rgb(var(--creme));
+  --color-creme-foncee: #f0e8d7;
   --color-creme-pale: rgb(var(--creme-pale));
   --color-paper: rgb(var(--paper));
+  --color-blanc-casse: #ffffff;
   --color-ink: rgb(var(--ink));
   --color-ink-soft: rgb(var(--ink-soft));
+  --color-encre: #1a1a1a;
   --color-line: rgb(var(--line));
+  --color-bordurewarm-tertiary: #e8e0d0;
+  --color-bordurewarm-secondary: #d6cdb8;
   --color-green: rgb(var(--green));
   --color-danger: rgb(var(--danger));
 
   /* Polices (variables injectées par next/font dans le layout [locale]) */
   --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-dm-sans), var(--font-manrope), ui-sans-serif, system-ui,
+    sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
   --font-mono:
     var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, menlo, monospace;
   /* Alias d’en-têtes (Geist) — aligné sur la spec produit */
   --font-heading: var(--font-display);
+
+  /* Layout tokens */
+  --header-height: 4rem;
+  --container-max: 80rem;
+  --max-width-container: 80rem;
+  --shadow-card: 0 4px 12px rgba(26, 26, 26, 0.06);
+  --shadow-card-hover: 0 8px 24px rgba(26, 26, 26, 0.1);
+  --radius-card: 12px;
+  --radius-control: 8px;
 
   /* Cartes sémantiques shadcn -> tokens papimo */
   --color-background: var(--background);
@@ -131,11 +150,19 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-creme text-ink;
+    background-color: var(--color-creme);
+    color: var(--color-encre);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04";
   }
   html {
     @apply font-sans;
   }
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
 }
 
 /* RTL support: logical alignment + icon mirroring helpers */
