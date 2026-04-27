@@ -144,6 +144,51 @@
     "security": "Security",
     "caretaker": "Caretaker"
   },
+  "search": {
+    "title": "Property search",
+    "results": "listings",
+    "filters": {
+      "transactionType": "Transaction type",
+      "propertyType": "Property type",
+      "location": "Location",
+      "budget": "Budget",
+      "surfaceAndRooms": "Surface and rooms",
+      "amenities": "Amenities",
+      "moreCriteria": "More criteria",
+      "country": "Country",
+      "region": "Region",
+      "city": "City",
+      "neighborhoods": "Neighborhoods",
+      "priceMin": "Min price",
+      "priceMax": "Max price",
+      "surfaceMin": "Min surface",
+      "surfaceMax": "Max surface",
+      "rooms": "Rooms",
+      "bedrooms": "Bedrooms",
+      "reset": "Reset filters",
+      "save": "Save this search"
+    },
+    "sort": {
+      "recent": "Most recent",
+      "priceAsc": "Price ascending",
+      "priceDesc": "Price descending",
+      "surfaceDesc": "Surface descending",
+      "pricePerSqmAsc": "Price per m² ascending"
+    },
+    "amenityCategories": {
+      "comfort": "Comfort",
+      "exterior": "Exterior",
+      "building": "Building",
+      "views": "Views",
+      "security": "Security"
+    },
+    "emptyState": {
+      "title": "No listing matches your criteria",
+      "message": "Try broadening your search or reset the filters",
+      "reset": "Reset"
+    },
+    "loading": "Loading..."
+  },
   "seo": {
     "homeTitle": "papimo | Real estate between private owners",
     "searchTitle": "Real estate search | papimo",

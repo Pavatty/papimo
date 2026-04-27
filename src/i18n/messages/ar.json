@@ -144,6 +144,51 @@
     "security": "أمن",
     "caretaker": "حارس"
   },
+  "search": {
+    "title": "بحث الإعلانات",
+    "results": "إعلان",
+    "filters": {
+      "transactionType": "نوع المعاملة",
+      "propertyType": "نوع العقار",
+      "location": "الموقع",
+      "budget": "الميزانية",
+      "surfaceAndRooms": "المساحة والغرف",
+      "amenities": "التجهيزات",
+      "moreCriteria": "معايير إضافية",
+      "country": "البلد",
+      "region": "المنطقة",
+      "city": "المدينة",
+      "neighborhoods": "الأحياء",
+      "priceMin": "السعر الأدنى",
+      "priceMax": "السعر الأقصى",
+      "surfaceMin": "المساحة الدنيا",
+      "surfaceMax": "المساحة القصوى",
+      "rooms": "الغرف",
+      "bedrooms": "غرف النوم",
+      "reset": "إعادة ضبط الفلاتر",
+      "save": "حفظ هذا البحث"
+    },
+    "sort": {
+      "recent": "الأحدث",
+      "priceAsc": "السعر تصاعدياً",
+      "priceDesc": "السعر تنازلياً",
+      "surfaceDesc": "المساحة تنازلياً",
+      "pricePerSqmAsc": "سعر المتر تصاعدياً"
+    },
+    "amenityCategories": {
+      "comfort": "الراحة",
+      "exterior": "الخارج",
+      "building": "المبنى",
+      "views": "الإطلالات",
+      "security": "الأمان"
+    },
+    "emptyState": {
+      "title": "لا توجد إعلانات تطابق معاييرك",
+      "message": "جرّب توسيع البحث أو إعادة ضبط الفلاتر",
+      "reset": "إعادة ضبط"
+    },
+    "loading": "جاري التحميل..."
+  },
   "seo": {
     "homeTitle": "papimo | العقارات بين الخواص",
     "searchTitle": "البحث العقاري | papimo",

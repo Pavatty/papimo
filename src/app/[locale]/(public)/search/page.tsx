@@ -1,3 +1,14 @@
+import { Suspense } from "react";
+
+import { SearchPage } from "@/components/features/search/SearchPage";
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center">Chargement...</div>}>
+      <SearchPage />
+    </Suspense>
+  );
+}
 import type { Metadata } from "next";
 
 import { ListingCardGrid } from "@/components/features/search/ListingCardGrid";
