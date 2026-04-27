@@ -982,6 +982,10 @@ export type Database = {
         Args: { filters: Json };
         Returns: Database["public"]["Tables"]["listings"]["Row"][];
       };
+      admin_stats: {
+        Args: Record<string, never>;
+        Returns: Json;
+      };
     };
     Enums: {
       ad_slot:

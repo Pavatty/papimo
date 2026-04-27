@@ -27,7 +27,7 @@ export async function HeroSection() {
       </p>
       <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
         <Link
-          href="/publier"
+          href="/publish"
           className={cn(
             buttonVariants({ variant: "default", size: "lg" }),
             "min-h-11 min-w-[12rem] px-6",
@@ -36,7 +36,7 @@ export async function HeroSection() {
           {t("navigation.publishMyProperty")}
         </Link>
         <Link
-          href="/acheter"
+          href="/search"
           className={cn(
             buttonVariants({ variant: "outline", size: "lg" }),
             "border-bleu/30 text-bleu min-h-11 min-w-[12rem]",

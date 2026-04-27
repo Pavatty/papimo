@@ -4,6 +4,9 @@ import { ListingCardGrid } from "@/components/features/search/ListingCardGrid";
 import { captureServerEvent } from "@/lib/analytics/events";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { createClient } from "@/lib/supabase/server";
+import type { Database } from "@/types/database";
+
+type ListingRow = Database["public"]["Tables"]["listings"]["Row"];
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -46,8 +49,9 @@ export default async function SearchPage({ searchParams }: Props) {
     .order("created_at", { ascending: false })
     .limit(30);
 
-  if (query.type) req = req.eq("type", query.type);
-  if (query.category) req = req.eq("category", query.category);
+  if (query.type) req = req.eq("type", query.type as ListingRow["type"]);
+  if (query.category)
+    req = req.eq("category", query.category as ListingRow["category"]);
   if (query.city) req = req.ilike("city", `%${query.city}%`);
   if (query.q) req = req.or(`title.ilike.%${query.q}%,city.ilike.%${query.q}%`);
 

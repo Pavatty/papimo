@@ -5,10 +5,13 @@ import { describe, expect, it, vi } from "vitest";
 import type { SaveDraftInput } from "@/app/[locale]/(authed)/publish/actions";
 import { usePublishDraft } from "@/hooks/usePublishDraft";
 
-const saveDraftMock = vi.fn(async () => ({ ok: true, id: "draft-id" }));
+const saveDraftMock = vi.fn(async () => ({
+  ok: true,
+  id: "draft-id",
+}));
 
 vi.mock("@/app/[locale]/(authed)/publish/actions", () => ({
-  saveDraft: (...args: unknown[]) => saveDraftMock(...args),
+  saveDraft: (input: SaveDraftInput) => saveDraftMock(input),
 }));
 
 describe("usePublishDraft", () => {

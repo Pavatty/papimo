@@ -33,13 +33,14 @@ export function Step6PriceDescription({
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    if (!value.type || !value.city) return;
+    const txType = value.type;
+    if (!txType || !value.city) return;
     startTransition(async () => {
       const result = await getPriceMedian(
         value.country_code || "TN",
         value.city,
         value.neighborhood || null,
-        value.type,
+        txType,
       );
       setMedian(result.median ?? null);
     });

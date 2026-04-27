@@ -41,6 +41,8 @@ export function ListingGallery({ images }: Props) {
     );
   }
 
+  const main = images[0]!;
+
   return (
     <>
       <button
@@ -49,8 +51,8 @@ export function ListingGallery({ images }: Props) {
         onClick={() => setOpen(true)}
       >
         <Image
-          src={images[0].url}
-          alt={images[0].alt_text ?? "Photo principale"}
+          src={main.url}
+          alt={main.alt_text ?? "Photo principale"}
           width={1600}
           height={900}
           priority

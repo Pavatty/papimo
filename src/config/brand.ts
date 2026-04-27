@@ -1,5 +1,12 @@
 // Constantes de marque centralisées (source unique pour l’app et le SEO côté serveur)
 
+export const BRAND_COLORS = {
+  bleu: "#1E5A96" as const,
+  /** Corail Méditerranée (ex-#E63946) */
+  corail: "#EF6F50" as const,
+  creme: "#FBF6EC" as const,
+} as const;
+
 export const BRAND = {
   name: "papimo" as const,
   logoText: {

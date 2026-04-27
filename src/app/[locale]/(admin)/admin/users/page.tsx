@@ -7,6 +7,9 @@ import {
   verifyKycAction,
 } from "@/app/[locale]/(admin)/admin/actions";
 import { requireAdmin } from "@/lib/admin/guards";
+import type { Database } from "@/types/database";
+
+type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -26,7 +29,7 @@ export default async function AdminUsersPage({ params, searchParams }: Props) {
     .range((page - 1) * pageSize, page * pageSize - 1);
   if (query.q)
     req = req.or(`full_name.ilike.%${query.q}%,email.ilike.%${query.q}%`);
-  if (query.role) req = req.eq("role", query.role);
+  if (query.role) req = req.eq("role", query.role as ProfileRow["role"]);
   const { data: users } = await req;
 
   return (

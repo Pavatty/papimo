@@ -194,7 +194,7 @@ export async function verifyWhatsAppCode(phone: string, code: string) {
 
   const otpRow = otpRows?.[0];
   const isValid =
-    Boolean(otpRow) &&
+    otpRow !== undefined &&
     otpRow.code === parsedCode.data &&
     !otpRow.used &&
     otpRow.expires_at > nowIso;
@@ -206,6 +206,14 @@ export async function verifyWhatsAppCode(phone: string, code: string) {
         .update({ attempts: (otpRow.attempts ?? 0) + 1 } as never)
         .eq("id", otpRow.id);
     }
+    return {
+      ok: false,
+      error: "Code incorrect ou expire",
+      attemptsRemaining: verifyLimit.remaining,
+    };
+  }
+
+  if (!otpRow) {
     return {
       ok: false,
       error: "Code incorrect ou expire",

@@ -1,79 +1,127 @@
-import { Heart, LayoutGrid, LogOut, MessageSquare } from "lucide-react";
+import {
+  Heart,
+  LayoutGrid,
+  MessageSquare,
+  Sparkles,
+  Wrench,
+} from "lucide-react";
 
-import { Logo } from "@/components/shared/Logo";
-import { signOut } from "@/lib/auth/actions";
+import { buttonVariants } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { ensureProfile } from "@/lib/auth/session";
+import { cn } from "@/lib/utils";
 
 export default async function DashboardPage() {
   const { user, profile } = await ensureProfile();
 
-  const fullName = profile?.full_name ?? user?.email ?? "Utilisateur";
-  const firstName = fullName.split(" ")[0] ?? "Utilisateur";
-  const initials =
-    fullName
-      .split(" ")
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]?.toUpperCase() ?? "")
-      .join("") || "U";
+  const fullName = profile?.full_name?.trim() || user?.email || "Utilisateur";
 
   return (
-    <div className="bg-creme-pale min-h-screen">
-      <header className="border-line bg-paper border-b">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-          <Logo size="md" />
-          <div className="flex items-center gap-3">
-            <div className="bg-bleu-soft text-bleu inline-flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold">
-              {initials}
-            </div>
-            <div className="text-right">
-              <p className="text-ink text-sm font-semibold">{fullName}</p>
-              <form action={signOut}>
-                <button
-                  type="submit"
-                  className="text-ink-soft hover:text-bleu inline-flex items-center gap-1 text-xs"
-                >
-                  <LogOut className="h-3.5 w-3.5" />
-                  Se déconnecter
-                </button>
-              </form>
-            </div>
+    <main className="mx-auto w-full max-w-6xl px-4 py-8 md:px-6">
+      <h1 className="font-display text-ink text-3xl font-bold">
+        Bonjour {fullName}
+      </h1>
+      <p className="text-ink-soft mt-2 max-w-2xl">
+        Bienvenue dans votre espace papimo. Publiez une annonce, explorez le
+        marché ou utilisez nos outils gratuits — tout est à portée de clic.
+      </p>
+
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <Link
+          href="/publish"
+          className={cn(
+            buttonVariants({ variant: "default", size: "lg" }),
+            "inline-flex justify-center",
+          )}
+        >
+          Publier ma première annonce
+        </Link>
+        <Link
+          href="/search"
+          className={cn(
+            buttonVariants({ variant: "outline", size: "lg" }),
+            "border-bleu/30 text-bleu inline-flex justify-center",
+          )}
+        >
+          Découvrir les annonces
+        </Link>
+        <Link
+          href="/outils"
+          className={cn(
+            buttonVariants({ variant: "secondary", size: "lg" }),
+            "inline-flex items-center justify-center gap-2",
+          )}
+        >
+          <Wrench className="h-4 w-4" />
+          Mes outils
+        </Link>
+      </div>
+
+      <section className="mt-10 grid gap-4 md:grid-cols-3">
+        <Link
+          href="/dashboard/listings"
+          className="border-line bg-paper hover:border-bleu/30 group rounded-2xl border p-5 transition"
+        >
+          <LayoutGrid className="text-bleu mb-3 h-6 w-6" />
+          <h2 className="text-ink text-base font-semibold">Mes annonces</h2>
+          <p className="text-ink-soft mt-1 text-sm">
+            Gérer vos brouillons et annonces publiées.
+          </p>
+          <span className="text-bleu mt-3 inline-block text-sm font-medium group-hover:underline">
+            Ouvrir →
+          </span>
+        </Link>
+        <Link
+          href="/dashboard/listings?favorites=true"
+          className="border-line bg-paper hover:border-corail/30 group rounded-2xl border p-5 transition"
+        >
+          <Heart className="text-corail mb-3 h-6 w-6" />
+          <h2 className="text-ink text-base font-semibold">Mes favoris</h2>
+          <p className="text-ink-soft mt-1 text-sm">
+            Retrouvez les annonces que vous avez enregistrées.
+          </p>
+          <span className="text-corail mt-3 inline-block text-sm font-medium group-hover:underline">
+            Voir tout →
+          </span>
+        </Link>
+        <Link
+          href="/messages"
+          className="border-line bg-paper hover:border-bleu/30 group rounded-2xl border p-5 transition"
+        >
+          <MessageSquare className="text-bleu mb-3 h-6 w-6" />
+          <h2 className="text-ink text-base font-semibold">Mes messages</h2>
+          <p className="text-ink-soft mt-1 text-sm">
+            Reprenez la conversation avec les acheteurs ou vendeurs.
+          </p>
+          <span className="text-bleu mt-3 inline-block text-sm font-medium group-hover:underline">
+            Ouvrir →
+          </span>
+        </Link>
+      </section>
+
+      <section className="border-line bg-creme-pale mt-10 rounded-2xl border p-6">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="text-ink flex items-center gap-2 text-lg font-semibold">
+              <Sparkles className="text-corail h-5 w-5" />
+              Aller plus loin
+            </h2>
+            <p className="text-ink-soft mt-1 text-sm">
+              Estimation, simulateur, frais d’achat : les outils papimo pour
+              préparer votre projet.
+            </p>
           </div>
+          <Link
+            href="/outils/estimation"
+            className={cn(
+              buttonVariants({ variant: "secondary" }),
+              "text-bleu mt-4 shrink-0 md:mt-0",
+            )}
+          >
+            Voir les outils
+          </Link>
         </div>
-      </header>
-
-      <main className="mx-auto w-full max-w-6xl px-6 py-8">
-        <h1 className="font-display text-ink text-3xl font-bold">
-          Bonjour {firstName}
-        </h1>
-        <p className="text-ink-soft mt-2">
-          Bienvenue dans votre espace papimo.
-        </p>
-
-        <section className="mt-8 grid gap-4 md:grid-cols-3">
-          <article className="border-line bg-paper rounded-2xl border p-5">
-            <LayoutGrid className="text-bleu mb-3 h-6 w-6" />
-            <h2 className="text-ink text-base font-semibold">Mes annonces</h2>
-            <p className="text-ink-soft mt-1 text-sm">Bientôt disponible.</p>
-          </article>
-          <article className="border-line bg-paper rounded-2xl border p-5">
-            <Heart className="text-corail mb-3 h-6 w-6" />
-            <h2 className="text-ink text-base font-semibold">Mes favoris</h2>
-            <p className="text-ink-soft mt-1 text-sm">Bientôt disponible.</p>
-          </article>
-          <article className="border-line bg-paper rounded-2xl border p-5">
-            <MessageSquare className="text-bleu mb-3 h-6 w-6" />
-            <h2 className="text-ink text-base font-semibold">Mes messages</h2>
-            <p className="text-ink-soft mt-1 text-sm">Bientôt disponible.</p>
-          </article>
-        </section>
-      </main>
-
-      <footer className="border-line bg-paper mt-12 border-t">
-        <div className="mx-auto w-full max-w-6xl px-6 py-4 text-xs text-gray-500">
-          © papimo
-        </div>
-      </footer>
-    </div>
+      </section>
+    </main>
   );
 }

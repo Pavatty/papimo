@@ -15,9 +15,17 @@
   "navigation": {
     "buy": "Buy",
     "rent": "Rent",
+    "search": "Search",
     "estimate": "Valuation",
     "tools": "Tools",
+    "pricing": "Pricing",
+    "legal": "Legal",
     "login": "Log in",
+    "signup": "Create account",
+    "profile": "My account",
+    "signOut": "Sign out",
+    "messages": "Messages",
+    "publish": "Publish",
     "publishMyProperty": "List my property",
     "discover": "Browse properties",
     "languages": {
@@ -28,16 +36,51 @@
   },
   "footer": {
     "columnIndividuals": "Private owners",
+    "columnDiscover": "Discover",
+    "columnHelp": "Help & contact",
+    "columnLegal": "Legal",
     "columnAbout": "About",
+    "columnAboutText": "Private sales and rentals in Tunisia and for the diaspora: a clear platform, useful tools, no hidden fees.",
     "columnLanguages": "Languages",
+    "faq": "FAQ",
+    "contact": "Contact us",
+    "pricingLink": "Pricing & plans",
+    "searchLink": "Search listings",
+    "legalHub": "Legal center",
     "legalNotice": "Legal notice",
     "privacy": "Privacy"
   },
   "home": {
+    "howItWorks": {
+      "title": "How it works",
+      "step1Title": "List your place",
+      "step1": "Describe, photograph and publish your ad in a few minutes.",
+      "step2Title": "Chat directly",
+      "step2": "Get messages, schedule visits, negotiate with no go-between.",
+      "step3Title": "Move forward with confidence",
+      "step3": "Free tools, estimates and clear steps — in Tunisia and beyond."
+    },
+    "tools": {
+      "title": "Free tools",
+      "subtitle": "Simulators, estimate, description AI: everything to prepare your project.",
+      "cta": "View tools"
+    },
+    "sampleListings": {
+      "title": "Sample listings",
+      "subtitle": "Illustrative properties — see real stock on the search page.",
+      "cta": "Browse all listings"
+    },
     "hero": {
       "headline": "Real estate, <bleu>at home</bleu> and <corail>direct</corail>.",
       "subline": "Listings from owner to owner — no agency, no intermediary."
     }
+  },
+  "faq": {
+    "pageIntro": "Questions about listings, direct contact, or how papimo works? We’re expanding this page with more answers. In the meantime, email us and we’ll get back to you.",
+    "q1": "How do I publish a listing and get it approved?",
+    "q2": "How do I message buyers or sellers safely?",
+    "q3": "What are the plans and pricing on papimo?",
+    "backHome": "Back to home"
   },
   "cookies": {
     "title": "Cookie preferences",

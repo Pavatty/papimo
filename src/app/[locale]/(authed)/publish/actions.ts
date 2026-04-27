@@ -8,6 +8,7 @@ import { z } from "zod";
 import { captureServerEvent } from "@/lib/analytics/events";
 import { moderateListing } from "@/lib/moderation/listing";
 import { createClient } from "@/lib/supabase/server";
+import type { TablesInsert } from "@/types/database";
 
 const publishDraftSchema = z.object({
   id: z.string().uuid().optional(),
@@ -67,18 +68,32 @@ export async function saveDraft(input: SaveDraftInput) {
   if (!user) return { ok: false, error: "Unauthorized" };
 
   const draftId = parsed.data.id ?? randomUUID();
-  const payload = {
-    ...parsed.data,
+  const d = parsed.data;
+  const payload: TablesInsert<"listings"> = {
     id: draftId,
     owner_id: user.id,
-    type: parsed.data.type ?? "sale",
-    category: parsed.data.category ?? "apartment",
-    title: parsed.data.title?.trim() ? parsed.data.title : "Brouillon",
-    price: parsed.data.price && parsed.data.price > 0 ? parsed.data.price : 1,
-    city: parsed.data.city?.trim() ? parsed.data.city : "À préciser",
-    status: "draft" as const,
-    country_code: parsed.data.country_code ?? "TN",
-    currency: parsed.data.currency ?? "TND",
+    type: d.type ?? "sale",
+    category: d.category ?? "apartment",
+    title: d.title?.trim() ? d.title : "Brouillon",
+    price: d.price && d.price > 0 ? d.price : 1,
+    city: d.city?.trim() ? d.city : "À préciser",
+    status: "draft",
+    country_code: d.country_code ?? "TN",
+    currency: d.currency ?? "TND",
+    address: d.address?.trim() ? d.address : null,
+    description: d.description?.trim() ? d.description : null,
+    surface_m2: d.surface_m2 ?? null,
+    rooms: d.rooms ?? null,
+    bedrooms: d.bedrooms ?? null,
+    bathrooms: d.bathrooms ?? null,
+    floor: d.floor ?? null,
+    total_floors: d.total_floors ?? null,
+    year_built: d.year_built ?? null,
+    latitude: d.latitude ?? null,
+    longitude: d.longitude ?? null,
+    neighborhood: d.neighborhood?.trim() ? d.neighborhood : null,
+    governorate: d.governorate?.trim() ? d.governorate : null,
+    pack: d.pack ?? "free",
   };
 
   const { data: listing, error } = await supabase
@@ -105,8 +120,8 @@ export async function saveDraft(input: SaveDraftInput) {
   await captureServerEvent("publish_started", user.id, {
     listingId: listing.id,
   });
-  revalidateTag("listings");
-  revalidateTag(`listing:${listing.id}`);
+  revalidateTag("listings", "default");
+  revalidateTag(`listing:${listing.id}`, "default");
 
   return { ok: true, id: listing.id, updatedAt: listing.updated_at };
 }
@@ -185,11 +200,12 @@ export async function reorderImages(listingId: string, orderedIds: string[]) {
   }
 
   for (let idx = 0; idx < orderedIds.length; idx += 1) {
-    const id = orderedIds[idx];
+    const imageId = orderedIds[idx];
+    if (imageId === undefined) continue;
     await supabase
       .from("listing_images")
       .update({ position: idx, is_cover: idx === 0 })
-      .eq("id", id)
+      .eq("id", imageId)
       .eq("listing_id", listingId);
   }
   return { ok: true };
@@ -238,12 +254,16 @@ export async function getPriceMedian(
   type: "sale" | "rent",
 ) {
   const supabase = await createClient();
-  const { data } = await supabase
+  let priceQuery = supabase
     .from("price_index")
     .select("avg_price_m2_sale, avg_price_m2_rent")
     .eq("country_code", country_code)
-    .eq("city", city)
-    .eq("neighborhood", neighborhood)
+    .eq("city", city);
+  priceQuery =
+    neighborhood === null
+      ? priceQuery.is("neighborhood", null)
+      : priceQuery.eq("neighborhood", neighborhood);
+  const { data } = await priceQuery
     .order("period", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -301,8 +321,8 @@ export async function submitForReview(listingId: string) {
     listingId,
     status: targetStatus,
   });
-  revalidateTag("listings");
-  revalidateTag(`listing:${listingId}`);
+  revalidateTag("listings", "default");
+  revalidateTag(`listing:${listingId}`, "default");
 
   return { ok: true, status: targetStatus, moderation };
 }

@@ -74,7 +74,11 @@ test("admin can approve pending listing from moderation queue", async ({
     })
     .select("id")
     .single();
-  test.skip(!listing?.id, "Listing creation failed");
+  const listingId = listing?.id;
+  if (!listingId) {
+    test.skip(true, "Listing creation failed");
+    return;
+  }
 
   const magicLink = await admin.auth.admin.generateLink({
     type: "magiclink",
@@ -94,7 +98,7 @@ test("admin can approve pending listing from moderation queue", async ({
   const { data: updated } = await admin
     .from("listings")
     .select("status")
-    .eq("id", listing.id)
+    .eq("id", listingId)
     .single();
   expect(updated?.status).toBe("active");
 });

@@ -27,8 +27,12 @@ test("critical flow: signup magic link -> publish free -> listing visible on sea
     email,
     options: { redirectTo: "http://localhost:3000/fr/auth/callback" },
   });
+  const signupLink = linkData?.properties?.action_link;
+  if (!signupLink) {
+    throw new Error("Missing magic link for critical flow");
+  }
 
-  await page.goto(linkData.properties.action_link);
+  await page.goto(signupLink);
   await page.goto("/fr/publish");
   await page.getByRole("button", { name: "Vente" }).click();
   await page.getByRole("button", { name: "Suivant" }).click();
@@ -69,6 +73,9 @@ test("critical flow: signup magic link -> publish free -> listing visible on sea
     .limit(1)
     .single();
   expect(listing).toBeTruthy();
+  if (!listing) {
+    return;
+  }
   if (listing.status !== "active") {
     await admin
       .from("listings")
@@ -123,8 +130,13 @@ test("critical flow: search -> listing -> message conversation realtime", async 
     email: sellerEmail,
     options: { redirectTo: "http://localhost:3000/fr/auth/callback" },
   });
+  const buyerAction = buyerLink.data.properties?.action_link;
+  const sellerAction = sellerLink.data.properties?.action_link;
+  if (!buyerAction || !sellerAction) {
+    throw new Error("Missing magic link for buyer/seller");
+  }
 
-  await page.goto(buyerLink.data.properties.action_link);
+  await page.goto(buyerAction);
   await page.goto("/fr/search?q=La%20Marsa");
   await page.getByText("Appartement Vente La Marsa").first().click();
   await page.getByRole("link", { name: "Envoyer un message" }).first().click();
@@ -134,7 +146,7 @@ test("critical flow: search -> listing -> message conversation realtime", async 
 
   const sellerContext = await browser.newContext();
   const sellerPage = await sellerContext.newPage();
-  await sellerPage.goto(sellerLink.data.properties.action_link);
+  await sellerPage.goto(sellerAction);
   await sellerPage.goto("/fr/messages");
   await expect(sellerPage.getByText("Bonjour vendeur")).toBeVisible();
 });
@@ -179,13 +191,20 @@ test("critical flow: admin moderation + user visibility update", async ({
     })
     .select("id")
     .single();
+  if (!listing?.id) {
+    throw new Error("Failed to create listing for moderation test");
+  }
   const adminLink = await adminClient.auth.admin.generateLink({
     type: "magiclink",
     email: adminEmail,
     options: { redirectTo: "http://localhost:3000/fr/auth/callback" },
   });
+  const adminAction = adminLink.data.properties?.action_link;
+  if (!adminAction) {
+    throw new Error("Missing admin magic link");
+  }
 
-  await page.goto(adminLink.data.properties.action_link);
+  await page.goto(adminAction);
   await page.goto("/fr/admin/moderation");
   await page.getByRole("button", { name: "Approve" }).first().click();
 
@@ -207,7 +226,11 @@ test("critical flow: normal user cannot access admin", async ({ page }) => {
     email,
     options: { redirectTo: "http://localhost:3000/fr/auth/callback" },
   });
-  await page.goto(link.data.properties.action_link);
+  const normalUserLink = link.data.properties?.action_link;
+  if (!normalUserLink) {
+    throw new Error("Missing magic link");
+  }
+  await page.goto(normalUserLink);
   const response = await page.goto("/fr/admin");
   expect([307, 403]).toContain(response?.status() ?? 0);
 });
