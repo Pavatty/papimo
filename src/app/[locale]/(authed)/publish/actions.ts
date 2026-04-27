@@ -6,6 +6,9 @@ import { revalidateTag } from "next/cache";
 import { z } from "zod";
 
 import { captureServerEvent } from "@/lib/analytics/events";
+import { sendEmail } from "@/lib/email/send";
+import { type EmailLocale } from "@/lib/email/templates/base";
+import { listingPublishedEmail } from "@/lib/email/templates/listing-published";
 import { moderateListing } from "@/lib/moderation/listing";
 import { createClient } from "@/lib/supabase/server";
 import type { TablesInsert } from "@/types/database";
@@ -323,6 +326,30 @@ export async function submitForReview(listingId: string) {
   });
   revalidateTag("listings", "default");
   revalidateTag(`listing:${listingId}`, "default");
+
+  if (targetStatus === "active") {
+    const { data: owner } = await supabase
+      .from("profiles")
+      .select("email, full_name, preferred_language, notifications_email")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (owner?.email && owner.notifications_email !== false) {
+      const preferredLocale =
+        owner.preferred_language === "en" || owner.preferred_language === "ar"
+          ? (owner.preferred_language as EmailLocale)
+          : "fr";
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+      const listingPath = listing.slug || listingId;
+      const { subject, html } = listingPublishedEmail({
+        recipientName: owner.full_name || owner.email,
+        listingTitle: listing.title || "Votre annonce",
+        listingUrl: `${appUrl}/${preferredLocale}/listings/${listingPath}`,
+        locale: preferredLocale,
+      });
+      sendEmail({ to: owner.email, subject, html }).catch(console.error);
+    }
+  }
 
   return { ok: true, status: targetStatus, moderation };
 }

@@ -3,6 +3,9 @@
 import { z } from "zod";
 
 import { captureServerEvent } from "@/lib/analytics/events";
+import { sendEmail } from "@/lib/email/send";
+import { type EmailLocale } from "@/lib/email/templates/base";
+import { newMessageEmail } from "@/lib/email/templates/new-message";
 import { moderateMessageAsync } from "@/lib/messages/moderate-message";
 import { createClient } from "@/lib/supabase/server";
 
@@ -25,7 +28,7 @@ export async function sendMessage(input: z.infer<typeof sendMessageSchema>) {
 
   const { data: convo } = await supabase
     .from("conversations")
-    .select("id, buyer_id, seller_id")
+    .select("id, buyer_id, seller_id, listing_id")
     .eq("id", parsed.data.conversationId)
     .single();
   if (!convo || (convo.buyer_id !== user.id && convo.seller_id !== user.id)) {
@@ -71,6 +74,54 @@ export async function sendMessage(input: z.infer<typeof sendMessageSchema>) {
   await captureServerEvent("message_sent", user.id, {
     conversationId: parsed.data.conversationId,
   });
+
+  const recipientId =
+    convo.buyer_id === user.id ? convo.seller_id : convo.buyer_id;
+  const [{ data: senderProfile }, { data: listing }] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("full_name")
+      .eq("id", user.id)
+      .maybeSingle(),
+    supabase
+      .from("listings")
+      .select("title")
+      .eq("id", convo.listing_id)
+      .maybeSingle(),
+  ]);
+
+  let recipient: {
+    email?: string | null;
+    full_name?: string | null;
+    preferred_language?: string | null;
+    notifications_email?: boolean | null;
+  } | null = null;
+
+  const { data: richRecipient } = await supabase
+    .from("profiles")
+    .select("email, full_name, preferred_language, notifications_email")
+    .eq("id", recipientId)
+    .maybeSingle();
+  recipient = richRecipient;
+
+  if (recipient?.email && recipient.notifications_email !== false) {
+    const preferredLocale =
+      recipient.preferred_language === "en" ||
+      recipient.preferred_language === "ar"
+        ? (recipient.preferred_language as EmailLocale)
+        : "fr";
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+    const { subject, html } = newMessageEmail({
+      recipientName: recipient.full_name || recipient.email,
+      senderName: senderProfile?.full_name || "Utilisateur papimo",
+      listingTitle: listing?.title ?? "Une annonce",
+      messagePreview: parsed.data.content.slice(0, 200),
+      conversationUrl: `${appUrl}/${preferredLocale}/messages/${parsed.data.conversationId}`,
+      locale: preferredLocale,
+    });
+    sendEmail({ to: recipient.email, subject, html }).catch(console.error);
+  }
 
   return { ok: true, message: inserted };
 }
