@@ -47,3 +47,7 @@ supabase.txt
 
 # typescript
 *.tsbuildinfo
+
+# Claude local settings
+.claude/settings.local.json
+supabase/.temp/
