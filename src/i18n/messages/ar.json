@@ -148,5 +148,31 @@
     "homeTitle": "papimo | العقارات بين الخواص",
     "searchTitle": "البحث العقاري | papimo",
     "listingNotFound": "الإعلان غير موجود | papimo"
+  },
+  "profile": {
+    "edit": {
+      "title": "تعديل ملفي الشخصي",
+      "avatar": "صورة الملف الشخصي",
+      "changeAvatar": "تغيير صورتي",
+      "personalInfo": "المعلومات الشخصية",
+      "fullName": "الاسم الكامل",
+      "phone": "الهاتف",
+      "phonePlaceholder": "+216 22 162 261",
+      "bio": "نبذة عني",
+      "bioPlaceholder": "بضع كلمات للتعريف بنفسك (حد أقصى 500 حرف)",
+      "accountType": "نوع الحساب",
+      "individual": "فردي",
+      "professional": "مهني",
+      "preferences": "التفضيلات",
+      "language": "اللغة المفضلة",
+      "emailNotifications": "تلقي إشعارات عبر البريد الإلكتروني",
+      "pushNotifications": "تلقي إشعارات فورية",
+      "save": "حفظ التعديلات",
+      "saved": "تم تحديث الملف الشخصي بنجاح",
+      "error": "حدث خطأ",
+      "dangerZone": "منطقة الخطر",
+      "changeEmail": "تغيير بريدي الإلكتروني",
+      "deleteAccount": "حذف حسابي"
+    }
   }
 }

@@ -148,5 +148,31 @@
     "homeTitle": "papimo | Real estate between private owners",
     "searchTitle": "Real estate search | papimo",
     "listingNotFound": "Listing not found | papimo"
+  },
+  "profile": {
+    "edit": {
+      "title": "Edit my profile",
+      "avatar": "Profile photo",
+      "changeAvatar": "Change my photo",
+      "personalInfo": "Personal information",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "phonePlaceholder": "+216 22 162 261",
+      "bio": "About me",
+      "bioPlaceholder": "A few words to introduce yourself (max 500 characters)",
+      "accountType": "Account type",
+      "individual": "Individual",
+      "professional": "Professional",
+      "preferences": "Preferences",
+      "language": "Preferred language",
+      "emailNotifications": "Receive email notifications",
+      "pushNotifications": "Receive push notifications",
+      "save": "Save changes",
+      "saved": "Profile updated successfully",
+      "error": "Something went wrong",
+      "dangerZone": "Danger zone",
+      "changeEmail": "Change my email",
+      "deleteAccount": "Delete my account"
+    }
   }
 }
