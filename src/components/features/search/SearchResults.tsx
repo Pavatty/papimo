@@ -9,7 +9,7 @@ import { ListingCard } from "./ListingCard";
 type Props = {
   results: SearchResult[];
   loading: boolean;
-  onReset: () => void;
+  onReset?: () => void;
 };
 
 export function SearchResults({ results, loading, onReset }: Props) {
@@ -43,13 +43,15 @@ export function SearchResults({ results, loading, onReset }: Props) {
           {t("emptyState.title")}
         </h3>
         <p className="text-ink-soft mb-5 text-sm">{t("emptyState.message")}</p>
-        <button
-          type="button"
-          onClick={onReset}
-          className="border-line rounded-lg border px-4 py-2 text-sm"
-        >
-          {t("emptyState.reset")}
-        </button>
+        {onReset ? (
+          <button
+            type="button"
+            onClick={onReset}
+            className="border-line rounded-lg border px-4 py-2 text-sm"
+          >
+            {t("emptyState.reset")}
+          </button>
+        ) : null}
       </div>
     );
   }

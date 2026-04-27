@@ -26,7 +26,7 @@ export function ListingCard({ listing }: Props) {
       <div className="relative aspect-video">
         <Image
           src={listing.main_photo || listing.photos?.[0] || "/placeholder.svg"}
-          alt={listing.title}
+          alt={listing.title ?? ""}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
           className="object-cover"
