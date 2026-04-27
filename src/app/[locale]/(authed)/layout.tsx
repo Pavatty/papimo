@@ -1,9 +1,11 @@
 import {
+  ChevronDown,
   CreditCard,
   LayoutGrid,
   LogOut,
   MessageSquare,
   Search,
+  User,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
@@ -96,12 +98,50 @@ export default async function AuthedLayout({ children, params }: Props) {
               <CreditCard className="h-3.5 w-3.5" />
               Facturation
             </Link>
-            <Link
-              href={`/profile/${user.id}`}
-              className="text-bleu text-sm font-medium hover:underline"
-            >
-              Profil
-            </Link>
+            <details className="relative">
+              <summary className="border-line text-ink flex cursor-pointer list-none items-center gap-2 rounded-lg border bg-white px-2.5 py-1.5 text-sm">
+                {profile?.avatar_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={profile.avatar_url}
+                    alt={displayName}
+                    className="h-6 w-6 rounded-full object-cover"
+                  />
+                ) : (
+                  <User className="h-4 w-4" />
+                )}
+                <span className="max-w-28 truncate">{displayName}</span>
+                <ChevronDown className="h-3.5 w-3.5" />
+              </summary>
+              <div className="border-line absolute right-0 z-20 mt-2 w-52 rounded-xl border bg-white p-2 shadow-md">
+                <Link
+                  href="/profile/edit"
+                  className="hover:bg-creme-pale block rounded-md px-2 py-1.5 text-sm"
+                >
+                  Mon profil
+                </Link>
+                <Link
+                  href="/dashboard/listings"
+                  className="hover:bg-creme-pale block rounded-md px-2 py-1.5 text-sm"
+                >
+                  Mes annonces
+                </Link>
+                <Link
+                  href="/dashboard/billing"
+                  className="hover:bg-creme-pale block rounded-md px-2 py-1.5 text-sm"
+                >
+                  Facturation
+                </Link>
+                <form action={signOut} className="mt-1">
+                  <button
+                    type="submit"
+                    className="hover:bg-creme-pale text-danger w-full rounded-md px-2 py-1.5 text-left text-sm"
+                  >
+                    Déconnexion
+                  </button>
+                </form>
+              </div>
+            </details>
             <p className="text-ink-soft hidden text-xs md:block">
               {displayName}
             </p>
