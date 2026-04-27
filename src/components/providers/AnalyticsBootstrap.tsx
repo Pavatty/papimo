@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { readConsent } from "@/components/shared/CookieConsentBanner";
+import { readConsent } from "@/lib/consent";
 
 function injectScript(src: string, attrs: Record<string, string> = {}) {
   const exists = document.querySelector(`script[src="${src}"]`);

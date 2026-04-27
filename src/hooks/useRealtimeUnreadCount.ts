@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/data/supabase/client";
 
 export function useRealtimeUnreadCount(userId: string | null) {
   const [count, setCount] = useState(0);

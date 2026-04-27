@@ -10,7 +10,7 @@ import { sendEmail } from "@/lib/email/send";
 import { type EmailLocale } from "@/lib/email/templates/base";
 import { listingPublishedEmail } from "@/lib/email/templates/listing-published";
 import { moderateListing } from "@/lib/moderation/listing";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 import type { TablesInsert } from "@/types/database";
 
 const publishDraftSchema = z.object({

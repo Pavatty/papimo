@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/data/supabase/client";
 
 import { SearchFilters } from "./SearchFilters";
 import { SearchMap } from "./SearchMap";

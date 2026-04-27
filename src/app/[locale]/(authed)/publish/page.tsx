@@ -6,7 +6,7 @@ import { PublishPageWithStepper } from "@/components/features/publish/PublishPag
 import type { PublishFormState } from "@/components/features/publish/types";
 import { Link } from "@/i18n/navigation";
 import { normalizeAmenityKey } from "@/lib/amenities";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 function buildInitialDraft(): PublishFormState {
   return {

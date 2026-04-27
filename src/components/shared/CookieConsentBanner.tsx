@@ -3,66 +3,19 @@
 import { useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 
-export type CookieConsent = {
-  analytics: boolean;
-  productAnalytics: boolean;
-};
+import {
+  type CookieConsent,
+  readConsent,
+  subscribeConsent,
+  writeConsent,
+} from "@/lib/consent";
 
-const COOKIE_KEY = "papimo_cookie_consent";
-const STORAGE_KEY = "papimo_cookie_consent_v1";
-const THIRTEEN_MONTHS_SECONDS = 60 * 60 * 24 * 30 * 13;
-
-function writeConsent(consent: CookieConsent) {
-  const serialized = encodeURIComponent(JSON.stringify(consent));
-  document.cookie = `${COOKIE_KEY}=${serialized}; path=/; max-age=${THIRTEEN_MONTHS_SECONDS}; SameSite=Lax`;
-  try {
-    window.localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ ...consent, at: new Date().toISOString() }),
-    );
-  } catch {
-    // localStorage may be unavailable (private mode, SSR) — cookie still wins
-  }
-}
-
-export function readConsent(): CookieConsent | null {
-  if (typeof document === "undefined") return null;
-  const match = document.cookie
-    .split("; ")
-    .find((entry) => entry.startsWith(`${COOKIE_KEY}=`));
-  if (match) {
-    try {
-      const raw = match.split("=")[1];
-      if (raw !== undefined) {
-        return JSON.parse(decodeURIComponent(raw)) as CookieConsent;
-      }
-    } catch {
-      // fall through to localStorage
-    }
-  }
-  try {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored) as Partial<CookieConsent>;
-      if (
-        typeof parsed.analytics === "boolean" &&
-        typeof parsed.productAnalytics === "boolean"
-      ) {
-        return {
-          analytics: parsed.analytics,
-          productAnalytics: parsed.productAnalytics,
-        };
-      }
-    }
-  } catch {
-    // ignore
-  }
-  return null;
-}
+// Re-export for legacy callers (will be removed in Session 2 once they all migrate to "@/lib/consent")
+export { readConsent };
+export type { CookieConsent };
 
 function subscribe(callback: () => void) {
-  window.addEventListener("papimo:consent-updated", callback);
-  return () => window.removeEventListener("papimo:consent-updated", callback);
+  return subscribeConsent(callback);
 }
 
 export function CookieConsentBanner() {
@@ -78,7 +31,6 @@ export function CookieConsentBanner() {
 
   const save = (next: CookieConsent) => {
     writeConsent(next);
-    window.dispatchEvent(new CustomEvent("papimo:consent-updated"));
   };
 
   if (consent !== null) return null;

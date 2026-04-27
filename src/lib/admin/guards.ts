@@ -1,6 +1,6 @@
 import { forbidden, redirect } from "next/navigation";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 export async function requireAdmin(locale?: string) {
   const supabase = await createClient();

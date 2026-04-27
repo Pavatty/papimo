@@ -7,7 +7,7 @@ import { sendEmail } from "@/lib/email/send";
 import { type EmailLocale } from "@/lib/email/templates/base";
 import { newMessageEmail } from "@/lib/email/templates/new-message";
 import { moderateMessageAsync } from "@/lib/messages/moderate-message";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 const sendMessageSchema = z.object({
   conversationId: z.string().uuid(),

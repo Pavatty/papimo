@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { ConversationList } from "@/components/features/messages/ConversationList";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 import { createOrGetConversation } from "./actions";
 

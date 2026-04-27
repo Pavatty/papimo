@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-import { getSupabaseEnv } from "@/lib/supabase/env";
+import { getSupabaseEnv } from "@/data/supabase/env";
 import type { Database } from "@/types/database";
 
 export function createAdminClient() {

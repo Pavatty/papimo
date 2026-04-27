@@ -46,7 +46,7 @@ export function ListingSimilar({ locale, listings }: Props) {
                 {listing.title}
               </p>
               <p className="text-bleu mt-1 text-sm font-semibold">
-                {formatPrice(listing.price, listing.currency)}
+                {formatPrice(listing.price, listing.currency, listing.type)}
               </p>
               <p className="text-ink-soft mt-1 text-xs">{listing.city}</p>
             </div>

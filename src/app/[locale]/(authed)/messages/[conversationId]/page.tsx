@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { ConversationList } from "@/components/features/messages/ConversationList";
 import { ConversationClient } from "@/components/features/messages/ConversationClient";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 type Props = {
   params: Promise<{ locale: string; conversationId: string }>;

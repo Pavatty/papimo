@@ -1,11 +1,42 @@
+type TransactionType = string | null | undefined;
+
+export interface FormatPriceOptions {
+  locale?: string;
+  rentSuffix?: string;
+  fallback?: string;
+}
+
+// Source de vérité unique pour l'affichage des prix d'annonce immobilière.
+// Format compact : "450 000 TND" pour vente, "1 200 TND / mois" pour location.
 export function formatPrice(
-  value: number,
-  currency: "TND" | "EUR" | "USD" | "MAD" | "DZD",
-  locale = "fr-TN",
-) {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency,
-    maximumFractionDigits: 0,
-  }).format(value);
+  price: number | null | undefined,
+  currency: string | null | undefined,
+  transactionType: TransactionType = null,
+  options: FormatPriceOptions = {},
+): string {
+  const {
+    locale = "fr-FR",
+    rentSuffix = " / mois",
+    fallback = "Prix sur demande",
+  } = options;
+  if (price == null) return fallback;
+  const formatted = new Intl.NumberFormat(locale).format(price);
+  const isRent =
+    transactionType === "rent" || transactionType === "seasonal_rent";
+  const suffix = isRent ? rentSuffix : "";
+  return `${formatted} ${currency ?? "TND"}${suffix}`;
+}
+
+export const TRANSACTION_BADGES: Record<string, string> = {
+  sale: "À vendre",
+  rent: "À louer",
+  seasonal_rent: "Location saisonnière",
+  colocation: "Colocation",
+};
+
+export function getTransactionBadge(
+  transactionType: string | null | undefined,
+): string | null {
+  if (!transactionType) return null;
+  return TRANSACTION_BADGES[transactionType] ?? transactionType;
 }

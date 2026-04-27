@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.ci.json",
     "e2e": "playwright test",
     "seed": "tsx scripts/seed-demo.ts",
+    "db:types": "npx -y supabase@latest gen types typescript --project-id iwwzxxdgzelfhgpptngq > src/types/database.ts",
     "prepare": "husky"
   },
   "lint-staged": {

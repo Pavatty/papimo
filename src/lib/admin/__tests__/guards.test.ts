@@ -21,7 +21,7 @@ const hoisted = vi.hoisted(() => {
   };
 });
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/data/supabase/server", () => ({
   createClient: hoisted.createClient,
 }));
 vi.mock("next/navigation", () => ({

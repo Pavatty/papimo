@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient } from "@/data/supabase/admin";
 
 export async function GET(request: Request) {
   const authHeader = request.headers.get("authorization");

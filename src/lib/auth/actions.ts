@@ -3,7 +3,7 @@
 import { headers } from "next/headers";
 import { z } from "zod";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 import { checkRateLimit, RATE_LIMITS } from "./rateLimit";
 import { formatPhoneE164 } from "./whatsapp";

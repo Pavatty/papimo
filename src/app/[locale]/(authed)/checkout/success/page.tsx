@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 type Props = {
   params: Promise<{ locale: string }>;

@@ -7,7 +7,7 @@ const { createClientMock, rpcMock } = vi.hoisted(() => ({
   rpcMock: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/data/supabase/server", () => ({
   createClient: createClientMock,
 }));
 

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { ProfileEditForm } from "@/components/features/profile/ProfileEditForm";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 
 type Props = {
   params: Promise<{ locale: string }>;

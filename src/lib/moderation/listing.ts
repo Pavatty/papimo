@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/data/supabase/server";
 import type { Database } from "@/types/database";
 
 type ListingRow = Database["public"]["Tables"]["listings"]["Row"];

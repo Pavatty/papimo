@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { routing } from "@/i18n/routing";
 import { IS_BETA } from "@/lib/beta";
-import { getSupabaseEnv } from "@/lib/supabase/env";
+import { getSupabaseEnv } from "@/data/supabase/env";
 import type { Database } from "@/types/database";
 
 const intlMiddleware = createIntlMiddleware(routing);
