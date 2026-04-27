@@ -2,6 +2,7 @@
 
 import { BedDouble, LandPlot, MapPin, PanelBottom, Tag } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useLocale } from "next-intl";
 
 import { AMENITY_LABELS, getLabel } from "@/lib/constants/listing-labels";
@@ -23,10 +24,12 @@ export function ListingCard({ listing }: Props) {
   return (
     <article className="border-line overflow-hidden rounded-xl border bg-white shadow-sm">
       <div className="relative aspect-video">
-        <img
+        <Image
           src={listing.main_photo || listing.photos?.[0] || "/placeholder.svg"}
           alt={listing.title}
-          className="h-full w-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover"
         />
         <span
           className={`absolute top-2 left-2 rounded-full px-2 py-1 text-xs font-semibold ${badgeClass}`}

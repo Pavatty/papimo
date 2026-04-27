@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Columns2,
@@ -66,37 +66,41 @@ export function SearchPage() {
   const [loading, setLoading] = useState(true);
   const [, startTransition] = useTransition();
 
-  const parseFilters = (): SearchFiltersState => ({
-    transaction_type: searchParams.get("transaction") ?? undefined,
-    property_types:
-      searchParams.get("property_types")?.split(",").filter(Boolean) ?? [],
-    country: searchParams.get("country") ?? "TN",
-    region: searchParams.get("region") ?? undefined,
-    city: searchParams.get("city") ?? undefined,
-    neighborhoods:
-      searchParams.get("neighborhoods")?.split(",").filter(Boolean) ?? [],
-    price_min: searchParams.get("price_min")
-      ? Number(searchParams.get("price_min"))
-      : undefined,
-    price_max: searchParams.get("price_max")
-      ? Number(searchParams.get("price_max"))
-      : undefined,
-    surface_min: searchParams.get("surface_min")
-      ? Number(searchParams.get("surface_min"))
-      : undefined,
-    surface_max: searchParams.get("surface_max")
-      ? Number(searchParams.get("surface_max"))
-      : undefined,
-    rooms_min: searchParams.get("rooms_min")
-      ? Number(searchParams.get("rooms_min"))
-      : undefined,
-    bedrooms_min: searchParams.get("bedrooms_min")
-      ? Number(searchParams.get("bedrooms_min"))
-      : undefined,
-    amenities: searchParams.get("amenities")?.split(",").filter(Boolean) ?? [],
-    sort: searchParams.get("sort") ?? "recent",
-    page: Number(searchParams.get("page") ?? "1"),
-  });
+  const parseFilters = useCallback(
+    (): SearchFiltersState => ({
+      transaction_type: searchParams.get("transaction") ?? undefined,
+      property_types:
+        searchParams.get("property_types")?.split(",").filter(Boolean) ?? [],
+      country: searchParams.get("country") ?? "TN",
+      region: searchParams.get("region") ?? undefined,
+      city: searchParams.get("city") ?? undefined,
+      neighborhoods:
+        searchParams.get("neighborhoods")?.split(",").filter(Boolean) ?? [],
+      price_min: searchParams.get("price_min")
+        ? Number(searchParams.get("price_min"))
+        : undefined,
+      price_max: searchParams.get("price_max")
+        ? Number(searchParams.get("price_max"))
+        : undefined,
+      surface_min: searchParams.get("surface_min")
+        ? Number(searchParams.get("surface_min"))
+        : undefined,
+      surface_max: searchParams.get("surface_max")
+        ? Number(searchParams.get("surface_max"))
+        : undefined,
+      rooms_min: searchParams.get("rooms_min")
+        ? Number(searchParams.get("rooms_min"))
+        : undefined,
+      bedrooms_min: searchParams.get("bedrooms_min")
+        ? Number(searchParams.get("bedrooms_min"))
+        : undefined,
+      amenities:
+        searchParams.get("amenities")?.split(",").filter(Boolean) ?? [],
+      sort: searchParams.get("sort") ?? "recent",
+      page: Number(searchParams.get("page") ?? "1"),
+    }),
+    [searchParams],
+  );
 
   const filters = parseFilters();
   const paramsKey = searchParams.toString();
@@ -150,7 +154,7 @@ export function SearchPage() {
     return () => {
       cancelled = true;
     };
-  }, [paramsKey]);
+  }, [paramsKey, parseFilters]);
 
   const updateFilters = (updates: Partial<SearchFiltersState>) => {
     const params = new URLSearchParams(searchParams.toString());
