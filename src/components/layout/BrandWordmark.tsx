@@ -1,40 +1,39 @@
+import type { JSX } from "react";
+
 import { cn } from "@/lib/utils";
 
-type BrandWordmarkSize = "header" | "footer" | "compact";
+type BrandWordmarkSize = "header" | "footer" | "compact" | "hero";
 
-type Props = {
+type IntrinsicTag = keyof JSX.IntrinsicElements;
+
+interface Props {
   size?: BrandWordmarkSize;
+  as?: IntrinsicTag;
   className?: string;
-  part1?: string;
-  part2?: string;
-};
+}
 
 const SIZE_CLASSES: Record<BrandWordmarkSize, string> = {
-  header: "text-3xl md:text-4xl font-bold",
+  header: "text-3xl md:text-4xl",
   footer: "text-4xl md:text-5xl",
   compact: "text-xl",
+  hero: "text-5xl md:text-7xl",
 };
 
 export function BrandWordmark({
   size = "header",
+  as: Tag = "span",
   className,
-  part1 = "pap",
-  part2 = "imo",
 }: Props) {
   return (
-    <span
+    <Tag
+      aria-label="LODGE"
       className={cn(
-        "inline-flex font-serif leading-none font-medium tracking-tight select-none",
+        "text-vert inline-block leading-none font-black tracking-[-0.04em] uppercase select-none",
         SIZE_CLASSES[size],
         className,
       )}
     >
-      <span className="text-bleu" aria-hidden>
-        {part1}
-      </span>
-      <span className="text-corail" aria-hidden>
-        {part2}
-      </span>
-    </span>
+      LODGE
+    </Tag>
   );
 }

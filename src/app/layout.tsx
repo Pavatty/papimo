@@ -1,4 +1,10 @@
-import { DM_Sans, Geist, Instrument_Serif, Manrope } from "next/font/google";
+import {
+  DM_Sans,
+  Geist,
+  Instrument_Serif,
+  Inter,
+  Manrope,
+} from "next/font/google";
 import type { ReactNode } from "react";
 
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
@@ -30,6 +36,13 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
 type RootLayoutProps = {
   children: ReactNode;
 };
@@ -39,7 +52,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html
       lang="fr"
       suppressHydrationWarning
-      className={`${geist.variable} ${manrope.variable} ${dmSans.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${geist.variable} ${manrope.variable} ${dmSans.variable} ${instrumentSerif.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
         <link rel="preconnect" href="https://api.mapbox.com" crossOrigin="" />

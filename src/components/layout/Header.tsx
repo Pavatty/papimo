@@ -22,15 +22,7 @@ const LOCALES: Locale[] = ["fr", "ar", "en"];
 
 const PRICING_HIDDEN = IS_BETA;
 
-type HeaderProps = {
-  brandPart1?: string;
-  brandPart2?: string;
-};
-
-export function Header({
-  brandPart1 = "pap",
-  brandPart2 = "imo",
-}: HeaderProps = {}) {
+export function Header() {
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const pathname = usePathname();
@@ -76,7 +68,7 @@ export function Header({
           aria-label={t("common.brandName")}
           className="focus-visible:ring-bleu/40 focus-visible:ring-offset-creme inline-flex items-center rounded transition-transform hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-offset-2"
         >
-          <BrandWordmark size="header" part1={brandPart1} part2={brandPart2} />
+          <BrandWordmark size="header" />
         </Link>
 
         <nav
