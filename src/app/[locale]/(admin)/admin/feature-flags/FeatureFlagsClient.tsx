@@ -60,12 +60,14 @@ export function FeatureFlagsClient({ initialFlags, locale }: Props) {
         {flags.map((flag) => (
           <div
             key={flag.key}
-            className="border-bordurewarm-tertiary flex items-center justify-between gap-4 rounded-xl border bg-white px-5 py-4"
+            className="border-bordurewarm-tertiary dark:border-encre/20 flex items-center justify-between gap-4 rounded-xl border bg-white px-5 py-4"
           >
             <div className="min-w-0 flex-1">
-              <p className="text-encre text-sm font-medium">{flag.key}</p>
+              <p className="text-encre dark:text-creme text-sm font-medium">
+                {flag.key}
+              </p>
               {flag.description ? (
-                <p className="text-encre/70 mt-0.5 text-xs">
+                <p className="text-encre/70 dark:text-creme/70 mt-0.5 text-xs">
                   {flag.description}
                 </p>
               ) : null}

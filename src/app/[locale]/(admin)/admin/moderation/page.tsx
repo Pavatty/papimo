@@ -35,23 +35,27 @@ export default async function AdminModerationPage({ params }: Props) {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-encre text-2xl font-bold">
+      <h1 className="font-display text-encre dark:text-creme text-2xl font-bold">
         File de modération
       </h1>
 
-      <section className="border-bordurewarm-tertiary rounded-xl border bg-white p-4">
-        <h2 className="text-encre mb-3 text-lg font-semibold">
+      <section className="border-bordurewarm-tertiary dark:border-encre/20 rounded-xl border bg-white p-4">
+        <h2 className="text-encre dark:text-creme mb-3 text-lg font-semibold">
           Annonces pending
         </h2>
         <div className="space-y-2">
           {(pendingListings.data ?? []).map((item) => (
             <div
               key={item.id}
-              className="border-bordurewarm-tertiary flex items-start justify-between rounded-lg border p-3"
+              className="border-bordurewarm-tertiary dark:border-encre/20 flex items-start justify-between rounded-lg border p-3"
             >
               <div>
-                <p className="text-encre font-medium">{item.title}</p>
-                <p className="text-encre/70 text-xs">{item.city}</p>
+                <p className="text-encre dark:text-creme font-medium">
+                  {item.title}
+                </p>
+                <p className="text-encre/70 dark:text-creme/70 text-xs">
+                  {item.city}
+                </p>
               </div>
               <div className="flex gap-2 text-xs">
                 <form
@@ -89,21 +93,21 @@ export default async function AdminModerationPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-bordurewarm-tertiary rounded-xl border bg-white p-4">
-        <h2 className="text-encre mb-3 text-lg font-semibold">
+      <section className="border-bordurewarm-tertiary dark:border-encre/20 rounded-xl border bg-white p-4">
+        <h2 className="text-encre dark:text-creme mb-3 text-lg font-semibold">
           Messages flaggés
         </h2>
         <div className="space-y-2">
           {(flaggedMessages.data ?? []).map((item) => (
             <div
               key={item.id}
-              className="border-bordurewarm-tertiary flex items-start justify-between rounded-lg border p-3"
+              className="border-bordurewarm-tertiary dark:border-encre/20 flex items-start justify-between rounded-lg border p-3"
             >
               <div>
-                <p className="text-encre line-clamp-2 text-sm">
+                <p className="text-encre dark:text-creme line-clamp-2 text-sm">
                   {item.content}
                 </p>
-                <p className="text-encre/70 text-xs">
+                <p className="text-encre/70 dark:text-creme/70 text-xs">
                   {item.flag_reason ?? "-"}
                 </p>
               </div>
@@ -143,19 +147,23 @@ export default async function AdminModerationPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-bordurewarm-tertiary rounded-xl border bg-white p-4">
-        <h2 className="text-encre mb-3 text-lg font-semibold">
+      <section className="border-bordurewarm-tertiary dark:border-encre/20 rounded-xl border bg-white p-4">
+        <h2 className="text-encre dark:text-creme mb-3 text-lg font-semibold">
           Reports utilisateurs
         </h2>
         <div className="space-y-2">
           {(openReports.data ?? []).map((item) => (
             <div
               key={item.id}
-              className="border-bordurewarm-tertiary flex items-start justify-between rounded-lg border p-3"
+              className="border-bordurewarm-tertiary dark:border-encre/20 flex items-start justify-between rounded-lg border p-3"
             >
               <div>
-                <p className="text-encre text-sm">Raison: {item.reason}</p>
-                <p className="text-encre/70 text-xs">{item.details ?? "-"}</p>
+                <p className="text-encre dark:text-creme text-sm">
+                  Raison: {item.reason}
+                </p>
+                <p className="text-encre/70 dark:text-creme/70 text-xs">
+                  {item.details ?? "-"}
+                </p>
               </div>
               <div className="flex gap-2 text-xs">
                 <form

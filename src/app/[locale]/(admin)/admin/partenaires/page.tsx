@@ -15,7 +15,7 @@ export default async function AdminPartnersPage({ params }: Props) {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-encre text-2xl font-bold">
+      <h1 className="font-display text-encre dark:text-creme text-2xl font-bold">
         Partenaires
       </h1>
       <form
@@ -34,25 +34,25 @@ export default async function AdminPartnersPage({ params }: Props) {
             afterData: { name, type },
           });
         }}
-        className="border-bordurewarm-tertiary flex flex-wrap gap-2 rounded-xl border bg-white p-4"
+        className="border-bordurewarm-tertiary dark:border-encre/20 flex flex-wrap gap-2 rounded-xl border bg-white p-4"
       >
         <input
           name="name"
           placeholder="Nom partenaire"
-          className="border-bordurewarm-tertiary rounded border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded border px-2 py-1.5 text-sm"
         />
         <input
           name="type"
           placeholder="bank/notary/..."
-          className="border-bordurewarm-tertiary rounded border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded border px-2 py-1.5 text-sm"
         />
         <button className="bg-corail rounded px-3 py-1.5 text-sm text-white">
           Créer
         </button>
       </form>
-      <div className="border-bordurewarm-tertiary overflow-auto rounded-xl border bg-white">
+      <div className="border-bordurewarm-tertiary dark:border-encre/20 overflow-auto rounded-xl border bg-white">
         <table className="w-full min-w-[900px] text-sm">
-          <thead className="bg-creme-pale text-encre/70 text-xs">
+          <thead className="bg-creme-pale dark:bg-encre/60 text-encre/70 dark:text-creme/70 text-xs">
             <tr>
               <th className="px-3 py-2 text-left">Nom</th>
               <th className="px-3 py-2 text-left">Type</th>
@@ -63,7 +63,10 @@ export default async function AdminPartnersPage({ params }: Props) {
           </thead>
           <tbody>
             {(partners ?? []).map((p) => (
-              <tr key={p.id} className="border-bordurewarm-tertiary border-t">
+              <tr
+                key={p.id}
+                className="border-bordurewarm-tertiary dark:border-encre/20 border-t"
+              >
                 <td className="px-3 py-2">{p.name}</td>
                 <td className="px-3 py-2">{p.type}</td>
                 <td className="px-3 py-2">{p.leads_count}</td>

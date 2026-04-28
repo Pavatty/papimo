@@ -75,14 +75,18 @@ export function CookieConsentBanner() {
     <aside
       role="dialog"
       aria-label="Gestion des cookies"
-      className="bg-blanc-casse border-bordurewarm-secondary shadow-card-hover rounded-card fixed right-3 bottom-3 left-3 z-[60] border p-5 md:left-auto md:w-[560px]"
+      className="bg-blanc-casse dark:bg-encre/95 border-bordurewarm-secondary dark:border-encre/30 shadow-card-hover rounded-card fixed right-3 bottom-3 left-3 z-[60] border p-5 md:left-auto md:w-[560px]"
     >
-      <h2 className="text-encre font-serif text-lg">{t("title")}</h2>
-      <p className="text-encre/80 mt-1 text-sm">{t("description")}</p>
+      <h2 className="text-encre dark:text-creme font-serif text-lg">
+        {t("title")}
+      </h2>
+      <p className="text-encre/80 dark:text-creme/80 mt-1 text-sm">
+        {t("description")}
+      </p>
 
       {customize ? (
-        <div className="border-bordurewarm-tertiary rounded-control mt-3 space-y-2 border p-3">
-          <label className="text-encre flex items-center justify-between text-sm">
+        <div className="border-bordurewarm-tertiary dark:border-encre/20 rounded-control mt-3 space-y-2 border p-3">
+          <label className="text-encre dark:text-creme flex items-center justify-between text-sm">
             <span>Plausible (analytics web)</span>
             <input
               type="checkbox"
@@ -90,7 +94,7 @@ export function CookieConsentBanner() {
               onChange={(e) => setAnalytics(e.target.checked)}
             />
           </label>
-          <label className="text-encre flex items-center justify-between text-sm">
+          <label className="text-encre dark:text-creme flex items-center justify-between text-sm">
             <span>Posthog (events produit)</span>
             <input
               type="checkbox"
@@ -114,7 +118,7 @@ export function CookieConsentBanner() {
           type="button"
           disabled={submitting}
           onClick={() => save({ analytics: false, productAnalytics: false })}
-          className="bg-creme-foncee hover:bg-bordurewarm-tertiary text-encre rounded-control px-4 py-2 text-sm font-medium transition disabled:opacity-50"
+          className="bg-creme-foncee dark:bg-encre/40 hover:bg-bordurewarm-tertiary text-encre dark:text-creme rounded-control px-4 py-2 text-sm font-medium transition disabled:opacity-50"
         >
           {t("rejectAll")}
         </button>

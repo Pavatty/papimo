@@ -97,7 +97,7 @@ export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
         {items.map((row) => (
           <div
             key={row.id}
-            className={`border-bordurewarm-tertiary rounded-xl border bg-white p-4 transition ${row.is_active ? "" : "opacity-50"}`}
+            className={`border-bordurewarm-tertiary dark:border-encre/20 rounded-xl border bg-white p-4 transition ${row.is_active ? "" : "opacity-50"}`}
           >
             {editing === row.id ? (
               <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -105,7 +105,7 @@ export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
                   ["label_fr", "label_ar", "label_en", "sort_order"] as const
                 ).map((field) => (
                   <div key={field}>
-                    <label className="text-encre/70 mb-1 block text-xs">
+                    <label className="text-encre/70 dark:text-creme/70 mb-1 block text-xs">
                       {field}
                     </label>
                     <input
@@ -120,7 +120,7 @@ export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
                               : e.target.value,
                         }))
                       }
-                      className="border-bordurewarm-tertiary text-encre focus:ring-bleu w-full rounded border bg-white px-2 py-1.5 text-sm focus:ring-1 focus:outline-none"
+                      className="border-bordurewarm-tertiary dark:border-encre/20 text-encre dark:text-creme focus:ring-bleu w-full rounded border bg-white px-2 py-1.5 text-sm focus:ring-1 focus:outline-none"
                     />
                   </div>
                 ))}
@@ -136,7 +136,7 @@ export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
                   <button
                     type="button"
                     onClick={cancelEdit}
-                    className="text-encre/70 hover:text-encre px-4 py-2 text-xs transition"
+                    className="text-encre/70 dark:text-creme/70 hover:text-encre px-4 py-2 text-xs transition"
                   >
                     Annuler
                   </button>
@@ -145,10 +145,10 @@ export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
             ) : (
               <div className="flex items-center justify-between gap-4">
                 <div className="min-w-0 flex-1">
-                  <p className="text-encre text-sm font-medium">
+                  <p className="text-encre dark:text-creme text-sm font-medium">
                     {row.label_fr}
                   </p>
-                  <p className="text-encre/70 mt-0.5 truncate text-xs">
+                  <p className="text-encre/70 dark:text-creme/70 mt-0.5 truncate text-xs">
                     {row.label_ar} · {row.label_en} · code: {row.code}
                     {row.category ? ` · ${row.category}` : ""}
                   </p>
@@ -158,7 +158,7 @@ export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
                     type="button"
                     onClick={() => toggleActive(row.id, row.is_active)}
                     disabled={pending}
-                    className="text-encre/70 hover:text-encre text-xs transition disabled:opacity-50"
+                    className="text-encre/70 dark:text-creme/70 hover:text-encre text-xs transition disabled:opacity-50"
                   >
                     {row.is_active ? "Désactiver" : "Réactiver"}
                   </button>

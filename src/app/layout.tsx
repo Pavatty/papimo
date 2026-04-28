@@ -1,6 +1,8 @@
 import { DM_Sans, Geist, Instrument_Serif, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
 
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
+
 import "./globals.css";
 
 const geist = Geist({
@@ -36,6 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
       lang="fr"
+      suppressHydrationWarning
       className={`${geist.variable} ${manrope.variable} ${dmSans.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <head>
@@ -46,7 +49,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           crossOrigin=""
         />
       </head>
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -33,10 +33,10 @@ export default async function BrandSettingsPage({ params }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="font-display text-encre text-2xl font-bold">
+        <h1 className="font-display text-encre dark:text-creme text-2xl font-bold">
           Identité de marque
         </h1>
-        <p className="text-encre/70 mt-1 text-sm">
+        <p className="text-encre/70 dark:text-creme/70 mt-1 text-sm">
           Le nom commercial et le slogan visibles sur le site.
         </p>
       </div>

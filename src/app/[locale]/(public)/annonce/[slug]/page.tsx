@@ -107,7 +107,10 @@ export default async function ListingDetailPage({
 
   return (
     <article className="max-w-container mx-auto px-4 py-8 md:px-6 md:py-12 lg:px-8">
-      <nav aria-label="Fil d'Ariane" className="text-muted mb-6 text-sm">
+      <nav
+        aria-label="Fil d'Ariane"
+        className="text-muted dark:text-creme/60 mb-6 text-sm"
+      >
         <Link href={`/${locale}`} className="hover:text-bleu">
           {t("common.brandName")}
         </Link>
@@ -116,7 +119,7 @@ export default async function ListingDetailPage({
           {t("navigation.search")}
         </Link>
         <span className="mx-2">›</span>
-        <span className="text-encre">{listing.title}</span>
+        <span className="text-encre dark:text-creme">{listing.title}</span>
       </nav>
 
       <header className="mb-8">
@@ -125,10 +128,10 @@ export default async function ListingDetailPage({
             {badge}
           </span>
         )}
-        <h1 className="text-encre mb-2 font-serif text-3xl leading-tight md:text-4xl">
+        <h1 className="text-encre dark:text-creme mb-2 font-serif text-3xl leading-tight md:text-4xl">
           {listing.title}
         </h1>
-        <p className="text-muted text-base">
+        <p className="text-muted dark:text-creme/60 text-base">
           {listing.neighborhood ? `${listing.neighborhood} · ` : ""}
           {listing.city ?? ""}
         </p>
@@ -151,10 +154,10 @@ export default async function ListingDetailPage({
 
           {listing.description && (
             <section>
-              <h2 className="text-encre mb-4 font-serif text-xl">
+              <h2 className="text-encre dark:text-creme mb-4 font-serif text-xl">
                 Description
               </h2>
-              <p className="text-encre/80 leading-relaxed whitespace-pre-line">
+              <p className="text-encre/80 dark:text-creme/80 leading-relaxed whitespace-pre-line">
                 {listing.description}
               </p>
             </section>

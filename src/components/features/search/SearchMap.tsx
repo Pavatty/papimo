@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
+import { useTheme } from "next-themes";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import type { SearchResult } from "./SearchPage";
@@ -15,17 +16,29 @@ export function SearchMap({ results }: { results: SearchResult[] }) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const markers = useRef<mapboxgl.Marker[]>([]);
+  const { resolvedTheme } = useTheme();
+  const mapStyle =
+    resolvedTheme === "dark"
+      ? "mapbox://styles/mapbox/dark-v11"
+      : "mapbox://styles/mapbox/streets-v12";
 
   useEffect(() => {
     if (!mapContainer.current || map.current || !MAPBOX_TOKEN) return;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v12",
+      style: mapStyle,
       center: [10.18, 36.81],
       zoom: 9,
     });
     map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (map.current) {
+      map.current.setStyle(mapStyle);
+    }
+  }, [mapStyle]);
 
   useEffect(() => {
     if (!map.current) return;

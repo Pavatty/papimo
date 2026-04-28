@@ -14,10 +14,12 @@ export default async function AdminLeadsPage({ params }: Props) {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-encre text-2xl font-bold">Leads</h1>
-      <div className="border-bordurewarm-tertiary overflow-auto rounded-xl border bg-white">
+      <h1 className="font-display text-encre dark:text-creme text-2xl font-bold">
+        Leads
+      </h1>
+      <div className="border-bordurewarm-tertiary dark:border-encre/20 overflow-auto rounded-xl border bg-white">
         <table className="w-full min-w-[850px] text-sm">
-          <thead className="bg-creme-pale text-encre/70 text-xs">
+          <thead className="bg-creme-pale dark:bg-encre/60 text-encre/70 dark:text-creme/70 text-xs">
             <tr>
               <th className="px-3 py-2 text-left">ID</th>
               <th className="px-3 py-2 text-left">Type</th>
@@ -30,9 +32,11 @@ export default async function AdminLeadsPage({ params }: Props) {
             {(leads ?? []).map((lead) => (
               <tr
                 key={lead.id}
-                className="border-bordurewarm-tertiary border-t"
+                className="border-bordurewarm-tertiary dark:border-encre/20 border-t"
               >
-                <td className="text-encre/70 px-3 py-2 text-xs">{lead.id}</td>
+                <td className="text-encre/70 dark:text-creme/70 px-3 py-2 text-xs">
+                  {lead.id}
+                </td>
                 <td className="px-3 py-2">{lead.type}</td>
                 <td className="px-3 py-2">{lead.status}</td>
                 <td className="px-3 py-2">{lead.price ?? "-"}</td>

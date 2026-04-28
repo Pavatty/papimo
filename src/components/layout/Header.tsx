@@ -8,10 +8,12 @@ import {
 } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { type Locale, useLocale, useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
 import { useState } from "react";
 
 import { BrandWordmark } from "@/components/layout/BrandWordmark";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { ThemeSwitcher } from "@/components/theme/ThemeSwitcher";
 import { Link, usePathname } from "@/i18n/navigation";
 import { IS_BETA } from "@/lib/beta";
 import { cn } from "@/lib/utils";
@@ -35,11 +37,15 @@ export function Header({
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
 
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   const { scrollY } = useScroll();
   const headerBg = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(251, 246, 236, 0.5)", "rgba(255, 255, 255, 0.9)"],
+    isDark
+      ? ["rgba(26, 26, 26, 0.5)", "rgba(31, 31, 31, 0.9)"]
+      : ["rgba(251, 246, 236, 0.5)", "rgba(255, 255, 255, 0.9)"],
   );
   const headerBorder = useTransform(scrollY, [0, 80], [0, 1]);
 
@@ -62,7 +68,7 @@ export function Header({
         backgroundColor: headerBg,
         borderBottomWidth: headerBorder,
       }}
-      className="border-bordurewarm-tertiary sticky top-0 z-50 h-16 border-b backdrop-blur"
+      className="border-bordurewarm-tertiary dark:border-encre/20 sticky top-0 z-50 h-16 border-b backdrop-blur"
     >
       <div className="max-w-container mx-auto flex h-full items-center justify-between px-4 md:px-6 lg:px-8">
         <Link
@@ -88,7 +94,7 @@ export function Header({
                 "focus-visible:ring-bleu focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
                 isActive(link.href)
                   ? "text-bleu after:w-full"
-                  : "text-encre hover:text-bleu",
+                  : "text-encre dark:text-creme hover:text-bleu dark:hover:text-bleu",
               )}
             >
               {link.label}
@@ -97,9 +103,10 @@ export function Header({
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeSwitcher />
           <nav
             aria-label={t("a11y.languageMenu")}
-            className="border-bordurewarm-tertiary flex items-center gap-1 border-r pr-3"
+            className="border-bordurewarm-tertiary dark:border-encre/20 flex items-center gap-1 border-r pr-3"
           >
             {LOCALES.map((l) => (
               <Link
@@ -151,7 +158,7 @@ export function Header({
           aria-expanded={open}
           aria-controls="header-mobile-menu"
           aria-label={open ? "Close menu" : t("a11y.mainMenu")}
-          className="text-encre rounded-control focus-visible:ring-bleu inline-flex h-10 w-10 items-center justify-center focus-visible:ring-2 focus-visible:outline-none md:hidden"
+          className="text-encre dark:text-creme rounded-control focus-visible:ring-bleu inline-flex h-10 w-10 items-center justify-center focus-visible:ring-2 focus-visible:outline-none md:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -175,7 +182,7 @@ export function Header({
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
-              className="bg-blanc-casse border-bordurewarm-tertiary fixed inset-y-16 right-0 z-50 w-72 max-w-[85%] overflow-y-auto border-l shadow-2xl md:hidden"
+              className="bg-blanc-casse border-bordurewarm-tertiary dark:bg-encre dark:border-encre/20 fixed inset-y-16 right-0 z-50 w-72 max-w-[85%] overflow-y-auto border-l shadow-2xl md:hidden"
             >
               <nav
                 className="flex flex-col gap-1 p-5"
@@ -191,13 +198,13 @@ export function Header({
                       "rounded-control px-3 py-2 text-base transition",
                       isActive(link.href)
                         ? "text-bleu bg-bleu-pale font-medium"
-                        : "text-encre hover:bg-creme-foncee",
+                        : "text-encre dark:text-creme hover:bg-creme-foncee dark:hover:bg-encre/40",
                     )}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <hr className="border-bordurewarm-tertiary my-2" />
+                <hr className="border-bordurewarm-tertiary dark:border-encre/20 my-2" />
                 <div className="flex items-center gap-1 px-3 py-1">
                   {LOCALES.map((l) => (
                     <Link
@@ -219,7 +226,7 @@ export function Header({
                     </Link>
                   ))}
                 </div>
-                <hr className="border-bordurewarm-tertiary my-2" />
+                <hr className="border-bordurewarm-tertiary dark:border-encre/20 my-2" />
                 {user ? (
                   <Link
                     href="/dashboard"

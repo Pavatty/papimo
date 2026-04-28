@@ -58,13 +58,13 @@ export async function HomePageSections() {
   return (
     <>
       <AnimatedSection
-        className="border-bordurewarm-tertiary border-y bg-white/40 py-16 md:py-20"
+        className="border-bordurewarm-tertiary dark:border-encre/20 border-y bg-white/40 py-16 md:py-20"
         aria-labelledby="how-heading"
       >
         <div className="mx-auto max-w-6xl px-4 md:px-6">
           <h2
             id="how-heading"
-            className="font-heading text-encre text-center text-2xl font-bold tracking-tight md:text-3xl"
+            className="font-heading text-encre dark:text-creme text-center text-2xl font-bold tracking-tight md:text-3xl"
           >
             {t("howItWorks.title")}
           </h2>
@@ -90,13 +90,13 @@ export async function HomePageSections() {
               return (
                 <li
                   key={step.title}
-                  className="border-bordurewarm-tertiary bg-creme-pale/80 rounded-2xl border p-5 shadow-sm"
+                  className="border-bordurewarm-tertiary dark:border-encre/20 bg-creme-pale/80 rounded-2xl border p-5 shadow-sm"
                 >
                   <Icon className="text-bleu mb-3 h-8 w-8" aria-hidden />
-                  <h3 className="text-encre text-lg font-semibold">
+                  <h3 className="text-encre dark:text-creme text-lg font-semibold">
                     {step.title}
                   </h3>
-                  <p className="text-encre/70 mt-2 text-sm leading-relaxed">
+                  <p className="text-encre/70 dark:text-creme/70 mt-2 text-sm leading-relaxed">
                     {step.body}
                   </p>
                 </li>
@@ -112,11 +112,11 @@ export async function HomePageSections() {
       >
         <h2
           id="listings-heading"
-          className="text-encre font-serif text-3xl md:text-4xl"
+          className="text-encre dark:text-creme font-serif text-3xl md:text-4xl"
         >
           {t("sampleListings.title")}
         </h2>
-        <p className="text-muted mt-2 max-w-2xl text-sm md:text-base">
+        <p className="text-muted dark:text-creme/60 mt-2 max-w-2xl text-sm md:text-base">
           {t("sampleListings.subtitle")}
         </p>
 
@@ -148,9 +148,9 @@ export async function HomePageSections() {
                 <li key={listing.id} className="flex">
                   <Link
                     href={href}
-                    className="border-bordurewarm-tertiary bg-blanc-casse rounded-card shadow-card hover:shadow-card-hover flex w-full flex-col overflow-hidden border transition"
+                    className="border-bordurewarm-tertiary dark:border-encre/20 bg-blanc-casse dark:bg-encre/95 rounded-card shadow-card hover:shadow-card-hover flex w-full flex-col overflow-hidden border transition"
                   >
-                    <div className="bg-creme-foncee relative aspect-[4/3] w-full overflow-hidden">
+                    <div className="bg-creme-foncee dark:bg-encre/40 relative aspect-[4/3] w-full overflow-hidden">
                       {photo ? (
                         <Image
                           src={photo}
@@ -167,11 +167,13 @@ export async function HomePageSections() {
                       ) : null}
                     </div>
                     <div className="flex flex-1 flex-col gap-1 p-4">
-                      <p className="text-encre line-clamp-2 text-sm font-semibold">
+                      <p className="text-encre dark:text-creme line-clamp-2 text-sm font-semibold">
                         {listing.title}
                       </p>
                       {locality ? (
-                        <p className="text-muted text-xs">{locality}</p>
+                        <p className="text-muted dark:text-creme/60 text-xs">
+                          {locality}
+                        </p>
                       ) : null}
                       {priceLabel ? (
                         <p className="text-corail mt-2 font-serif text-lg">
@@ -185,7 +187,7 @@ export async function HomePageSections() {
             })}
           </ul>
         ) : (
-          <p className="text-muted mt-8 text-sm">
+          <p className="text-muted dark:text-creme/60 mt-8 text-sm">
             {t("sampleListings.fallback")}
           </p>
         )}
@@ -210,11 +212,11 @@ export async function HomePageSections() {
       >
         <h2
           id="categories-heading"
-          className="text-encre font-serif text-3xl md:text-4xl"
+          className="text-encre dark:text-creme font-serif text-3xl md:text-4xl"
         >
           Explorer par catégorie
         </h2>
-        <p className="text-encre/70 mt-2 max-w-2xl text-sm md:text-base">
+        <p className="text-encre/70 dark:text-creme/70 mt-2 max-w-2xl text-sm md:text-base">
           Trouvez le bien qui vous ressemble — appartements, villas, terrains ou
           locaux commerciaux.
         </p>
@@ -228,12 +230,12 @@ export async function HomePageSections() {
                 <li key={pt.id}>
                   <Link
                     href={`/search?type=${pt.code}`}
-                    className="border-bordurewarm-tertiary bg-blanc-casse hover:border-bleu/30 hover:shadow-card focus-visible:ring-bleu rounded-card group flex flex-col items-start gap-3 border p-4 transition focus-visible:ring-2 focus-visible:outline-none"
+                    className="border-bordurewarm-tertiary dark:border-encre/20 bg-blanc-casse dark:bg-encre/95 hover:border-bleu/30 hover:shadow-card focus-visible:ring-bleu rounded-card group flex flex-col items-start gap-3 border p-4 transition focus-visible:ring-2 focus-visible:outline-none"
                   >
                     <span className="bg-bleu-pale text-bleu rounded-control flex h-10 w-10 items-center justify-center transition group-hover:scale-105">
                       <Icon className="h-5 w-5" aria-hidden />
                     </span>
-                    <span className="text-encre text-sm font-medium">
+                    <span className="text-encre dark:text-creme text-sm font-medium">
                       {label}
                     </span>
                   </Link>
@@ -245,18 +247,18 @@ export async function HomePageSections() {
       </AnimatedSection>
 
       <AnimatedSection
-        className="from-bleu/8 border-bordurewarm-tertiary to-corail/8 border-y bg-gradient-to-br py-16 md:py-20"
+        className="from-bleu/8 border-bordurewarm-tertiary dark:border-encre/20 to-corail/8 border-y bg-gradient-to-br py-16 md:py-20"
         aria-labelledby="tools-heading"
       >
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 md:flex-row md:items-center md:justify-between md:px-6">
           <div>
             <h2
               id="tools-heading"
-              className="font-heading text-encre text-2xl font-bold tracking-tight md:text-3xl"
+              className="font-heading text-encre dark:text-creme text-2xl font-bold tracking-tight md:text-3xl"
             >
               {t("tools.title")}
             </h2>
-            <p className="text-encre/70 mt-2 max-w-2xl text-sm md:text-base">
+            <p className="text-encre/70 dark:text-creme/70 mt-2 max-w-2xl text-sm md:text-base">
               {t("tools.subtitle")}
             </p>
           </div>
