@@ -273,6 +273,39 @@ export type Database = {
           },
         ];
       };
+      cms_home_sections: {
+        Row: {
+          active: boolean;
+          content_json: Json;
+          created_at: string;
+          id: string;
+          section_key: string;
+          section_type: string;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          active?: boolean;
+          content_json?: Json;
+          created_at?: string;
+          id?: string;
+          section_key: string;
+          section_type: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Update: {
+          active?: boolean;
+          content_json?: Json;
+          created_at?: string;
+          id?: string;
+          section_key?: string;
+          section_type?: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       conversations: {
         Row: {
           buyer_id: string;
@@ -911,6 +944,50 @@ export type Database = {
           },
         ];
       };
+      moderation_logs: {
+        Row: {
+          ai_raw_response: string | null;
+          ai_score: number | null;
+          created_at: string;
+          decision: string;
+          id: string;
+          listing_id: string;
+          reasons: Json;
+          source: string;
+          user_id: string;
+        };
+        Insert: {
+          ai_raw_response?: string | null;
+          ai_score?: number | null;
+          created_at?: string;
+          decision: string;
+          id?: string;
+          listing_id: string;
+          reasons?: Json;
+          source?: string;
+          user_id: string;
+        };
+        Update: {
+          ai_raw_response?: string | null;
+          ai_score?: number | null;
+          created_at?: string;
+          decision?: string;
+          id?: string;
+          listing_id?: string;
+          reasons?: Json;
+          source?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "moderation_logs_listing_id_fkey";
+            columns: ["listing_id"];
+            isOneToOne: false;
+            referencedRelation: "listings";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       partners: {
         Row: {
           balance: number;
@@ -1483,6 +1560,27 @@ export type Database = {
             referencedColumns: ["id"];
           },
         ];
+      };
+      user_rate_limits: {
+        Row: {
+          day: string;
+          last_publish_at: string | null;
+          publish_count: number;
+          user_id: string;
+        };
+        Insert: {
+          day?: string;
+          last_publish_at?: string | null;
+          publish_count?: number;
+          user_id: string;
+        };
+        Update: {
+          day?: string;
+          last_publish_at?: string | null;
+          publish_count?: number;
+          user_id?: string;
+        };
+        Relationships: [];
       };
     };
     Views: {
