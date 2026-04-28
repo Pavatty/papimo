@@ -156,6 +156,12 @@ export default async function AuthedLayout({ children, params }: Props) {
                 >
                   Mes annonces
                 </Link>
+                <Link
+                  href="/dashboard/favoris"
+                  className="hover:bg-creme-pale block rounded-md px-2 py-1.5 text-sm"
+                >
+                  {t("myFavorites")}
+                </Link>
                 {!IS_BETA ? (
                   <Link
                     href="/dashboard/billing"

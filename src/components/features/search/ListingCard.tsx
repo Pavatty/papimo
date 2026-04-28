@@ -6,15 +6,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
+import { FavoriteButton } from "@/components/features/listing/FavoriteButton";
+
 import type { SearchResult } from "./SearchPage";
 
 type Props = {
   listing: SearchResult;
+  isAuthenticated?: boolean;
+  initialFavorited?: boolean;
 };
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
-export function ListingCard({ listing }: Props) {
+export function ListingCard({
+  listing,
+  isAuthenticated = false,
+  initialFavorited = false,
+}: Props) {
   const locale = useLocale() as "fr" | "en" | "ar";
   const t = useTranslations("home");
   const badgeClass =
@@ -38,6 +46,11 @@ export function ListingCard({ listing }: Props) {
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
       className="border-bordurewarm-tertiary dark:border-encre/20 bg-blanc-casse dark:bg-encre/95 rounded-card shadow-card hover:shadow-card-hover hover:border-bleu/30 group overflow-hidden border transition-shadow"
     >
+      <FavoriteButton
+        listingId={listing.id}
+        initialFavorited={initialFavorited}
+        isAuthenticated={isAuthenticated}
+      />
       <Link
         href={href}
         className="focus-visible:ring-bleu block focus-visible:ring-2 focus-visible:outline-none"
