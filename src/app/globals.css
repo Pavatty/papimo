@@ -4,19 +4,37 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Thème papimo : identité institutionnelle (bleu) + CTA (corail), fond crème, encre en nuances */
+/* LODGE — palette vert émeraude #1B5E3F + crème #FAFAF7 + dark mode #0F1A14.
+   Les anciens tokens (bleu / corail) restent en place mais leurs valeurs RGB
+   pointent désormais vers le vert LODGE, ce qui transforme automatiquement
+   chaque bg-bleu / text-corail / border-bleu / bg-corail-pale existant en
+   variation de vert sans toucher aux composants. Les nouvelles classes
+   (bg-vert, text-vert-clair, bg-vert-fonce, bg-terracotta) sont les
+   préférences pour tout nouveau code. */
+
 @theme inline {
-  /* Couleurs de marque (accès sémantique Tailwind v4) */
+  /* === LODGE tokens === */
+  --color-vert: rgb(var(--vert));
+  --color-vert-hover: #144a30;
+  --color-vert-soft: rgb(var(--vert-soft));
+  --color-vert-pale: rgb(var(--vert-pale));
+  --color-vert-clair: rgb(var(--vert-clair));
+  --color-vert-fonce: rgb(var(--vert-fonce));
+  --color-terracotta: rgb(var(--terracotta));
+  --color-terracotta-soft: rgb(var(--terracotta-soft));
+
+  /* === aliases compat papimo → lodge === */
   --color-bleu: rgb(var(--bleu));
-  --color-bleu-hover: #174a7e;
+  --color-bleu-hover: #144a30;
   --color-bleu-soft: rgb(var(--bleu-soft));
   --color-bleu-pale: rgb(var(--bleu-pale));
   --color-corail: rgb(var(--corail));
-  --color-corail-hover: #dd5c3d;
+  --color-corail-hover: #144a30;
   --color-corail-soft: rgb(var(--corail-soft));
   --color-corail-pale: rgb(var(--corail-pale));
+
   --color-creme: rgb(var(--creme));
-  --color-creme-foncee: #f0e8d7;
+  --color-creme-foncee: #f0eee8;
   --color-creme-pale: rgb(var(--creme-pale));
   --color-paper: rgb(var(--paper));
   --color-blanc-casse: #ffffff;
@@ -24,24 +42,24 @@
   --color-ink-soft: rgb(var(--ink-soft));
   --color-encre: #1a1a1a;
   --color-line: rgb(var(--line));
-  --color-bordurewarm-tertiary: #e8e0d0;
-  --color-bordurewarm-secondary: #d6cdb8;
+  --color-bordurewarm-tertiary: rgba(0, 0, 0, 0.08);
+  --color-bordurewarm-secondary: rgba(0, 0, 0, 0.15);
+  --color-bordurewarm-primary: rgba(0, 0, 0, 0.25);
   --color-green: rgb(var(--green));
   --color-danger: rgb(var(--danger));
 
-  /* Polices (variables injectées par next/font dans le layout [locale]) */
+  /* Polices */
   --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-sans:
-    var(--font-dm-sans), var(--font-manrope), ui-sans-serif, system-ui,
-    sans-serif;
+    var(--font-inter), var(--font-dm-sans), var(--font-manrope), ui-sans-serif,
+    system-ui, sans-serif;
   --font-serif: var(--font-instrument-serif), Georgia, serif;
   --font-mono:
     var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, menlo, monospace;
-  /* Alias d’en-têtes (Geist) — aligné sur la spec produit */
   --font-heading: var(--font-display);
 
-  /* Layout tokens */
-  --header-height: 4rem;
+  /* Layout */
+  --header-height: 5rem;
   --container-max: 80rem;
   --max-width-container: 80rem;
   --shadow-card: 0 4px 12px rgba(26, 26, 26, 0.06);
@@ -49,7 +67,7 @@
   --radius-card: 12px;
   --radius-control: 8px;
 
-  /* Cartes sémantiques shadcn -> tokens papimo */
+  /* shadcn → lodge */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -90,80 +108,114 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/*
-  Variables sémantiques (format compatible avec l’écosystème shadcn / Radix)
-  CTA primaire = corail ; actions institutionnelles = bleu
-*/
+/* LODGE values. RGB triplets pour Tailwind v4 alpha syntax (slash). */
 :root {
-  --bleu: 30 90 150;
-  --bleu-soft: 220 234 247;
-  --bleu-pale: 239 245 251;
-  /* Corail Méditerranée #EF6F50 (rgb 239 111 80) */
-  --corail: 239 111 80;
-  --corail-soft: 255 232 224;
-  --corail-pale: 255 244 240;
-  --creme: 251 246 236;
-  --creme-pale: 254 252 248;
+  /* Vert LODGE #1B5E3F = rgb(27, 94, 63) */
+  --vert: 27 94 63;
+  --vert-soft: 232 241 236; /* #E8F1EC */
+  --vert-pale: 240 246 242; /* #F0F6F2 */
+  /* Vert clair #3DA876 = rgb(61, 168, 118) */
+  --vert-clair: 61 168 118;
+  /* Vert très foncé #0A2A1B = rgb(10, 42, 27) */
+  --vert-fonce: 10 42 27;
+  /* Terracotta #E07B3F = rgb(224, 123, 63) */
+  --terracotta: 224 123 63;
+  --terracotta-soft: 250 237 227; /* #FAEDE3 */
+
+  /* === Aliases compat papimo → lodge === */
+  --bleu: var(--vert);
+  --bleu-soft: var(--vert-soft);
+  --bleu-pale: var(--vert-pale);
+  --corail: var(--vert);
+  --corail-soft: var(--vert-soft);
+  --corail-pale: var(--vert-pale);
+
+  /* Crème LODGE #FAFAF7 = rgb(250, 250, 247) */
+  --creme: 250 250 247;
+  --creme-pale: 240 238 232; /* #F0EEE8 */
   --paper: 255 255 255;
-  --ink: 31 41 55;
+  --ink: 26 26 26;
   --ink-soft: 107 114 128;
   --line: 232 221 201;
   --green: 16 185 129;
   --danger: 220 38 38;
   --font-jetbrains-mono: ui-monospace, SFMono-Regular, menlo, monospace;
-  --background: #fbf6ec;
-  --foreground: #1f2937;
+
+  --background: #fafaf7;
+  --foreground: #1a1a1a;
   --card: #ffffff;
-  --card-foreground: #1f2937;
+  --card-foreground: #1a1a1a;
   --popover: #ffffff;
-  --popover-foreground: #1f2937;
-  --primary: #ef6f50;
+  --popover-foreground: #1a1a1a;
+  --primary: #1b5e3f;
   --primary-foreground: #ffffff;
   --secondary: #ffffff;
-  --secondary-foreground: #1e5a96;
-  --muted: #efefef;
-  --muted-foreground: #6b7280;
-  --accent: #fef3f4;
-  --accent-foreground: #1f2937;
+  --secondary-foreground: #1b5e3f;
+  --muted: #f0eee8;
+  --muted-foreground: #6b6b6b;
+  --accent: #e8f1ec;
+  --accent-foreground: #1a1a1a;
   --destructive: #dc2626;
-  --border: #e8ddc9;
-  --input: #e8ddc9;
-  --ring: #1e5a96;
-  --chart-1: #1e5a96;
-  --chart-2: #ef6f50;
-  --chart-3: #1f2937;
-  --chart-4: #6b7280;
-  --chart-5: #e8ddc9;
+  --border: rgba(0, 0, 0, 0.08);
+  --input: rgba(0, 0, 0, 0.08);
+  --ring: #1b5e3f;
+  --chart-1: #1b5e3f;
+  --chart-2: #3da876;
+  --chart-3: #e07b3f;
+  --chart-4: #6b6b6b;
+  --chart-5: #f0eee8;
   --radius: 0.625rem;
-  --sidebar: #fefcf8;
-  --sidebar-foreground: #1f2937;
-  --sidebar-primary: #1e5a96;
+  --sidebar: #fafaf7;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-primary: #1b5e3f;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #efefef;
-  --sidebar-accent-foreground: #1f2937;
-  --sidebar-border: #e8ddc9;
-  --sidebar-ring: #1e5a96;
+  --sidebar-accent: #f0eee8;
+  --sidebar-accent-foreground: #1a1a1a;
+  --sidebar-border: rgba(0, 0, 0, 0.08);
+  --sidebar-ring: #1b5e3f;
 }
 
-/* Dark mode token overrides — toggled via class="dark" on <html> by next-themes */
 .dark {
-  --background: #1a1a1a;
-  --foreground: #fbf6ec;
-  --card: #1f1f1f;
-  --card-foreground: #fbf6ec;
-  --popover: #1f1f1f;
-  --popover-foreground: #fbf6ec;
-  --muted: #262626;
+  /* Vert dark plus lumineux pour contraste #2A8A5E */
+  --vert: 42 138 94;
+  --vert-soft: 31 60 47;
+  --vert-pale: 21 45 35;
+  --vert-clair: 79 194 137;
+  --vert-fonce: 15 26 20;
+  --terracotta: 240 137 86;
+  --terracotta-soft: 60 38 28;
+
+  --bleu: var(--vert);
+  --bleu-soft: var(--vert-soft);
+  --bleu-pale: var(--vert-pale);
+  --corail: var(--vert);
+  --corail-soft: var(--vert-soft);
+  --corail-pale: var(--vert-pale);
+
+  --creme: 15 26 20;
+  --creme-pale: 20 36 27;
+  --paper: 26 41 32;
+  --ink: 250 250 247;
+  --ink-soft: 184 184 175;
+  --line: 38 56 47;
+
+  --background: #0f1a14;
+  --foreground: #fafaf7;
+  --card: #14241b;
+  --card-foreground: #fafaf7;
+  --popover: #14241b;
+  --popover-foreground: #fafaf7;
+  --muted: #1a2920;
   --muted-foreground: #a8a89e;
-  --accent: #2a2a2a;
-  --accent-foreground: #fbf6ec;
-  --border: #2e2e2e;
-  --input: #2e2e2e;
-  --sidebar: #1a1a1a;
-  --sidebar-foreground: #fbf6ec;
-  --sidebar-border: #2e2e2e;
-  --sidebar-accent: #262626;
-  --sidebar-accent-foreground: #fbf6ec;
+  --accent: #1f3c2f;
+  --accent-foreground: #fafaf7;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --sidebar: #0f1a14;
+  --sidebar-foreground: #fafaf7;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-accent: #1a2920;
+  --sidebar-accent-foreground: #fafaf7;
 }
 
 @layer base {
@@ -180,8 +232,8 @@
       color 0.2s ease;
   }
   .dark body {
-    background-color: #1a1a1a;
-    color: #fbf6ec;
+    background-color: #0f1a14;
+    color: #fafaf7;
   }
   html {
     @apply font-sans;
@@ -193,26 +245,24 @@
   font-weight: 400;
 }
 
-/* RTL support: logical alignment + icon mirroring helpers */
+/* RTL support */
 [dir="rtl"] .rtl-flip {
   transform: scaleX(-1);
 }
-
 [dir="rtl"] .rtl-text-start {
   text-align: right;
 }
-
 [dir="rtl"] .rtl-text-end {
   text-align: left;
 }
 
-/* Keep focus visibility strong for keyboard navigation (WCAG 2.1 AA) */
+/* Focus visible (LODGE vert) */
 :focus-visible {
-  outline: 2px solid rgb(var(--bleu));
+  outline: 2px solid rgb(var(--vert));
   outline-offset: 2px;
 }
 
-/* Mapbox markers : forcer LTR pour éviter le décalage en mode RTL (locale ar) */
+/* Mapbox RTL fix */
 .mapboxgl-marker.papimo-price-marker,
 .mapboxgl-marker {
   direction: ltr;
