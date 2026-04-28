@@ -25,6 +25,8 @@ import {
   reorderImages,
   uploadListingImage,
 } from "@/app/[locale]/(authed)/publish/actions";
+import { trackEvent } from "@/lib/analytics/plausible";
+import { applyWatermark } from "@/lib/watermark/apply";
 
 type ImageItem = {
   id: string;
@@ -38,6 +40,7 @@ type Props = {
   pack: "free" | "essential" | "comfort" | "premium";
   images: ImageItem[];
   onImagesChange: (images: ImageItem[]) => void;
+  watermarkEnabled?: boolean;
 };
 
 function maxPhotosForPack(pack: Props["pack"]) {
@@ -106,6 +109,7 @@ export function Step5Photos({
   pack,
   images,
   onImagesChange,
+  watermarkEnabled = false,
 }: Props) {
   const [isPending, startTransition] = useTransition();
   const sensors = useSensors(useSensor(PointerSensor));
@@ -123,12 +127,19 @@ export function Step5Photos({
           initialQuality: 0.8,
           useWebWorker: true,
         });
+        const finalFile = watermarkEnabled
+          ? await applyWatermark(compressed)
+          : compressed;
         const formData = new FormData();
         formData.append("listingId", listingId);
-        formData.append("file", compressed, file.name);
+        formData.append("file", finalFile, file.name);
         const result = await uploadListingImage(formData);
         if (result.ok && result.image) {
           onImagesChange([...images, result.image as ImageItem]);
+          trackEvent("photo_uploaded", {
+            pack,
+            watermark: watermarkEnabled,
+          });
         }
       }
     });

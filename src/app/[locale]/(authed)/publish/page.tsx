@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { PublishPageWithStepper } from "@/components/features/publish/PublishPageWithStepper";
 import type { PublishFormState } from "@/components/features/publish/types";
+import { isFlagEnabled } from "@/data/repositories/feature-flags";
 import { Link } from "@/i18n/navigation";
 import { normalizeAmenityKey } from "@/lib/amenities";
 import { createClient } from "@/data/supabase/server";
@@ -129,6 +130,7 @@ export default async function PublishPage({ params }: Props) {
         <PublishPageWithStepper
           initialData={initial}
           preferredCurrency={profile?.preferred_currency ?? "TND"}
+          watermarkEnabled={await isFlagEnabled("watermark_enabled")}
         />
       </div>
     </main>

@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
 import { FavoriteButton } from "@/components/features/listing/FavoriteButton";
+import { trackEvent } from "@/lib/analytics/plausible";
 
 import type { SearchResult } from "./SearchPage";
 
@@ -57,6 +58,12 @@ export function ListingCard({
         href={href}
         className="focus-visible:ring-bleu block focus-visible:ring-2 focus-visible:outline-none"
         aria-label={`Voir l'annonce ${listing.title ?? ""}`}
+        onClick={() =>
+          trackEvent("listing_card_click", {
+            listing_id: listing.id,
+            transaction: listing.transaction_type ?? "unknown",
+          })
+        }
       >
         <div className="bg-creme-foncee dark:bg-encre/40 relative aspect-[4/3] overflow-hidden">
           {cover ? (
