@@ -20,3 +20,7 @@ export async function isFlagEnabled(key: string): Promise<boolean> {
   const flags = await getFeatureFlags();
   return flags[key] ?? false;
 }
+
+export async function getFeatureFlag(key: string): Promise<boolean> {
+  return isFlagEnabled(key);
+}
