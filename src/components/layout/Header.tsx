@@ -43,7 +43,12 @@ export function Header() {
 
   const close = () => setOpen(false);
 
-  const navLinks = [
+  const navLinks: Array<{ href: string; label: string; badge?: string }> = [
+    {
+      href: "/sejours",
+      label: t("navigation.stays"),
+      badge: t("sejours.newBadge"),
+    },
     { href: "/outils", label: t("navigation.tools") },
     ...(!PRICING_HIDDEN
       ? [{ href: "/pricing", label: t("navigation.pricing") }]
@@ -80,7 +85,7 @@ export function Header() {
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
               className={cn(
-                "relative rounded-sm transition",
+                "relative inline-flex items-center gap-1.5 rounded-sm transition",
                 "after:bg-bleu after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:transition-all hover:after:w-full",
                 "focus-visible:ring-bleu focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
                 isActive(link.href)
@@ -89,6 +94,11 @@ export function Header() {
               )}
             >
               {link.label}
+              {link.badge ? (
+                <span className="bg-sejours-turquoise-light text-sejours-turquoise rounded-full px-1.5 py-0.5 text-[10px] font-bold tracking-wide">
+                  {link.badge}
+                </span>
+              ) : null}
             </Link>
           ))}
         </nav>

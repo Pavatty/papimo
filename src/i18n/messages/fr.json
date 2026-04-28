@@ -70,11 +70,29 @@
     "publish": "Publier",
     "publishMyProperty": "Publier mon bien",
     "discover": "Découvrir les biens",
+    "stays": "Séjours",
     "languages": {
       "fr": "Français",
       "ar": "العربية",
       "en": "English"
     }
+  },
+  "sejours": {
+    "title": "Séjours en Tunisie",
+    "subtitle": "Location courte durée entre particuliers",
+    "perNight": "par nuit",
+    "checkIn": "Arrivée",
+    "checkOut": "Départ",
+    "guests": "Voyageurs",
+    "reserve": "Réserver maintenant",
+    "instantBooking": "Instantané",
+    "minNights": "Minimum {n} nuits",
+    "totalLine": "Total",
+    "serviceFee": "Frais de service",
+    "description": "Description",
+    "houseRules": "Règlement intérieur",
+    "noResults": "Aucun séjour disponible pour le moment.",
+    "newBadge": "NEW"
   },
   "footer": {
     "columnIndividuals": "Particuliers",
