@@ -34,6 +34,18 @@
     "goHome": "Back to home",
     "exploreListings": "Explore listings"
   },
+  "validation": {
+    "required": "Required field",
+    "minLength": "Minimum {min} characters",
+    "maxLength": "Maximum {max} characters",
+    "minValue": "Must be greater than {min}",
+    "maxValue": "Must be less than {max}",
+    "positiveNumber": "Must be positive",
+    "invalidEmail": "Invalid email",
+    "invalidPhone": "Invalid phone",
+    "yearRange": "Year between 1800 and today",
+    "minMaxOrder": "Min value must be less than max value"
+  },
   "a11y": {
     "mainMenu": "Main menu",
     "languageMenu": "Language switcher"
