@@ -39,14 +39,23 @@ export default async function AdminLayout({
     (pendingListings ?? 0) + (pendingReports ?? 0) + (flaggedMessages ?? 0);
 
   return (
-    <div className="bg-creme-pale min-h-screen">
-      <AdminSidebar locale={locale} />
+    <div className="bg-creme-pale dark:bg-encre/95 min-h-screen">
+      <AdminSidebar
+        locale={locale}
+        user={{
+          full_name: profile.full_name ?? null,
+          email: profile.email ?? null,
+          avatar_url: profile.avatar_url ?? null,
+        }}
+      />
       <div className="ml-[280px] min-h-screen">
         <AdminHeader
           adminName={profile.full_name ?? profile.email ?? "Admin"}
           pendingTasks={pendingTasks}
         />
-        <main className="p-6">{children}</main>
+        <main id="main-content" className="p-6">
+          {children}
+        </main>
       </div>
     </div>
   );

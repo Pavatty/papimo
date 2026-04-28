@@ -3,11 +3,36 @@
     "brandName": "papimo",
     "skipToContent": "Aller au contenu principal",
     "adminDashboard": "Tableau de bord admin",
+    "backToSite": "Retour au site",
+    "signOut": "Déconnexion",
+    "areYouSure": "Êtes-vous sûr ?",
+    "confirmSignOut": "Confirmer la déconnexion",
+    "cancel": "Annuler",
+    "tryAgain": "Réessayer",
+    "goHome": "Retour à l'accueil",
+    "noListingsTitle": "Aucune annonce pour le moment",
+    "noListingsDesc": "Publiez votre première annonce et rencontrez des particuliers directement.",
+    "noFavoritesTitle": "Aucun favori",
+    "noFavoritesDesc": "Cliquez sur le cœur d'une annonce pour la sauvegarder ici.",
+    "noSearchResultsTitle": "Aucun résultat",
+    "noSearchResultsDesc": "Essayez d'élargir vos critères ou explorez d'autres types de biens.",
+    "publishMyFirst": "Publier ma première annonce",
+    "exploreListings": "Explorer les annonces",
+    "saveSuccess": "Modifications enregistrées",
+    "saveError": "Erreur — Réessayez dans un instant",
+    "deleteSuccess": "Élément supprimé",
+    "actionInProgress": "Action en cours…",
     "tagline": {
       "fr": "L'immobilier entre particuliers",
       "en": "Real estate between private owners",
       "ar": "العقارات بين الخواص"
     }
+  },
+  "notFound": {
+    "title": "Cette page n'existe plus",
+    "description": "L'annonce ou la page que vous cherchez a peut-être été retirée. Pas d'inquiétude — tout est à portée de clic.",
+    "goHome": "Retour à l'accueil",
+    "exploreListings": "Explorer les annonces"
   },
   "a11y": {
     "mainMenu": "Menu principal",

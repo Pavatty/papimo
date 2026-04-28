@@ -1,6 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
 import { saveBrandSettings } from "./actions";
 
@@ -43,6 +45,7 @@ const FIELDS: Array<{ key: keyof BrandFields; label: string; hint: string }> = [
 ];
 
 export function BrandSettingsClient({ initial, locale }: Props) {
+  const t = useTranslations("common");
   const [form, setForm] = useState(initial);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -58,8 +61,13 @@ export function BrandSettingsClient({ initial, locale }: Props) {
     startTransition(async () => {
       setError(null);
       const result = await saveBrandSettings(locale, form);
-      if (result.ok) setSaved(true);
-      else setError(result.error ?? "Erreur");
+      if (result.ok) {
+        setSaved(true);
+        toast.success(t("saveSuccess"));
+      } else {
+        setError(result.error ?? "Erreur");
+        toast.error(result.error ?? t("saveError"));
+      }
     });
 
   return (

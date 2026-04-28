@@ -121,6 +121,11 @@ export default async function AuthedLayout({ children, params }: Props) {
                   <User className="h-4 w-4" />
                 )}
                 <span className="max-w-28 truncate">{displayName}</span>
+                {isAdmin ? (
+                  <span className="bg-bleu/10 text-bleu rounded px-1.5 py-0.5 text-[9px] font-semibold tracking-wider uppercase">
+                    Admin
+                  </span>
+                ) : null}
                 <ChevronDown className="h-3.5 w-3.5" />
               </summary>
               <div className="border-line absolute right-0 z-20 mt-2 w-56 rounded-xl border bg-white p-2 shadow-md">

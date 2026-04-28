@@ -1,6 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
 import { toggleTaxonomyActive, updateTaxonomyRow } from "./actions";
 
@@ -28,6 +30,7 @@ type Draft = Partial<
 >;
 
 export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
+  const t = useTranslations("common");
   const [items, setItems] = useState<TaxonomyRow[]>(rows);
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState<Draft>({});
@@ -55,6 +58,7 @@ export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
       const result = await updateTaxonomyRow(locale, kind, id, draft);
       if (!result.ok) {
         setError(result.error ?? "Erreur");
+        toast.error(result.error ?? t("saveError"));
         return;
       }
       setItems((prev) =>
@@ -63,6 +67,7 @@ export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
       setEditing(null);
       setDraft({});
       setError(null);
+      toast.success(t("saveSuccess"));
     });
   };
 
@@ -71,11 +76,13 @@ export function TaxonomyCrudClient({ kind, rows, locale }: Props) {
       const result = await toggleTaxonomyActive(locale, kind, id, !current);
       if (!result.ok) {
         setError(result.error ?? "Erreur");
+        toast.error(result.error ?? t("saveError"));
         return;
       }
       setItems((prev) =>
         prev.map((r) => (r.id === id ? { ...r, is_active: !current } : r)),
       );
+      toast.success(t("saveSuccess"));
     });
   };
 

@@ -1,7 +1,10 @@
 "use client";
 
+import { ArrowLeft, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+import { signOut } from "@/lib/auth/actions";
 
 type SidebarItem = { href: string; label: string };
 type SidebarSection = { title: string; items: readonly SidebarItem[] };
@@ -52,23 +55,40 @@ const SECTIONS: readonly SidebarSection[] = [
   },
 ];
 
-export function AdminSidebar({ locale }: { locale: string }) {
+type AdminUserInfo = {
+  full_name: string | null;
+  email: string | null;
+  avatar_url: string | null;
+};
+
+type Props = {
+  locale: string;
+  user?: AdminUserInfo;
+};
+
+export function AdminSidebar({ locale, user }: Props) {
   const pathname = usePathname();
+  const initial =
+    user?.full_name?.[0]?.toUpperCase() ??
+    user?.email?.[0]?.toUpperCase() ??
+    "?";
+
   return (
-    <aside className="border-bordurewarm-tertiary bg-blanc-casse fixed top-0 left-0 h-screen w-[280px] overflow-y-auto border-r p-4">
+    <aside className="border-bordurewarm-tertiary bg-blanc-casse dark:border-encre/20 dark:bg-encre fixed top-0 left-0 flex h-screen w-[280px] flex-col overflow-y-auto border-r p-4">
       <div className="mb-6">
         <p className="font-serif text-2xl">
           <span className="text-bleu">pap</span>
           <span className="text-corail">imo</span>
         </p>
-        <p className="text-encre/50 mt-1 text-[10px] tracking-widest uppercase">
+        <p className="text-encre/50 dark:text-creme/50 mt-1 text-[10px] tracking-widest uppercase">
           Admin
         </p>
       </div>
+
       <nav className="space-y-5">
         {SECTIONS.map((section) => (
           <div key={section.title}>
-            <p className="text-encre/50 mb-1.5 px-3 text-[10px] font-medium tracking-widest uppercase">
+            <p className="text-encre/50 dark:text-creme/50 mb-1.5 px-3 text-[10px] font-medium tracking-widest uppercase">
               {section.title}
             </p>
             <ul className="space-y-0.5">
@@ -83,7 +103,7 @@ export function AdminSidebar({ locale }: { locale: string }) {
                       className={`block rounded-lg px-3 py-2 text-sm transition ${
                         active
                           ? "bg-bleu-pale text-bleu font-medium"
-                          : "text-encre hover:bg-creme-pale"
+                          : "text-encre hover:bg-creme-pale dark:text-creme dark:hover:bg-encre/40"
                       }`}
                     >
                       {item.label}
@@ -95,6 +115,53 @@ export function AdminSidebar({ locale }: { locale: string }) {
           </div>
         ))}
       </nav>
+
+      <div className="flex-1" aria-hidden />
+
+      <div className="border-bordurewarm-tertiary dark:border-encre/20 mt-6 space-y-1 border-t pt-4">
+        {user ? (
+          <div className="flex items-center gap-2 px-2 py-1.5">
+            {user.avatar_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={user.avatar_url}
+                alt=""
+                className="size-7 rounded-full object-cover"
+              />
+            ) : (
+              <div className="bg-bleu/10 text-bleu flex size-7 items-center justify-center rounded-full text-xs font-semibold">
+                {initial}
+              </div>
+            )}
+            <div className="min-w-0 flex-1">
+              <p className="text-encre dark:text-creme truncate text-xs font-medium">
+                {user.full_name ?? user.email ?? "Admin"}
+              </p>
+              <p className="text-encre/60 dark:text-creme/60 text-[10px]">
+                Admin
+              </p>
+            </div>
+          </div>
+        ) : null}
+
+        <Link
+          href={`/${locale}`}
+          className="rounded-control text-encre/70 hover:text-encre focus-visible:ring-bleu dark:text-creme/70 dark:hover:text-creme flex items-center gap-2 px-2 py-1.5 text-sm transition focus-visible:ring-2 focus-visible:outline-none"
+        >
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          Retour au site
+        </Link>
+
+        <form action={signOut}>
+          <button
+            type="submit"
+            className="rounded-control flex w-full items-center gap-2 px-2 py-1.5 text-sm text-red-600 transition hover:bg-red-50 focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:outline-none dark:hover:bg-red-950/30"
+          >
+            <LogOut className="size-4" aria-hidden="true" />
+            Déconnexion
+          </button>
+        </form>
+      </div>
     </aside>
   );
 }

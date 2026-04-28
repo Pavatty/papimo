@@ -1,6 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
 import { toggleFeatureFlag } from "./actions";
 
@@ -18,6 +20,7 @@ type Props = {
 };
 
 export function FeatureFlagsClient({ initialFlags, locale }: Props) {
+  const t = useTranslations("common");
   const [flags, setFlags] = useState(initialFlags);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -38,8 +41,10 @@ export function FeatureFlagsClient({ initialFlags, locale }: Props) {
           ),
         );
         setError(result.error ?? "Erreur");
+        toast.error(result.error ?? t("saveError"));
       } else {
         setError(null);
+        toast.success(t("saveSuccess"));
       }
     });
   };

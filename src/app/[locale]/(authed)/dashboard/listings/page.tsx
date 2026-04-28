@@ -1,3 +1,7 @@
+import { Heart, Home as HomeIcon } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+
+import { EmptyState } from "@/components/shared/EmptyState";
 import { startBoostCheckoutAction } from "@/lib/payments/actions";
 import { BOOST_CONFIG } from "@/lib/payments/pricing";
 import { createClient } from "@/data/supabase/server";
@@ -14,6 +18,7 @@ type Props = {
 export default async function DashboardListingsPage({ searchParams }: Props) {
   const { favorites: favoritesParam } = await searchParams;
   const showFavorites = favoritesParam === "true" || favoritesParam === "1";
+  const t = await getTranslations("common");
 
   const supabase = await createClient();
   const {
@@ -56,12 +61,19 @@ export default async function DashboardListingsPage({ searchParams }: Props) {
           </p>
           <div className="mt-6 space-y-4">
             {favorites.length === 0 ? (
-              <p className="text-ink-soft text-sm">
-                Aucun favori pour le moment.{" "}
-                <Link className="text-bleu font-medium" href="/search">
-                  Parcourir les annonces
-                </Link>
-              </p>
+              <EmptyState
+                icon={<Heart className="size-12" aria-hidden="true" />}
+                title={t("noFavoritesTitle")}
+                description={t("noFavoritesDesc")}
+                action={
+                  <Link
+                    href="/search"
+                    className="bg-bleu hover:bg-bleu-hover rounded-control inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white transition"
+                  >
+                    {t("exploreListings")}
+                  </Link>
+                }
+              />
             ) : (
               favorites.map((listing) => (
                 <article
@@ -111,6 +123,21 @@ export default async function DashboardListingsPage({ searchParams }: Props) {
           </Link>
         </p>
         <div className="mt-6 space-y-4">
+          {(listings ?? []).length === 0 ? (
+            <EmptyState
+              icon={<HomeIcon className="size-12" aria-hidden="true" />}
+              title={t("noListingsTitle")}
+              description={t("noListingsDesc")}
+              action={
+                <Link
+                  href="/publish"
+                  className="bg-corail hover:bg-corail-hover rounded-control inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white transition"
+                >
+                  {t("publishMyFirst")}
+                </Link>
+              }
+            />
+          ) : null}
           {(listings ?? []).map((listing) => (
             <article
               key={listing.id}
