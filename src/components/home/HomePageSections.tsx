@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { buttonVariants } from "@/components/ui/button";
 import { getLatestActiveListings } from "@/data/repositories/listings";
 import {
@@ -33,8 +34,8 @@ export async function HomePageSections() {
 
   return (
     <>
-      <section
-        className="border-line border-y bg-white/40 py-16 md:py-20"
+      <AnimatedSection
+        className="border-bordurewarm-tertiary border-y bg-white/40 py-16 md:py-20"
         aria-labelledby="how-heading"
       >
         <div className="mx-auto max-w-6xl px-4 md:px-6">
@@ -66,13 +67,13 @@ export async function HomePageSections() {
               return (
                 <li
                   key={step.title}
-                  className="border-line bg-creme-pale/80 rounded-2xl border p-5 shadow-sm"
+                  className="border-bordurewarm-tertiary bg-creme-pale/80 rounded-2xl border p-5 shadow-sm"
                 >
                   <Icon className="text-bleu mb-3 h-8 w-8" aria-hidden />
-                  <h3 className="text-ink text-lg font-semibold">
+                  <h3 className="text-encre text-lg font-semibold">
                     {step.title}
                   </h3>
-                  <p className="text-ink-soft mt-2 text-sm leading-relaxed">
+                  <p className="text-encre/70 mt-2 text-sm leading-relaxed">
                     {step.body}
                   </p>
                 </li>
@@ -80,9 +81,9 @@ export async function HomePageSections() {
             })}
           </ol>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section
+      <AnimatedSection
         className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-20"
         aria-labelledby="listings-heading"
       >
@@ -178,21 +179,21 @@ export async function HomePageSections() {
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section
-        className="from-bleu/8 border-line to-corail/8 border-y bg-gradient-to-br py-16 md:py-20"
+      <AnimatedSection
+        className="from-bleu/8 border-bordurewarm-tertiary to-corail/8 border-y bg-gradient-to-br py-16 md:py-20"
         aria-labelledby="tools-heading"
       >
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 md:flex-row md:items-center md:justify-between md:px-6">
           <div>
             <h2
               id="tools-heading"
-              className="font-heading text-ink text-2xl font-bold tracking-tight md:text-3xl"
+              className="font-heading text-encre text-2xl font-bold tracking-tight md:text-3xl"
             >
               {t("tools.title")}
             </h2>
-            <p className="text-ink-soft mt-2 max-w-2xl text-sm md:text-base">
+            <p className="text-encre/70 mt-2 max-w-2xl text-sm md:text-base">
               {t("tools.subtitle")}
             </p>
           </div>
@@ -207,7 +208,7 @@ export async function HomePageSections() {
             {t("tools.cta")}
           </Link>
         </div>
-      </section>
+      </AnimatedSection>
     </>
   );
 }
