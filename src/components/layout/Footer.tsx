@@ -8,11 +8,6 @@ import { IS_BETA } from "@/lib/beta";
 
 const PRICING_HIDDEN = IS_BETA;
 
-type FooterProps = {
-  brandPart1?: string;
-  brandPart2?: string;
-};
-
 type IconProps = { className?: string };
 
 const XLogo = ({ className }: IconProps) => (
@@ -65,10 +60,7 @@ const FacebookLogo = ({ className }: IconProps) => (
   </svg>
 );
 
-export async function Footer({
-  brandPart1 = "pap",
-  brandPart2 = "imo",
-}: FooterProps = {}) {
+export async function Footer() {
   const t = await getTranslations();
   const locale = await getLocale();
   const year = new Date().getFullYear();
@@ -131,11 +123,7 @@ export async function Footer({
                 aria-label={t("common.brandName")}
                 className="inline-flex"
               >
-                <BrandWordmark
-                  size="footer"
-                  part1={brandPart1}
-                  part2={brandPart2}
-                />
+                <BrandWordmark size="footer" />
               </Link>
               <ChevronDown
                 className="size-4 transition-transform group-open:rotate-180 md:hidden"
