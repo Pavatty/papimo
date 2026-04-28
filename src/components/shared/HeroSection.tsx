@@ -1,6 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { HeroSearchBar } from "@/components/home/HeroSearchBar";
 import { buttonVariants } from "@/components/ui/button";
 import { getHomeSectionByKey } from "@/data/repositories/cms-home";
 import { Link } from "@/i18n/navigation";
@@ -125,7 +124,6 @@ export async function HeroSection() {
             {t("navigation.discover")}
           </Link>
         </div>
-        <HeroSearchBar />
       </div>
     </section>
   );

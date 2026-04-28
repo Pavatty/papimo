@@ -13,13 +13,19 @@ export function FeesCalculator() {
     [price, countryCode],
   );
 
+  // LODGE est gratuit pour particuliers (3 annonces max), 0% commission.
+  // L'outil n'affiche donc que les frais réels d'acquisition.
   const rows = [
     ["Droits enregistrement", fees.registration],
     ["Honoraires notaire", fees.notary],
     ["Taxe foncière prorata", fees.propertyTaxProrata],
-    ["Frais d'agence (LODGE)", fees.agency],
     ["Frais dossier banque", fees.bankFileFee],
   ];
+  const totalSansAgence =
+    fees.registration +
+    fees.notary +
+    fees.propertyTaxProrata +
+    fees.bankFileFee;
 
   return (
     <section className="border-line rounded-2xl border bg-white p-5">
@@ -60,7 +66,7 @@ export function FeesCalculator() {
       <div className="mt-4 flex justify-between">
         <span className="text-ink font-semibold">Total</span>
         <span className="text-bleu text-xl font-bold">
-          {Math.round(fees.total)} DT
+          {Math.round(totalSansAgence)} DT
         </span>
       </div>
     </section>
