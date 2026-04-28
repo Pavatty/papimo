@@ -1,10 +1,18 @@
 import {
   ArrowRight,
+  Briefcase,
+  Building2,
   CheckCircle2,
+  Hotel,
   Home,
+  LandPlot,
   MessageCircle,
   Sparkles,
+  Store,
+  Warehouse,
+  Building,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 
@@ -12,13 +20,26 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { buttonVariants } from "@/components/ui/button";
 import { getLatestActiveListings } from "@/data/repositories/listings";
 import {
-  getTransactionTypes,
+  getPropertyTypes,
   getTaxonomyLabel,
+  getTransactionTypes,
   type LocaleKey,
 } from "@/data/repositories/taxonomies";
 import { Link } from "@/i18n/navigation";
 import { formatPrice } from "@/lib/listing/format";
 import { cn } from "@/lib/utils";
+
+const PROPERTY_TYPE_ICONS: Record<string, LucideIcon> = {
+  apartment: Building2,
+  house: Home,
+  villa: Hotel,
+  studio: Building,
+  land: LandPlot,
+  commercial: Store,
+  commercial_space: Store,
+  office: Briefcase,
+  warehouse: Warehouse,
+};
 
 // Sections marketing sous le hero : parcours, dernières annonces, outils
 export async function HomePageSections() {
@@ -26,11 +47,13 @@ export async function HomePageSections() {
   const locale = await getLocale();
   const localeKey: LocaleKey =
     locale === "ar" || locale === "en" ? (locale as LocaleKey) : "fr";
-  const [listings, transactionTypes] = await Promise.all([
+  const [listings, transactionTypes, propertyTypes] = await Promise.all([
     getLatestActiveListings(4),
     getTransactionTypes(),
+    getPropertyTypes(),
   ]);
   const txByCode = new Map(transactionTypes.map((t) => [t.code, t]));
+  const featuredPropertyTypes = propertyTypes.slice(0, 8);
 
   return (
     <>
@@ -41,7 +64,7 @@ export async function HomePageSections() {
         <div className="mx-auto max-w-6xl px-4 md:px-6">
           <h2
             id="how-heading"
-            className="font-heading text-ink text-center text-2xl font-bold tracking-tight md:text-3xl"
+            className="font-heading text-encre text-center text-2xl font-bold tracking-tight md:text-3xl"
           >
             {t("howItWorks.title")}
           </h2>
@@ -179,6 +202,46 @@ export async function HomePageSections() {
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
+      </AnimatedSection>
+
+      <AnimatedSection
+        className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-20"
+        aria-labelledby="categories-heading"
+      >
+        <h2
+          id="categories-heading"
+          className="text-encre font-serif text-3xl md:text-4xl"
+        >
+          Explorer par catégorie
+        </h2>
+        <p className="text-encre/70 mt-2 max-w-2xl text-sm md:text-base">
+          Trouvez le bien qui vous ressemble — appartements, villas, terrains ou
+          locaux commerciaux.
+        </p>
+
+        {featuredPropertyTypes.length > 0 ? (
+          <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+            {featuredPropertyTypes.map((pt) => {
+              const Icon = PROPERTY_TYPE_ICONS[pt.code] ?? Building2;
+              const label = getTaxonomyLabel(pt, localeKey);
+              return (
+                <li key={pt.id}>
+                  <Link
+                    href={`/search?type=${pt.code}`}
+                    className="border-bordurewarm-tertiary bg-blanc-casse hover:border-bleu/30 hover:shadow-card focus-visible:ring-bleu rounded-card group flex flex-col items-start gap-3 border p-4 transition focus-visible:ring-2 focus-visible:outline-none"
+                  >
+                    <span className="bg-bleu-pale text-bleu rounded-control flex h-10 w-10 items-center justify-center transition group-hover:scale-105">
+                      <Icon className="h-5 w-5" aria-hidden />
+                    </span>
+                    <span className="text-encre text-sm font-medium">
+                      {label}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
       </AnimatedSection>
 
       <AnimatedSection
