@@ -98,7 +98,7 @@
       "fallback": "Découvrez les annonces sur la recherche."
     },
     "hero": {
-      "headline": "Vendez, achetez, louez <bleu>de particulier</bleu> <corail>à particulier</corail> — plus facilement et sans frais d’agence.",
+      "headline": "<corail>Vendez, achetez, louez</corail> <bleu>de particulier à particulier</bleu> <corail>— plus facilement et sans frais d’agence.</corail>",
       "subline": "L’immobilier entre particuliers."
     }
   },

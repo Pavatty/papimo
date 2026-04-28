@@ -68,7 +68,7 @@ export function Header({
         backgroundColor: headerBg,
         borderBottomWidth: headerBorder,
       }}
-      className="border-bordurewarm-tertiary dark:border-encre/20 sticky top-0 z-50 h-16 border-b backdrop-blur"
+      className="border-bordurewarm-tertiary dark:border-encre/20 sticky top-0 z-50 h-20 border-b shadow-sm backdrop-blur dark:shadow-none"
     >
       <div className="max-w-container mx-auto flex h-full items-center justify-between px-4 md:px-6 lg:px-8">
         <Link
@@ -173,7 +173,7 @@ export function Header({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={close}
-              className="fixed inset-0 top-16 z-40 bg-black/30 md:hidden"
+              className="fixed inset-0 top-20 z-40 bg-black/30 md:hidden"
               aria-hidden="true"
             />
             <motion.div
@@ -182,7 +182,7 @@ export function Header({
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
-              className="bg-blanc-casse border-bordurewarm-tertiary dark:bg-encre dark:border-encre/20 fixed inset-y-16 right-0 z-50 w-72 max-w-[85%] overflow-y-auto border-l shadow-2xl md:hidden"
+              className="bg-blanc-casse border-bordurewarm-tertiary dark:bg-encre dark:border-encre/20 fixed inset-y-20 right-0 z-50 w-72 max-w-[85%] overflow-y-auto border-l shadow-2xl md:hidden"
             >
               <nav
                 className="flex flex-col gap-1 p-5"
