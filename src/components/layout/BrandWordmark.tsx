@@ -10,7 +10,7 @@ type Props = {
 };
 
 const SIZE_CLASSES: Record<BrandWordmarkSize, string> = {
-  header: "text-3xl md:text-4xl",
+  header: "text-3xl md:text-4xl font-bold",
   footer: "text-4xl md:text-5xl",
   compact: "text-xl",
 };
