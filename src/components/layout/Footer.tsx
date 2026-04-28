@@ -107,7 +107,7 @@ export async function Footer() {
 
   return (
     <AnimatedSection
-      className="bg-creme-foncee dark:bg-encre/40 border-bordurewarm-tertiary dark:border-encre/20 border-t py-12 md:py-16"
+      className="bg-vert-fonce border-t border-white/15 py-12 text-white md:py-16"
       aria-label="Pied de page"
     >
       <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8">
@@ -115,9 +115,9 @@ export async function Footer() {
           {/* Col 1 — Marque (always open on mobile) */}
           <details
             open
-            className="group border-bordurewarm-tertiary dark:border-encre/20 border-b pb-3 md:border-none md:pb-0"
+            className="group border-b border-white/15 pb-3 md:border-none md:pb-0"
           >
-            <summary className="text-encre dark:text-creme flex cursor-pointer list-none items-center justify-between font-medium md:cursor-default md:font-semibold">
+            <summary className="flex cursor-pointer list-none items-center justify-between font-medium text-white md:cursor-default md:font-semibold">
               <Link
                 href="/"
                 aria-label={t("common.brandName")}
@@ -131,36 +131,36 @@ export async function Footer() {
               />
             </summary>
             <div className="mt-3 space-y-2">
-              <p className="text-encre dark:text-creme font-serif text-lg md:text-xl">
+              <p className="font-serif text-lg text-white md:text-xl">
                 {tagline}
               </p>
-              <p className="text-encre/75 dark:text-creme/75 text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed text-white/75">
                 {t("footer.columnAboutText")}
               </p>
               <a
-                href="mailto:contact@papimo.com"
-                className="text-bleu hover:text-bleu-hover focus-visible:ring-bleu inline-flex text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                href="mailto:contact@lodge.tn"
+                className="text-vert-clair focus-visible:ring-vert-clair inline-flex text-sm font-medium transition hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
-                contact@papimo.com
+                contact@lodge.tn
               </a>
             </div>
           </details>
 
           {/* Col 2 — Discover */}
-          <details className="group border-bordurewarm-tertiary dark:border-encre/20 border-b pb-3 md:border-none md:pb-0">
-            <summary className="text-encre dark:text-creme flex cursor-pointer list-none items-center justify-between text-sm font-semibold tracking-wide uppercase md:cursor-default">
+          <details className="group border-b border-white/15 pb-3 md:border-none md:pb-0">
+            <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold tracking-wide text-white uppercase md:cursor-default">
               {t("footer.columnDiscover")}
               <ChevronDown
                 className="size-4 transition-transform group-open:rotate-180 md:hidden"
                 aria-hidden="true"
               />
             </summary>
-            <ul className="text-encre/80 dark:text-creme/80 mt-3 space-y-2 text-sm">
+            <ul className="mt-3 space-y-2 text-sm text-white/80">
               {discoverLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="hover:text-bleu focus-visible:ring-bleu rounded-sm transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                    className="hover:text-vert-clair focus-visible:ring-vert-clair rounded-sm transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                   >
                     {link.label}
                   </Link>
@@ -170,28 +170,28 @@ export async function Footer() {
           </details>
 
           {/* Col 3 — Help & Legal merged for compactness on desktop, separated mobile */}
-          <details className="group border-bordurewarm-tertiary dark:border-encre/20 border-b pb-3 md:border-none md:pb-0">
-            <summary className="text-encre dark:text-creme flex cursor-pointer list-none items-center justify-between text-sm font-semibold tracking-wide uppercase md:cursor-default">
+          <details className="group border-b border-white/15 pb-3 md:border-none md:pb-0">
+            <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold tracking-wide text-white uppercase md:cursor-default">
               {t("footer.columnLegal")}
               <ChevronDown
                 className="size-4 transition-transform group-open:rotate-180 md:hidden"
                 aria-hidden="true"
               />
             </summary>
-            <ul className="text-encre/80 dark:text-creme/80 mt-3 space-y-2 text-sm">
+            <ul className="mt-3 space-y-2 text-sm text-white/80">
               {helpLinks.map((link) => (
                 <li key={"href" in link ? link.href : link.mailto}>
                   {"mailto" in link ? (
                     <a
                       href={link.mailto}
-                      className="hover:text-bleu focus-visible:ring-bleu rounded-sm transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                      className="hover:text-vert-clair focus-visible:ring-vert-clair rounded-sm transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                     >
                       {link.label}
                     </a>
                   ) : (
                     <Link
                       href={link.href}
-                      className="hover:text-bleu focus-visible:ring-bleu rounded-sm transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                      className="hover:text-vert-clair focus-visible:ring-vert-clair rounded-sm transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                     >
                       {link.label}
                     </Link>
@@ -202,7 +202,7 @@ export async function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="hover:text-bleu focus-visible:ring-bleu rounded-sm transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                    className="hover:text-vert-clair focus-visible:ring-vert-clair rounded-sm transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                   >
                     {link.label}
                   </Link>
@@ -212,8 +212,8 @@ export async function Footer() {
           </details>
 
           {/* Col 4 — Social */}
-          <details className="group border-bordurewarm-tertiary dark:border-encre/20 border-b pb-3 md:border-none md:pb-0">
-            <summary className="text-encre dark:text-creme flex cursor-pointer list-none items-center justify-between text-sm font-semibold tracking-wide uppercase md:cursor-default">
+          <details className="group border-b border-white/15 pb-3 md:border-none md:pb-0">
+            <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold tracking-wide text-white uppercase md:cursor-default">
               Réseaux
               <ChevronDown
                 className="size-4 transition-transform group-open:rotate-180 md:hidden"
@@ -226,7 +226,7 @@ export async function Footer() {
                   <a
                     href={href}
                     aria-label={label}
-                    className="border-bordurewarm-tertiary dark:border-encre/20 text-encre/80 dark:text-creme/80 hover:text-bleu hover:border-bleu/40 focus-visible:ring-bleu inline-flex size-9 items-center justify-center rounded-full border transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                    className="hover:text-vert-clair hover:border-vert-clair/40 focus-visible:ring-vert-clair inline-flex size-9 items-center justify-center rounded-full border border-white/15 text-white/80 transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                   >
                     <Icon className="size-4" />
                   </a>
@@ -236,12 +236,12 @@ export async function Footer() {
           </details>
         </div>
 
-        <div className="border-bordurewarm-tertiary dark:border-encre/20 mt-10 flex flex-col items-start gap-3 border-t pt-6 md:flex-row md:items-center md:justify-between">
-          <p className="text-encre/70 dark:text-creme/70 text-sm">
+        <div className="mt-10 flex flex-col items-start gap-3 border-t border-white/15 pt-6 md:flex-row md:items-center md:justify-between">
+          <p className="text-sm text-white/70">
             {t("navigation.languages.fr")} · {t("navigation.languages.ar")} ·{" "}
             {t("navigation.languages.en")}
           </p>
-          <p className="text-encre/70 dark:text-creme/70 text-xs">
+          <p className="text-xs text-white/70">
             © {year} {t("common.brandName")} — {tagline}
           </p>
         </div>

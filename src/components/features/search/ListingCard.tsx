@@ -27,8 +27,10 @@ export function ListingCard({
   const t = useTranslations("home");
   const badgeClass =
     listing.transaction_type === "sale"
-      ? "bg-corail text-white"
-      : "bg-bleu text-white";
+      ? "bg-vert text-white"
+      : listing.transaction_type === "seasonal_rent"
+        ? "bg-terracotta text-white"
+        : "bg-vert-clair text-white";
   const cover = listing.main_photo || listing.photos?.[0] || null;
   const href = `/${locale}/annonce/${listing.slug ?? listing.id}`;
   const publishedAt = listing.published_at;
