@@ -49,8 +49,22 @@ export async function HeroSection() {
     content[`headline_${locale}` as const] ?? FALLBACK_HEADLINE[locale];
   const subline =
     content[`subline_${locale}` as const] ?? FALLBACK_SUBLINE[locale];
-  const colorLine1 = content.color_line1 ?? "#1A1A1A";
-  const colorLine2 = content.color_line2 ?? "#1B5E3F";
+  // Line1 = couleur "encre" qui swap blanc/noir selon le thème via la
+  // CSS var --color-encre. Si l'admin a écrit "encre" dans content_json,
+  // on bascule sur la classe Tailwind text-encre. Sinon, on respecte la
+  // valeur hex DB (au prix d'un contraste fixe).
+  const adminColorLine1 = content.color_line1;
+  const adminColorLine2 = content.color_line2;
+  const useEncreClass =
+    !adminColorLine1 ||
+    adminColorLine1 === "encre" ||
+    adminColorLine1.toUpperCase() === "#1A1A1A";
+  const colorLine1Hex = adminColorLine1 ?? "#1A1A1A";
+  const colorLine2Hex = adminColorLine2 ?? "#1B5E3F";
+  const useVertClass =
+    !adminColorLine2 ||
+    adminColorLine2 === "vert" ||
+    adminColorLine2.toUpperCase() === "#1B5E3F";
   const showTexture = content.background_texture === "true";
   const textureOpacity = parseFloat(content.background_opacity ?? "0.06");
 
@@ -75,14 +89,20 @@ export async function HeroSection() {
           id="hero-heading"
           className="max-w-4xl font-sans text-3xl leading-[1.1] font-extrabold tracking-[-0.04em] md:text-5xl"
         >
-          <span className="block" style={{ color: colorLine1 }}>
+          <span
+            className={useEncreClass ? "text-encre block" : "block"}
+            {...(useEncreClass ? {} : { style: { color: colorLine1Hex } })}
+          >
             {headline.line1}
           </span>
-          <span className="block" style={{ color: colorLine2 }}>
+          <span
+            className={useVertClass ? "text-vert block" : "block"}
+            {...(useVertClass ? {} : { style: { color: colorLine2Hex } })}
+          >
             {headline.line2}
           </span>
         </h1>
-        <p className="text-encre/65 dark:text-creme/65 mt-4 max-w-2xl text-base font-medium md:text-lg">
+        <p className="text-encre/70 mt-4 max-w-2xl text-base font-medium md:text-lg">
           {subline}
         </p>
         <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">

@@ -34,17 +34,17 @@
   --color-corail-pale: rgb(var(--corail-pale));
 
   --color-creme: rgb(var(--creme));
-  --color-creme-foncee: #f0eee8;
+  --color-creme-foncee: var(--creme-foncee);
   --color-creme-pale: rgb(var(--creme-pale));
   --color-paper: rgb(var(--paper));
-  --color-blanc-casse: #ffffff;
+  --color-blanc-casse: var(--blanc-casse);
   --color-ink: rgb(var(--ink));
   --color-ink-soft: rgb(var(--ink-soft));
-  --color-encre: #1a1a1a;
+  --color-encre: var(--encre);
   --color-line: rgb(var(--line));
-  --color-bordurewarm-tertiary: rgba(0, 0, 0, 0.08);
-  --color-bordurewarm-secondary: rgba(0, 0, 0, 0.15);
-  --color-bordurewarm-primary: rgba(0, 0, 0, 0.25);
+  --color-bordurewarm-tertiary: var(--bordurewarm-tertiary);
+  --color-bordurewarm-secondary: var(--bordurewarm-secondary);
+  --color-bordurewarm-primary: var(--bordurewarm-primary);
   --color-green: rgb(var(--green));
   --color-danger: rgb(var(--danger));
 
@@ -147,10 +147,16 @@
   /* Crème LODGE #FAFAF7 = rgb(250, 250, 247) */
   --creme: 250 250 247;
   --creme-pale: 240 238 232; /* #F0EEE8 */
+  --creme-foncee: #f0eee8;
   --paper: 255 255 255;
+  --blanc-casse: #ffffff;
   --ink: 26 26 26;
   --ink-soft: 107 114 128;
+  --encre: #1a1a1a;
   --line: 232 221 201;
+  --bordurewarm-tertiary: rgba(0, 0, 0, 0.08);
+  --bordurewarm-secondary: rgba(0, 0, 0, 0.15);
+  --bordurewarm-primary: rgba(0, 0, 0, 0.25);
   --green: 16 185 129;
   --danger: 220 38 38;
 
@@ -222,10 +228,16 @@
 
   --creme: 15 26 20;
   --creme-pale: 20 36 27;
+  --creme-foncee: #14241b;
   --paper: 26 41 32;
+  --blanc-casse: #14241b;
   --ink: 250 250 247;
   --ink-soft: 184 184 175;
+  --encre: #fafaf7;
   --line: 38 56 47;
+  --bordurewarm-tertiary: rgba(255, 255, 255, 0.1);
+  --bordurewarm-secondary: rgba(255, 255, 255, 0.18);
+  --bordurewarm-primary: rgba(255, 255, 255, 0.28);
 
   /* Couleurs émotionnelles dark — plus lumineuses pour contraste */
   --joie: #ffc670;
