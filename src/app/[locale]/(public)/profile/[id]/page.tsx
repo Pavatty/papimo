@@ -1,3 +1,4 @@
+import { CheckCircle2 } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -44,9 +45,17 @@ export default async function PublicProfilePage({ params }: Props) {
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 md:px-6">
-      <h1 className="text-ink text-3xl font-bold">
-        {profile.full_name ?? "Profil utilisateur"}
-      </h1>
+      <div className="flex flex-wrap items-center gap-3">
+        <h1 className="text-ink text-3xl font-bold">
+          {profile.full_name ?? "Profil utilisateur"}
+        </h1>
+        {profile.is_verified ? (
+          <span className="bg-sejours-turquoise-light text-sejours-turquoise inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold">
+            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden />
+            Vérifié
+          </span>
+        ) : null}
+      </div>
       <p className="text-ink-soft mt-2 text-sm">
         Membre depuis {new Date(profile.created_at).toLocaleDateString("fr-FR")}
       </p>
