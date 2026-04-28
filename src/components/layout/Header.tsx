@@ -83,8 +83,9 @@ export function Header({
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
               className={cn(
-                "relative transition",
+                "relative rounded-sm transition",
                 "after:bg-bleu after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:transition-all hover:after:w-full",
+                "focus-visible:ring-bleu focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
                 isActive(link.href)
                   ? "text-bleu after:w-full"
                   : "text-encre hover:text-bleu",
@@ -108,8 +109,11 @@ export function Header({
                 hrefLang={l}
                 aria-current={l === locale ? "true" : undefined}
                 className={cn(
-                  "rounded-control px-1.5 py-0.5 text-xs font-medium transition",
-                  l === locale ? "text-bleu" : "text-muted hover:text-bleu",
+                  "rounded-control px-1.5 py-0.5 text-xs transition",
+                  "focus-visible:ring-bleu focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none",
+                  l === locale
+                    ? "text-bleu font-semibold"
+                    : "text-encre/80 hover:text-bleu font-medium",
                 )}
               >
                 {l.toUpperCase()}
@@ -119,7 +123,7 @@ export function Header({
           {user ? (
             <Link
               href="/dashboard"
-              className="text-bleu hover:text-bleu-hover text-sm font-medium"
+              className="text-bleu hover:text-bleu-hover focus-visible:ring-bleu rounded-sm text-sm font-semibold focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             >
               {t("navigation.profile")}
             </Link>
@@ -127,13 +131,13 @@ export function Header({
             <>
               <Link
                 href="/login"
-                className="text-bleu hover:text-bleu-hover text-sm font-medium"
+                className="text-bleu hover:text-bleu-hover focus-visible:ring-bleu rounded-sm text-sm font-semibold focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
                 {t("navigation.login")}
               </Link>
               <Link
                 href="/signup"
-                className="bg-corail hover:bg-corail-hover rounded-control px-4 py-2 text-sm font-medium text-white transition"
+                className="bg-corail hover:bg-corail-hover rounded-control focus-visible:ring-corail px-4 py-2 text-sm font-medium text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
                 {t("navigation.signup")}
               </Link>
@@ -204,10 +208,11 @@ export function Header({
                       onClick={close}
                       aria-current={l === locale ? "true" : undefined}
                       className={cn(
-                        "rounded-control px-2 py-1 text-xs font-medium transition",
+                        "rounded-control px-2 py-1 text-xs transition",
+                        "focus-visible:ring-bleu focus-visible:ring-2 focus-visible:outline-none",
                         l === locale
-                          ? "text-bleu"
-                          : "text-muted hover:text-bleu",
+                          ? "text-bleu font-semibold"
+                          : "text-encre/80 hover:text-bleu font-medium",
                       )}
                     >
                       {l.toUpperCase()}
