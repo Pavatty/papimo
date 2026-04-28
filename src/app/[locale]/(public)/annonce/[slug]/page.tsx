@@ -141,11 +141,9 @@ export default async function ListingDetailPage({
         </p>
       </header>
 
-      {galleryImages.length > 0 && (
-        <section className="mb-10">
-          <ListingGallery images={galleryImages} />
-        </section>
-      )}
+      <section className="mb-10">
+        <ListingGallery images={galleryImages} />
+      </section>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_320px] lg:gap-12">
         <div className="space-y-8">
