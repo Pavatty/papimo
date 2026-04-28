@@ -12,9 +12,14 @@ import { useTranslations } from "next-intl";
 
 import { createClient } from "@/data/supabase/client";
 
-import { SearchFilters } from "./SearchFilters";
+import { SearchFilters, type DbTaxonomyItem } from "./SearchFilters";
 import { SearchMap } from "./SearchMap";
 import { SearchResults } from "./SearchResults";
+
+type SearchPageProps = {
+  transactionTypes?: DbTaxonomyItem[];
+  propertyTypes?: DbTaxonomyItem[];
+};
 
 export type SearchFiltersState = {
   transaction_type?: string | undefined;
@@ -54,7 +59,10 @@ export type SearchResult = {
   amenities?: string[] | null;
 };
 
-export function SearchPage() {
+export function SearchPage({
+  transactionTypes,
+  propertyTypes,
+}: SearchPageProps = {}) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -309,6 +317,8 @@ export function SearchPage() {
             filters={filters}
             onChange={updateFilters}
             onReset={resetFilters}
+            {...(transactionTypes ? { transactionTypes } : {})}
+            {...(propertyTypes ? { propertyTypes } : {})}
           />
         </aside>
 
