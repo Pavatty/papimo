@@ -6,12 +6,13 @@ const hoisted = vi.hoisted(() => {
   const select = vi.fn();
   const eq = vi.fn();
   const single = vi.fn();
-  const from = vi.fn(() => ({ upsert, select, eq, single }));
+  const update = vi.fn();
+  const from = vi.fn(() => ({ upsert, select, eq, single, update }));
   const createClient = vi.fn(async () => ({
     auth: { getUser },
     from,
   }));
-  return { getUser, upsert, select, eq, single, from, createClient };
+  return { getUser, upsert, select, eq, single, update, from, createClient };
 });
 
 vi.mock("@/data/supabase/server", () => ({
@@ -23,6 +24,8 @@ describe("auth session helpers", () => {
     vi.clearAllMocks();
     hoisted.select.mockReturnValue({ eq: hoisted.eq, single: hoisted.single });
     hoisted.eq.mockReturnValue({ single: hoisted.single });
+    hoisted.update.mockReturnValue({ eq: vi.fn().mockResolvedValue({}) });
+    hoisted.upsert.mockResolvedValue({});
   });
 
   it("returns null user/profile when unauthenticated", async () => {

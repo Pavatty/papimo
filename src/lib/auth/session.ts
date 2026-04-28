@@ -17,14 +17,25 @@ export async function upsertProfileForUser(
       ? user.user_metadata.full_name.trim()
       : email;
 
-  const upsertPayload: Database["public"]["Tables"]["profiles"]["Insert"] = {
+  // Two-step pattern so existing rows keep their role (admins were getting
+  // downgraded to "user" on every login because the previous upsert always
+  // re-sent role: "user"). New rows still default to role="user" via the DB
+  // column default; the explicit role on insert is a belt-and-suspenders.
+  const insertPayload: Database["public"]["Tables"]["profiles"]["Insert"] = {
     id: user.id,
     email,
     full_name: fullName,
     role: "user",
   };
 
-  await supabase.from("profiles").upsert(upsertPayload, { onConflict: "id" });
+  await supabase
+    .from("profiles")
+    .upsert(insertPayload, { onConflict: "id", ignoreDuplicates: true });
+
+  await supabase
+    .from("profiles")
+    .update({ email, full_name: fullName })
+    .eq("id", user.id);
 }
 
 export async function ensureProfile() {
