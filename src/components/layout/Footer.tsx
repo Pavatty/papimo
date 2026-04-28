@@ -6,7 +6,15 @@ import { IS_BETA } from "@/lib/beta";
 
 const PRICING_HIDDEN = IS_BETA;
 
-export async function Footer() {
+type FooterProps = {
+  brandPart1?: string;
+  brandPart2?: string;
+};
+
+export async function Footer({
+  brandPart1 = "pap",
+  brandPart2 = "imo",
+}: FooterProps = {}) {
   const t = await getTranslations();
   const locale = await getLocale();
   const year = new Date().getFullYear();
@@ -30,7 +38,11 @@ export async function Footer() {
             aria-label={t("common.brandName")}
             className="inline-flex"
           >
-            <BrandWordmark size="footer" />
+            <BrandWordmark
+              size="footer"
+              part1={brandPart1}
+              part2={brandPart2}
+            />
           </Link>
           <p className="text-encre mt-4 font-serif text-2xl">{tagline}</p>
           <p className="text-encre/75 mt-3 text-sm leading-relaxed">
