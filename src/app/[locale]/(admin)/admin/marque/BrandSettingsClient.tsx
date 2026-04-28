@@ -81,7 +81,7 @@ export function BrandSettingsClient({ initial, locale }: Props) {
         <div key={key}>
           <label
             htmlFor={`brand-${key}`}
-            className="text-encre mb-1 block text-sm font-medium"
+            className="text-encre dark:text-creme mb-1 block text-sm font-medium"
           >
             {label}
           </label>
@@ -89,9 +89,11 @@ export function BrandSettingsClient({ initial, locale }: Props) {
             id={`brand-${key}`}
             value={form[key]}
             onChange={update(key)}
-            className="border-bordurewarm-tertiary text-encre focus:ring-bleu w-full rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+            className="border-bordurewarm-tertiary dark:border-encre/20 text-encre dark:text-creme focus:ring-bleu w-full rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
           />
-          <p className="text-encre/70 mt-1 text-xs">{hint}</p>
+          <p className="text-encre/70 dark:text-creme/70 mt-1 text-xs">
+            {hint}
+          </p>
         </div>
       ))}
       <div className="flex items-center gap-4 pt-2">
@@ -105,8 +107,10 @@ export function BrandSettingsClient({ initial, locale }: Props) {
         </button>
         {saved ? <span className="text-bleu text-sm">✓ Sauvegardé</span> : null}
       </div>
-      <div className="border-bordurewarm-tertiary bg-creme-pale rounded-xl border p-4">
-        <p className="text-encre/70 mb-2 text-xs">Aperçu du logo</p>
+      <div className="border-bordurewarm-tertiary dark:border-encre/20 bg-creme-pale dark:bg-encre/60 rounded-xl border p-4">
+        <p className="text-encre/70 dark:text-creme/70 mb-2 text-xs">
+          Aperçu du logo
+        </p>
         <span className="font-serif text-3xl font-medium tracking-tight">
           <span className="text-bleu">{form.logo_part1}</span>
           <span className="text-corail">{form.logo_part2}</span>

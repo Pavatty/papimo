@@ -25,14 +25,14 @@ export function ListingCard({ listing }: Props) {
     <motion.article
       whileHover={{ y: -2 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
-      className="border-bordurewarm-tertiary bg-blanc-casse rounded-card shadow-card hover:shadow-card-hover hover:border-bleu/30 group overflow-hidden border transition-shadow"
+      className="border-bordurewarm-tertiary dark:border-encre/20 bg-blanc-casse dark:bg-encre/95 rounded-card shadow-card hover:shadow-card-hover hover:border-bleu/30 group overflow-hidden border transition-shadow"
     >
       <Link
         href={href}
         className="focus-visible:ring-bleu block focus-visible:ring-2 focus-visible:outline-none"
         aria-label={`Voir l'annonce ${listing.title ?? ""}`}
       >
-        <div className="bg-creme-foncee relative aspect-[4/3] overflow-hidden">
+        <div className="bg-creme-foncee dark:bg-encre/40 relative aspect-[4/3] overflow-hidden">
           {cover ? (
             <Image
               src={cover}
@@ -52,16 +52,16 @@ export function ListingCard({ listing }: Props) {
           ) : null}
         </div>
         <div className="space-y-2 p-4">
-          <h3 className="text-encre line-clamp-2 text-sm font-semibold">
+          <h3 className="text-encre dark:text-creme line-clamp-2 text-sm font-semibold">
             {listing.title}
           </h3>
           <p className="text-corail font-serif text-xl font-medium">
             {Number(listing.price ?? 0).toLocaleString("fr-FR")}{" "}
-            <span className="text-encre/60 text-xs font-normal">
+            <span className="text-encre/60 dark:text-creme/60 text-xs font-normal">
               {listing.price_currency}
             </span>
           </p>
-          <div className="text-encre/70 flex flex-wrap items-center gap-3 text-xs">
+          <div className="text-encre/70 dark:text-creme/70 flex flex-wrap items-center gap-3 text-xs">
             {listing.surface_area ? (
               <span className="inline-flex items-center gap-1">
                 <LandPlot className="h-3.5 w-3.5" aria-hidden />
@@ -82,7 +82,7 @@ export function ListingCard({ listing }: Props) {
             ) : null}
           </div>
           {(listing.city || listing.neighborhood) && (
-            <p className="text-encre/60 inline-flex items-center gap-1 text-xs">
+            <p className="text-encre/60 dark:text-creme/60 inline-flex items-center gap-1 text-xs">
               <MapPin className="h-3.5 w-3.5" aria-hidden />
               {listing.neighborhood
                 ? `${listing.neighborhood} · ${listing.city ?? ""}`

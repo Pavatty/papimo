@@ -51,47 +51,47 @@ export default async function AdminTransactionsPage({
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-encre text-2xl font-bold">
+      <h1 className="font-display text-encre dark:text-creme text-2xl font-bold">
         Transactions
       </h1>
-      <form className="border-bordurewarm-tertiary grid gap-2 rounded-xl border bg-white p-4 md:grid-cols-6">
+      <form className="border-bordurewarm-tertiary dark:border-encre/20 grid gap-2 rounded-xl border bg-white p-4 md:grid-cols-6">
         <input
           name="status"
           defaultValue={query.status}
           placeholder="status"
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="gateway"
           defaultValue={query.gateway}
           placeholder="gateway"
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="type"
           defaultValue={query.type}
           placeholder="type"
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           type="date"
           name="from"
           defaultValue={query.from}
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           type="date"
           name="to"
           defaultValue={query.to}
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <button className="bg-corail rounded-lg px-3 py-1.5 text-sm text-white">
           Filtrer
         </button>
       </form>
 
-      <div className="border-bordurewarm-tertiary flex items-center justify-between rounded-xl border bg-white p-3">
-        <p className="text-encre text-sm">
+      <div className="border-bordurewarm-tertiary dark:border-encre/20 flex items-center justify-between rounded-xl border bg-white p-3">
+        <p className="text-encre dark:text-creme text-sm">
           Total cumulé visible:{" "}
           <span className="font-semibold">{totalAmount}</span>
         </p>
@@ -104,9 +104,9 @@ export default async function AdminTransactionsPage({
         </a>
       </div>
 
-      <div className="border-bordurewarm-tertiary overflow-auto rounded-xl border bg-white">
+      <div className="border-bordurewarm-tertiary dark:border-encre/20 overflow-auto rounded-xl border bg-white">
         <table className="w-full min-w-[1100px] text-sm">
-          <thead className="bg-creme-pale text-encre/70 text-xs">
+          <thead className="bg-creme-pale dark:bg-encre/60 text-encre/70 dark:text-creme/70 text-xs">
             <tr>
               <th className="px-3 py-2 text-left">ID</th>
               <th className="px-3 py-2 text-left">Montant</th>
@@ -119,8 +119,13 @@ export default async function AdminTransactionsPage({
           </thead>
           <tbody>
             {(transactions ?? []).map((tx) => (
-              <tr key={tx.id} className="border-bordurewarm-tertiary border-t">
-                <td className="text-encre/70 px-3 py-2 text-xs">{tx.id}</td>
+              <tr
+                key={tx.id}
+                className="border-bordurewarm-tertiary dark:border-encre/20 border-t"
+              >
+                <td className="text-encre/70 dark:text-creme/70 px-3 py-2 text-xs">
+                  {tx.id}
+                </td>
                 <td className="px-3 py-2">
                   {tx.amount} {tx.currency}
                 </td>

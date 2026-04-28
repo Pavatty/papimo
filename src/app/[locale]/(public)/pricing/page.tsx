@@ -29,10 +29,12 @@ export default async function PricingPage() {
   const packs = await getPricingPacks();
 
   return (
-    <main className="bg-creme min-h-screen px-6 py-10">
+    <main className="bg-creme dark:bg-encre min-h-screen px-6 py-10">
       <div className="mx-auto max-w-6xl">
-        <h1 className="text-encre font-serif text-4xl">Tarifs papimo</h1>
-        <p className="text-muted mt-2 text-sm">
+        <h1 className="text-encre dark:text-creme font-serif text-4xl">
+          Tarifs papimo
+        </h1>
+        <p className="text-muted dark:text-creme/60 mt-2 text-sm">
           Quatre packs immobiliers pour vendre ou louer en toute simplicité,
           sans commission cachée. Konnect ou Stripe selon votre pays.
         </p>
@@ -48,7 +50,7 @@ export default async function PricingPage() {
                 className={`rounded-card shadow-card border bg-white p-6 ${
                   plan.is_recommended
                     ? "border-corail shadow-card-hover"
-                    : "border-bordurewarm-tertiary"
+                    : "border-bordurewarm-tertiary dark:border-encre/20"
                 }`}
               >
                 {plan.is_recommended ? (
@@ -56,13 +58,13 @@ export default async function PricingPage() {
                     Recommandé
                   </span>
                 ) : null}
-                <h2 className="text-encre text-xl font-semibold">
+                <h2 className="text-encre dark:text-creme text-xl font-semibold">
                   {getTaxonomyLabel(plan, localeKey)}
                 </h2>
                 <p className="text-corail mt-2 font-serif text-3xl">
                   {formatPackPrice(Number(plan.price_monthly_tnd), locale)}
                 </p>
-                <p className="text-muted mt-1 text-sm">
+                <p className="text-muted dark:text-creme/60 mt-1 text-sm">
                   {plan.max_active_listings} annonce
                   {plan.max_active_listings > 1 ? "s" : ""} ·{" "}
                   {plan.max_photos_per_listing} photos · {plan.active_days}{" "}
@@ -72,7 +74,7 @@ export default async function PricingPage() {
                   {features.map((feature) => (
                     <li
                       key={feature}
-                      className="text-encre flex items-start gap-2"
+                      className="text-encre dark:text-creme flex items-start gap-2"
                     >
                       <Check
                         className="text-corail mt-0.5 h-4 w-4 shrink-0"

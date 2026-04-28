@@ -29,7 +29,7 @@ export async function Footer({
   return (
     <footer
       role="contentinfo"
-      className="bg-creme-foncee border-bordurewarm-tertiary border-t py-12 md:py-16"
+      className="bg-creme-foncee dark:bg-encre/40 border-bordurewarm-tertiary dark:border-encre/20 border-t py-12 md:py-16"
     >
       <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8">
         <div className="mb-10 max-w-2xl">
@@ -44,7 +44,9 @@ export async function Footer({
               part2={brandPart2}
             />
           </Link>
-          <p className="text-encre mt-4 font-serif text-2xl">{tagline}</p>
+          <p className="text-encre dark:text-creme mt-4 font-serif text-2xl">
+            {tagline}
+          </p>
           <p className="text-encre/75 mt-3 text-sm leading-relaxed">
             {t("footer.columnAboutText")}
           </p>
@@ -52,10 +54,10 @@ export async function Footer({
 
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <h2 className="text-encre mb-3 text-sm font-semibold tracking-wide uppercase">
+            <h2 className="text-encre dark:text-creme mb-3 text-sm font-semibold tracking-wide uppercase">
               {t("footer.columnDiscover")}
             </h2>
-            <ul className="text-encre/80 space-y-2 text-sm">
+            <ul className="text-encre/80 dark:text-creme/80 space-y-2 text-sm">
               <li>
                 <Link href="/search" className="hover:text-bleu transition">
                   {t("footer.searchLink")}
@@ -80,10 +82,10 @@ export async function Footer({
           </div>
 
           <div>
-            <h2 className="text-encre mb-3 text-sm font-semibold tracking-wide uppercase">
+            <h2 className="text-encre dark:text-creme mb-3 text-sm font-semibold tracking-wide uppercase">
               {t("footer.columnHelp")}
             </h2>
-            <ul className="text-encre/80 space-y-2 text-sm">
+            <ul className="text-encre/80 dark:text-creme/80 space-y-2 text-sm">
               <li>
                 <Link href="/faq" className="hover:text-bleu transition">
                   {t("footer.faq")}
@@ -108,10 +110,10 @@ export async function Footer({
           </div>
 
           <div>
-            <h2 className="text-encre mb-3 text-sm font-semibold tracking-wide uppercase">
+            <h2 className="text-encre dark:text-creme mb-3 text-sm font-semibold tracking-wide uppercase">
               {t("footer.columnLegal")}
             </h2>
-            <ul className="text-encre/80 space-y-2 text-sm">
+            <ul className="text-encre/80 dark:text-creme/80 space-y-2 text-sm">
               <li>
                 <Link href="/legal" className="hover:text-bleu transition">
                   {t("footer.legalHub")}
@@ -155,12 +157,12 @@ export async function Footer({
           </div>
         </div>
 
-        <div className="border-bordurewarm-tertiary mt-10 flex flex-col items-start gap-3 border-t pt-6 md:flex-row md:items-center md:justify-between">
-          <p className="text-encre/70 text-sm">
+        <div className="border-bordurewarm-tertiary dark:border-encre/20 mt-10 flex flex-col items-start gap-3 border-t pt-6 md:flex-row md:items-center md:justify-between">
+          <p className="text-encre/70 dark:text-creme/70 text-sm">
             {t("navigation.languages.fr")} · {t("navigation.languages.ar")} ·{" "}
             {t("navigation.languages.en")}
           </p>
-          <p className="text-encre/70 text-xs">
+          <p className="text-encre/70 dark:text-creme/70 text-xs">
             © {year} {t("common.brandName")} - {tagline}
           </p>
         </div>

@@ -54,40 +54,40 @@ export default async function AdminListingsPage({
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-encre text-2xl font-bold">
+      <h1 className="font-display text-encre dark:text-creme text-2xl font-bold">
         Gestion des annonces
       </h1>
 
-      <form className="border-bordurewarm-tertiary grid gap-2 rounded-xl border bg-white p-4 md:grid-cols-6">
+      <form className="border-bordurewarm-tertiary dark:border-encre/20 grid gap-2 rounded-xl border bg-white p-4 md:grid-cols-6">
         <input
           name="q"
           defaultValue={query.q}
           placeholder="Recherche"
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="status"
           defaultValue={query.status}
           placeholder="status"
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="type"
           defaultValue={query.type}
           placeholder="type"
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="category"
           defaultValue={query.category}
           placeholder="category"
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="city"
           defaultValue={query.city}
           placeholder="ville"
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <button className="bg-corail rounded-lg px-3 py-1.5 text-sm text-white">
           Filtrer
@@ -104,26 +104,26 @@ export default async function AdminListingsPage({
           const status = String(formData.get("bulkStatus") ?? "pending");
           await bulkListingStatusAction(locale, ids, status as never);
         }}
-        className="border-bordurewarm-tertiary flex flex-wrap items-center gap-2 rounded-xl border bg-white p-3"
+        className="border-bordurewarm-tertiary dark:border-encre/20 flex flex-wrap items-center gap-2 rounded-xl border bg-white p-3"
       >
         <input
           name="ids"
           placeholder="id1,id2,id3"
-          className="border-bordurewarm-tertiary min-w-[280px] rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 min-w-[280px] rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="bulkStatus"
           placeholder="active/rejected/expired"
-          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary dark:border-encre/20 rounded-lg border px-2 py-1.5 text-sm"
         />
         <button className="bg-bleu rounded-lg px-3 py-1.5 text-sm text-white">
           Bulk action
         </button>
       </form>
 
-      <div className="border-bordurewarm-tertiary overflow-auto rounded-xl border bg-white">
+      <div className="border-bordurewarm-tertiary dark:border-encre/20 overflow-auto rounded-xl border bg-white">
         <table className="w-full min-w-[980px] text-sm">
-          <thead className="bg-creme-pale text-encre/70 text-xs">
+          <thead className="bg-creme-pale dark:bg-encre/60 text-encre/70 dark:text-creme/70 text-xs">
             <tr>
               <th className="px-3 py-2 text-left">Titre</th>
               <th className="px-3 py-2 text-left">Ville</th>
@@ -137,11 +137,15 @@ export default async function AdminListingsPage({
             {(listings ?? []).map((listing) => (
               <tr
                 key={listing.id}
-                className="border-bordurewarm-tertiary border-t align-top"
+                className="border-bordurewarm-tertiary dark:border-encre/20 border-t align-top"
               >
                 <td className="px-3 py-2">
-                  <p className="text-encre font-medium">{listing.title}</p>
-                  <p className="text-encre/70 text-xs">{listing.id}</p>
+                  <p className="text-encre dark:text-creme font-medium">
+                    {listing.title}
+                  </p>
+                  <p className="text-encre/70 dark:text-creme/70 text-xs">
+                    {listing.id}
+                  </p>
                 </td>
                 <td className="px-3 py-2">{listing.city}</td>
                 <td className="px-3 py-2">{listing.type}</td>
@@ -151,7 +155,7 @@ export default async function AdminListingsPage({
                   <div className="flex flex-wrap gap-2 text-xs">
                     <Link
                       href={`/${locale}/annonce/${listing.slug ?? listing.id}`}
-                      className="border-bordurewarm-tertiary rounded border bg-white px-2 py-1"
+                      className="border-bordurewarm-tertiary dark:border-encre/20 rounded border bg-white px-2 py-1"
                     >
                       Voir
                     </Link>
@@ -185,7 +189,7 @@ export default async function AdminListingsPage({
                         await suspendListingAction(locale, listing.id);
                       }}
                     >
-                      <button className="bg-creme rounded px-2 py-1">
+                      <button className="bg-creme dark:bg-encre rounded px-2 py-1">
                         Suspendre
                       </button>
                     </form>
@@ -205,7 +209,7 @@ export default async function AdminListingsPage({
                         await softDeleteListingAction(locale, listing.id);
                       }}
                     >
-                      <button className="bg-creme rounded px-2 py-1">
+                      <button className="bg-creme dark:bg-encre rounded px-2 py-1">
                         Soft delete
                       </button>
                     </form>

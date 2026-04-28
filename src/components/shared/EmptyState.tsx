@@ -24,10 +24,16 @@ export function EmptyState({
         className,
       )}
     >
-      {icon ? <div className="text-encre/60 mb-4">{icon}</div> : null}
-      <h3 className="text-encre mb-1 font-serif text-lg">{title}</h3>
+      {icon ? (
+        <div className="text-encre/60 dark:text-creme/60 mb-4">{icon}</div>
+      ) : null}
+      <h3 className="text-encre dark:text-creme mb-1 font-serif text-lg">
+        {title}
+      </h3>
       {description ? (
-        <p className="text-encre/70 mb-4 max-w-sm text-sm">{description}</p>
+        <p className="text-encre/70 dark:text-creme/70 mb-4 max-w-sm text-sm">
+          {description}
+        </p>
       ) : null}
       {action}
     </div>

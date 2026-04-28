@@ -145,6 +145,27 @@
   --sidebar-ring: #1e5a96;
 }
 
+/* Dark mode token overrides — toggled via class="dark" on <html> by next-themes */
+.dark {
+  --background: #1a1a1a;
+  --foreground: #fbf6ec;
+  --card: #1f1f1f;
+  --card-foreground: #fbf6ec;
+  --popover: #1f1f1f;
+  --popover-foreground: #fbf6ec;
+  --muted: #262626;
+  --muted-foreground: #a8a89e;
+  --accent: #2a2a2a;
+  --accent-foreground: #fbf6ec;
+  --border: #2e2e2e;
+  --input: #2e2e2e;
+  --sidebar: #1a1a1a;
+  --sidebar-foreground: #fbf6ec;
+  --sidebar-border: #2e2e2e;
+  --sidebar-accent: #262626;
+  --sidebar-accent-foreground: #fbf6ec;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -154,6 +175,13 @@
     color: var(--color-encre);
     font-family: var(--font-sans);
     font-feature-settings: "cv02", "cv03", "cv04";
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .dark body {
+    background-color: #1a1a1a;
+    color: #fbf6ec;
   }
   html {
     @apply font-sans;
