@@ -13,7 +13,7 @@ import { useState } from "react";
 
 import { BrandWordmark } from "@/components/layout/BrandWordmark";
 import { useAuth } from "@/components/providers/AuthProvider";
-import { ThemeSwitcher } from "@/components/theme/ThemeSwitcher";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Link, usePathname } from "@/i18n/navigation";
 import { IS_BETA } from "@/lib/beta";
 import { cn } from "@/lib/utils";
@@ -44,7 +44,6 @@ export function Header() {
   const close = () => setOpen(false);
 
   const navLinks = [
-    { href: "/search", label: t("navigation.search") },
     { href: "/outils", label: t("navigation.tools") },
     ...(!PRICING_HIDDEN
       ? [{ href: "/pricing", label: t("navigation.pricing") }]
@@ -95,7 +94,7 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <ThemeSwitcher />
+          <ThemeToggle />
           <nav
             aria-label={t("a11y.languageMenu")}
             className="border-bordurewarm-tertiary dark:border-encre/20 flex items-center gap-1 border-r pr-3"
