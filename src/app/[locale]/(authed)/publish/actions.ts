@@ -9,7 +9,15 @@ import { captureServerEvent } from "@/lib/analytics/events";
 import { sendEmail } from "@/lib/email/send";
 import { type EmailLocale } from "@/lib/email/templates/base";
 import { listingPublishedEmail } from "@/lib/email/templates/listing-published";
+import { isFlagEnabled } from "@/data/repositories/feature-flags";
+import { checkAntiAgency } from "@/lib/moderation/anti-agency";
+import { moderateWithClaude } from "@/lib/moderation/claude-moderator";
 import { moderateListing } from "@/lib/moderation/listing";
+import { logModeration } from "@/lib/moderation/log";
+import {
+  checkPublishRateLimit,
+  incrementPublishCount,
+} from "@/lib/moderation/rate-limit";
 import {
   sanitizeDescription,
   sanitizeTitle,
@@ -318,13 +326,88 @@ export async function submitForReview(listingId: string) {
     .single();
   if (!listing) return { ok: false, error: "Listing introuvable" };
 
-  const moderation = await moderateListing(listing);
-  const targetStatus =
-    moderation.result === "active"
-      ? "active"
-      : moderation.result === "pending"
-        ? "pending"
-        : "pending";
+  const [rateLimitFlag, antiAgencyFlag, aiFlag] = await Promise.all([
+    isFlagEnabled("rate_limit_enabled"),
+    isFlagEnabled("anti_agency_enabled"),
+    isFlagEnabled("ai_moderation_enabled"),
+  ]);
+
+  if (rateLimitFlag) {
+    const rl = await checkPublishRateLimit(user.id);
+    if (!rl.allowed) {
+      return {
+        ok: false,
+        error: `Limite de ${rl.limit} publications par jour atteinte. Réessayez demain.`,
+        code: "RATE_LIMIT",
+      };
+    }
+  }
+
+  if (antiAgencyFlag && listing.pack === "free") {
+    const aa = await checkAntiAgency(user.id);
+    if (!aa.allowed) {
+      return {
+        ok: false,
+        error: `Maximum ${aa.max} annonces gratuites actives. Passez en plan payant pour publier davantage.`,
+        code: "ANTI_AGENCY",
+      };
+    }
+  }
+
+  const rules = await moderateListing(listing);
+
+  let claudeResult: Awaited<ReturnType<typeof moderateWithClaude>> = null;
+  if (aiFlag) {
+    claudeResult = await moderateWithClaude(listing);
+  }
+
+  let targetStatus: "active" | "pending" = "pending";
+  let logDecision: "approved" | "rejected" | "manual_review" | "pending" =
+    "pending";
+  let logSource: "ai_claude" | "rules" = "rules";
+  const combinedReasons = [...rules.reasons];
+
+  if (claudeResult) {
+    logSource = "ai_claude";
+    combinedReasons.push(...claudeResult.reasons);
+    if (claudeResult.decision === "rejected") {
+      logDecision = "rejected";
+      await logModeration({
+        listingId,
+        userId: user.id,
+        decision: "rejected",
+        source: "ai_claude",
+        reasons: combinedReasons,
+        aiScore: claudeResult.score,
+        aiRaw: claudeResult.raw,
+      });
+      return {
+        ok: false,
+        error: "Annonce rejetée par la modération automatique.",
+        code: "MODERATION_REJECTED",
+        reasons: combinedReasons,
+      };
+    }
+    if (claudeResult.decision === "manual_review") {
+      targetStatus = "pending";
+      logDecision = "manual_review";
+    } else if (rules.result === "active") {
+      targetStatus = "active";
+      logDecision = "approved";
+    } else {
+      targetStatus = "pending";
+      logDecision = "pending";
+    }
+  } else {
+    if (rules.result === "active") {
+      targetStatus = "active";
+      logDecision = "approved";
+    } else {
+      targetStatus = "pending";
+      logDecision =
+        rules.result === "manual_review" ? "manual_review" : "pending";
+    }
+  }
 
   const { error } = await supabase
     .from("listings")
@@ -333,6 +416,20 @@ export async function submitForReview(listingId: string) {
     .eq("owner_id", user.id);
 
   if (error) return { ok: false, error: error.message };
+
+  await logModeration({
+    listingId,
+    userId: user.id,
+    decision: logDecision,
+    source: logSource,
+    reasons: combinedReasons,
+    aiScore: claudeResult?.score ?? null,
+    aiRaw: claudeResult?.raw ?? null,
+  });
+
+  if (rateLimitFlag) {
+    await incrementPublishCount(user.id);
+  }
 
   await captureServerEvent("publish_completed", user.id, {
     listingId,
@@ -371,5 +468,13 @@ export async function submitForReview(listingId: string) {
     }
   }
 
-  return { ok: true, status: targetStatus, moderation };
+  return {
+    ok: true,
+    status: targetStatus,
+    moderation: {
+      decision: logDecision,
+      source: logSource,
+      reasons: combinedReasons,
+    },
+  };
 }
