@@ -2,10 +2,12 @@
 
 import { differenceInDays, format } from "date-fns";
 import { Sparkles } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition } from "react";
 import type { DateRange } from "react-day-picker";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
+import { createBooking } from "@/app/actions/bookings";
 import { Calendar } from "@/components/ui/calendar";
 
 export type BookingPanelListing = {
@@ -35,8 +37,12 @@ export function SejourBookingPanel({
   serviceFeePercent = 10,
 }: Props) {
   const t = useTranslations("sejours");
+  const locale = useLocale();
+  const router = useRouter();
   const [range, setRange] = useState<DateRange | undefined>();
   const [guests, setGuests] = useState(1);
+  const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   const disabledDates = useMemo(
     () =>
@@ -154,11 +160,34 @@ export function SejourBookingPanel({
 
       <button
         type="button"
-        disabled={!canReserve}
+        disabled={!canReserve || pending}
+        onClick={() => {
+          if (!checkIn || !checkOut) return;
+          setError(null);
+          startTransition(async () => {
+            const result = await createBooking({
+              listingId: listing.id,
+              checkInDate: format(checkIn, "yyyy-MM-dd"),
+              checkOutDate: format(checkOut, "yyyy-MM-dd"),
+              numGuests: guests,
+            });
+            if (result.ok) {
+              router.push(`/${locale}/dashboard/reservations`);
+            } else {
+              setError(result.error);
+            }
+          });
+        }}
         className="bg-sejours-coral hover:bg-sejours-coral-hover focus-visible:ring-sejours-coral w-full rounded-md py-3 text-sm font-semibold text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {t("reserve")}
+        {pending ? "…" : t("reserve")}
       </button>
+
+      {error ? (
+        <p className="bg-coeur-soft text-coeur mt-3 rounded-md px-3 py-2 text-xs">
+          {error}
+        </p>
+      ) : null}
 
       {minNights > 1 ? (
         <p className="text-encre/60 dark:text-creme/60 mt-3 text-center text-xs">
