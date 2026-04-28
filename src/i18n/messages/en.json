@@ -99,7 +99,56 @@
     },
     "hero": {
       "headline": "<corail>Sell, buy, rent</corail> <bleu>peer to peer</bleu> <corail>— easier and with no agency fees.</corail>",
-      "subline": "Peer-to-peer real estate."
+      "subline": "Peer-to-peer real estate.",
+      "search": {
+        "buy": "Buy",
+        "rent": "Rent",
+        "seasonal": "Seasonal",
+        "placeholder": "City, area, property type…",
+        "button": "Search"
+      }
+    },
+    "publishCta": "Publish my listing",
+    "newBadge": "New",
+    "trust": {
+      "aria": "Why trust us",
+      "secure": "Secure data",
+      "p2p": "Owner to owner",
+      "fast": "Direct & fast contact",
+      "verified": "Verified listings"
+    },
+    "quickFilters": {
+      "title": "Popular searches",
+      "studios": "Studios to rent",
+      "villas": "Villas with pool",
+      "seaview": "Sea view",
+      "commercial": "Commercial spaces",
+      "furnished": "Furnished",
+      "students": "For students"
+    },
+    "why": {
+      "title": "Why papimo?",
+      "subtitle": "A platform built for owners — no intermediaries.",
+      "savings": {
+        "title": "Real savings",
+        "desc": "No agency commission on your transaction.",
+        "highlight": "0%"
+      },
+      "direct": {
+        "title": "Direct contact",
+        "desc": "Reach the owner in minutes.",
+        "highlight": "24h"
+      },
+      "trust": {
+        "title": "With confidence",
+        "desc": "Verified listings and certified profiles.",
+        "highlight": "100%"
+      },
+      "free": {
+        "title": "Free",
+        "desc": "Publish and browse at no cost.",
+        "highlight": "Free"
+      }
     }
   },
   "faq": {

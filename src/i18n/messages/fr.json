@@ -99,7 +99,56 @@
     },
     "hero": {
       "headline": "<corail>Vendez, achetez, louez</corail> <bleu>de particulier à particulier</bleu> <corail>— plus facilement et sans frais d’agence.</corail>",
-      "subline": "L’immobilier entre particuliers."
+      "subline": "L’immobilier entre particuliers.",
+      "search": {
+        "buy": "Acheter",
+        "rent": "Louer",
+        "seasonal": "Saisonnier",
+        "placeholder": "Ville, quartier, type de bien…",
+        "button": "Rechercher"
+      }
+    },
+    "publishCta": "Publier mon bien",
+    "newBadge": "Nouveau",
+    "trust": {
+      "aria": "Pourquoi nous faire confiance",
+      "secure": "Données sécurisées",
+      "p2p": "Particulier à particulier",
+      "fast": "Contact direct & rapide",
+      "verified": "Annonces vérifiées"
+    },
+    "quickFilters": {
+      "title": "Recherches populaires",
+      "studios": "Studios à louer",
+      "villas": "Villas avec piscine",
+      "seaview": "Vue mer",
+      "commercial": "Locaux commerciaux",
+      "furnished": "Meublés",
+      "students": "Pour étudiants"
+    },
+    "why": {
+      "title": "Pourquoi papimo ?",
+      "subtitle": "Une plateforme pensée pour les particuliers, sans intermédiaires.",
+      "savings": {
+        "title": "Économies réelles",
+        "desc": "Pas de commission d’agence sur votre transaction.",
+        "highlight": "0 %"
+      },
+      "direct": {
+        "title": "Contact direct",
+        "desc": "Échangez avec le propriétaire en quelques minutes.",
+        "highlight": "24h"
+      },
+      "trust": {
+        "title": "En toute confiance",
+        "desc": "Annonces vérifiées et profils certifiés.",
+        "highlight": "100%"
+      },
+      "free": {
+        "title": "Gratuit",
+        "desc": "Publiez et consultez sans frais.",
+        "highlight": "Free"
+      }
     }
   },
   "faq": {

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 
 import { HomePageSections } from "@/components/home/HomePageSections";
+import { QuickFilters } from "@/components/home/QuickFilters";
+import { StickyPublishCTA } from "@/components/home/StickyPublishCTA";
+import { TrustSignals } from "@/components/home/TrustSignals";
 import { HeroSection } from "@/components/shared/HeroSection";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
@@ -19,12 +22,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const revalidate = 900;
 
-// Page d’accueil publique : coquille marketing (Header/Footer fournis par le layout (public))
 export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <TrustSignals />
+      <QuickFilters />
       <HomePageSections />
+      <StickyPublishCTA />
     </>
   );
 }

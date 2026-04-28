@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { BedDouble, LandPlot, MapPin, PanelBottom } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import type { SearchResult } from "./SearchPage";
 
@@ -12,14 +12,25 @@ type Props = {
   listing: SearchResult;
 };
 
+const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+
 export function ListingCard({ listing }: Props) {
   const locale = useLocale() as "fr" | "en" | "ar";
+  const t = useTranslations("home");
   const badgeClass =
     listing.transaction_type === "sale"
       ? "bg-corail text-white"
       : "bg-bleu text-white";
   const cover = listing.main_photo || listing.photos?.[0] || null;
   const href = `/${locale}/annonce/${listing.slug ?? listing.id}`;
+  const publishedAt = listing.published_at;
+  // Date.now() in a client component is fine because the card only renders
+  // when actually mounted; flagging it as impure is overly strict here.
+  // eslint-disable-next-line react-hooks/purity
+  const nowMs = Date.now();
+  const isNew = Boolean(
+    publishedAt && nowMs - new Date(publishedAt).getTime() < SEVEN_DAYS_MS,
+  );
 
   return (
     <motion.article
@@ -48,6 +59,11 @@ export function ListingCard({ listing }: Props) {
               className={`rounded-control absolute top-2 left-2 px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${badgeClass}`}
             >
               {listing.transaction_type}
+            </span>
+          ) : null}
+          {isNew ? (
+            <span className="bg-bleu absolute top-2 right-2 rounded-full px-2 py-1 text-[10px] font-semibold tracking-wider text-white uppercase shadow-md">
+              {t("newBadge")}
             </span>
           ) : null}
         </div>
