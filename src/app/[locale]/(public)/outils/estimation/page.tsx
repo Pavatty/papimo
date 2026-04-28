@@ -8,7 +8,7 @@ export default function EstimationPage() {
           Estimer mon bien
         </h1>
         <p className="text-ink-soft mt-2 text-sm">
-          Wizard en 5 étapes basé sur le price index papimo.
+          Wizard en 5 étapes basé sur le price index LODGE.
         </p>
         <div className="mt-6">
           <EstimationWizard />

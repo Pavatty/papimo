@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "papimo",
-    short_name: "papimo",
+    name: "LODGE",
+    short_name: "LODGE",
     description: "L'immobilier entre particuliers",
     start_url: "/",
     display: "standalone",

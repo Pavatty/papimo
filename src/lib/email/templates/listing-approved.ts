@@ -16,21 +16,21 @@ export function listingApprovedEmail(params: ListingApprovedEmailParams) {
       hello: `Bonjour ${recipientName},`,
       intro: `Votre annonce "${listingTitle}" a été approuvée par notre équipe et est maintenant visible.`,
       cta: "Voir l'annonce",
-      foot: "Merci d'utiliser papimo.",
+      foot: "Merci d'utiliser LODGE.",
     },
     en: {
       subject: "Your listing has been approved",
       hello: `Hello ${recipientName},`,
       intro: `Your listing "${listingTitle}" has been approved by our team and is now visible.`,
       cta: "View listing",
-      foot: "Thanks for using papimo.",
+      foot: "Thanks for using LODGE.",
     },
     ar: {
       subject: "تمت الموافقة على إعلانك",
       hello: `مرحباً ${recipientName}،`,
       intro: `تمت الموافقة على إعلانك "${listingTitle}" من قبل فريقنا وهو الآن ظاهر.`,
       cta: "عرض الإعلان",
-      foot: "شكراً لاستخدامك papimo.",
+      foot: "شكراً لاستخدامك LODGE.",
     },
   };
 

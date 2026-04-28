@@ -28,7 +28,7 @@ describe("whatsapp helpers", () => {
     const link = buildWhatsAppLink("+21622162261", "123456", "fr");
     expect(link).toContain("https://wa.me/21622162261");
     expect(link).toContain(
-      encodeURIComponent("Bonjour papimo, mon code est 123456"),
+      encodeURIComponent("Bonjour LODGE, mon code est 123456"),
     );
   });
 });

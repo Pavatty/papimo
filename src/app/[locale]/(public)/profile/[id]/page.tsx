@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return buildPageMetadata({
     locale,
     pathnameWithoutLocale: `/profile/${id}`,
-    title: `${name} | papimo`,
-    description: `Profil public de ${name} sur papimo.`,
+    title: `${name} | LODGE`,
+    description: `Profil public de ${name} sur LODGE.`,
   });
 }
 

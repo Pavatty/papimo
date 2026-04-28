@@ -263,7 +263,7 @@
 }
 
 /* Mapbox RTL fix */
-.mapboxgl-marker.papimo-price-marker,
+.mapboxgl-marker.lodge-price-marker,
 .mapboxgl-marker {
   direction: ltr;
 }

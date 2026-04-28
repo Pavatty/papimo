@@ -8,10 +8,10 @@ export type CookieConsent = {
   productAnalytics: boolean;
 };
 
-const COOKIE_KEY = "papimo_cookie_consent";
-const STORAGE_KEY = "papimo_cookie_consent_v1";
+const COOKIE_KEY = "LODGE_cookie_consent";
+const STORAGE_KEY = "LODGE_cookie_consent_v1";
 const THIRTEEN_MONTHS_SECONDS = 60 * 60 * 24 * 30 * 13;
-const CONSENT_EVENT = "papimo:consent-updated";
+const CONSENT_EVENT = "LODGE:consent-updated";
 
 export function readConsent(): CookieConsent | null {
   if (typeof document === "undefined") return null;

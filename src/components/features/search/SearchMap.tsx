@@ -56,7 +56,7 @@ export function SearchMap({ results }: { results: SearchResult[] }) {
     validResults.forEach((listing) => {
       const el = document.createElement("div");
       el.className =
-        "papimo-price-marker bg-corail text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg cursor-pointer hover:opacity-90 transition whitespace-nowrap";
+        "lodge-price-marker bg-corail text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg cursor-pointer hover:opacity-90 transition whitespace-nowrap";
       el.style.willChange = "transform";
       el.textContent = `${(Number(listing.price) / 1000).toFixed(0)}k`;
 

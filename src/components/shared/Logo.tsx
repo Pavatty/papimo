@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-// Logo texte bicolore : pap = bleu institutionnel, imo = corail (règles de marque papimo)
+// Logo texte bicolore : pap = bleu institutionnel, imo = corail (règles de marque LODGE)
 
 const sizeClasses = {
   xs: "text-lg",

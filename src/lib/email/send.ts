@@ -10,7 +10,7 @@ interface SendEmailParams {
 export async function sendEmail(params: SendEmailParams) {
   try {
     const { data, error } = await resend.emails.send({
-      from: "papimo <noreply@papimo.app>",
+      from: "LODGE <noreply@LODGE.app>",
       to: [params.to],
       subject: params.subject,
       html: params.html,

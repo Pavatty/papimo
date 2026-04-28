@@ -32,9 +32,9 @@ export function AnalyticsBootstrap() {
     };
 
     applyConsent();
-    window.addEventListener("papimo:consent-updated", applyConsent);
+    window.addEventListener("LODGE:consent-updated", applyConsent);
     return () =>
-      window.removeEventListener("papimo:consent-updated", applyConsent);
+      window.removeEventListener("LODGE:consent-updated", applyConsent);
   }, []);
 
   return null;

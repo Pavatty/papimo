@@ -1,6 +1,6 @@
 {
   "common": {
-    "brandName": "papimo",
+    "brandName": "LODGE",
     "skipToContent": "Aller au contenu principal",
     "adminDashboard": "Tableau de bord admin",
     "myFavorites": "Mes favoris",
@@ -109,7 +109,7 @@
     },
     "sampleListings": {
       "title": "Dernières annonces",
-      "subtitle": "Les biens publiés récemment par les particuliers sur papimo.",
+      "subtitle": "Les biens publiés récemment par les particuliers sur LODGE.",
       "cta": "Parcourir toutes les annonces",
       "fallback": "Découvrez les annonces sur la recherche."
     },
@@ -143,7 +143,7 @@
       "students": "Pour étudiants"
     },
     "why": {
-      "title": "Pourquoi papimo ?",
+      "title": "Pourquoi LODGE ?",
       "subtitle": "Une plateforme pensée pour les particuliers, sans intermédiaires.",
       "savings": {
         "title": "Économies réelles",
@@ -168,10 +168,10 @@
     }
   },
   "faq": {
-    "pageIntro": "Vous avez une question sur papimo, la publication d’annonces ou les échanges entre particuliers ? Cette page sera enrichie de réponses détaillées. En attendant, écrivez-nous : nous vous répondons dès que possible.",
+    "pageIntro": "Vous avez une question sur LODGE, la publication d’annonces ou les échanges entre particuliers ? Cette page sera enrichie de réponses détaillées. En attendant, écrivez-nous : nous vous répondons dès que possible.",
     "q1": "Comment publier une annonce et la faire valider ?",
     "q2": "Comment contacter un vendeur ou un acheteur en toute sécurité ?",
-    "q3": "Quels sont les forfaits et l’abonnement papimo ?",
+    "q3": "Quels sont les forfaits et l’abonnement LODGE ?",
     "backHome": "Retour à l’accueil"
   },
   "cookies": {
@@ -282,9 +282,9 @@
     "loading": "Chargement..."
   },
   "seo": {
-    "homeTitle": "papimo | L'immobilier entre particuliers",
-    "searchTitle": "Recherche immobilière | papimo",
-    "listingNotFound": "Annonce introuvable | papimo"
+    "homeTitle": "LODGE | L'immobilier entre particuliers",
+    "searchTitle": "Recherche immobilière | LODGE",
+    "listingNotFound": "Annonce introuvable | LODGE"
   },
   "profile": {
     "edit": {

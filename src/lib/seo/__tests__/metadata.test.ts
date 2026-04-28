@@ -29,7 +29,7 @@ describe("seo metadata helpers", () => {
       currency: "TND",
       countryCode: "TN",
       city: "Tunis",
-      url: "https://papimo.com/fr/listings/test",
+      url: "https://lodge.tn/fr/listings/test",
     });
     expect(payload["@type"]).toBe("RealEstateListing");
     expect(payload.offers.price).toBe(100000);

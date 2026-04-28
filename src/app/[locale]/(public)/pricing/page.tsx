@@ -32,7 +32,7 @@ export default async function PricingPage() {
     <main className="bg-creme dark:bg-encre min-h-screen px-6 py-10">
       <div className="mx-auto max-w-6xl">
         <h1 className="text-encre dark:text-creme font-serif text-4xl">
-          Tarifs papimo
+          Tarifs LODGE
         </h1>
         <p className="text-muted dark:text-creme/60 mt-2 text-sm">
           Quatre packs immobiliers pour vendre ou louer en toute simplicité,

@@ -29,7 +29,7 @@ export default async function DashboardPage() {
         Bonjour {displayName}
       </h1>
       <p className="text-ink-soft mt-2 max-w-2xl">
-        Bienvenue dans votre espace papimo. Publiez une annonce, explorez le
+        Bienvenue dans votre espace LODGE. Publiez une annonce, explorez le
         marché ou utilisez nos outils gratuits — tout est à portée de clic.
       </p>
 
@@ -114,7 +114,7 @@ export default async function DashboardPage() {
               Aller plus loin
             </h2>
             <p className="text-ink-soft mt-1 text-sm">
-              Estimation, simulateur, frais d’achat : les outils papimo pour
+              Estimation, simulateur, frais d’achat : les outils LODGE pour
               préparer votre projet.
             </p>
           </div>

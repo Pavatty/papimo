@@ -37,7 +37,7 @@ export function PublishPageWithStepper({
         <button
           type="button"
           onClick={openQuit}
-          className="hover:border-papimo-coral hover:text-papimo-coral absolute top-4 right-4 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-600 transition"
+          className="hover:border-LODGE-coral hover:text-LODGE-coral absolute top-4 right-4 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-600 transition"
         >
           {t("cancelAndQuit")}
         </button>
@@ -64,7 +64,7 @@ export function PublishPageWithStepper({
               <button
                 type="button"
                 onClick={() => setShowQuitModal(false)}
-                className="bg-papimo-coral hover:bg-papimo-coral-dark rounded-xl px-5 py-2.5 font-semibold text-white transition"
+                className="bg-LODGE-coral hover:bg-LODGE-coral-dark rounded-xl px-5 py-2.5 font-semibold text-white transition"
               >
                 {t("quitModal.continue")}
               </button>

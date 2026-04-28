@@ -20,7 +20,7 @@ export function PriceDiagnosticTool() {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         className="border-line w-full rounded-xl border px-3 py-2"
-        placeholder="URL papimo ou ID annonce"
+        placeholder="URL LODGE ou ID annonce"
       />
       <button
         type="button"

@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return buildPageMetadata({
     locale,
     pathnameWithoutLocale: "/achat/appartement-tunis",
-    title: "Appartement à vendre à Tunis | papimo",
+    title: "Appartement à vendre à Tunis | LODGE",
     description:
       "Sélection d'appartements à vendre à Tunis entre particuliers.",
   });

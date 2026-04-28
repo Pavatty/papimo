@@ -21,28 +21,28 @@ export function newMessageEmail(params: NewMessageEmailParams) {
 
   const labels = {
     fr: {
-      subject: `Nouveau message de ${senderName} sur papimo`,
+      subject: `Nouveau message de ${senderName} sur LODGE`,
       hello: `Bonjour ${recipientName},`,
       intro: `${senderName} vous a envoyé un message au sujet de votre annonce "${listingTitle}".`,
       preview: "Aperçu :",
       cta: "Voir la conversation",
-      ignore: "Vous pouvez répondre directement depuis papimo.",
+      ignore: "Vous pouvez répondre directement depuis LODGE.",
     },
     en: {
-      subject: `New message from ${senderName} on papimo`,
+      subject: `New message from ${senderName} on LODGE`,
       hello: `Hello ${recipientName},`,
       intro: `${senderName} sent you a message about your listing "${listingTitle}".`,
       preview: "Preview:",
       cta: "View conversation",
-      ignore: "You can reply directly from papimo.",
+      ignore: "You can reply directly from LODGE.",
     },
     ar: {
-      subject: `رسالة جديدة من ${senderName} على papimo`,
+      subject: `رسالة جديدة من ${senderName} على LODGE`,
       hello: `مرحباً ${recipientName}،`,
       intro: `أرسل ${senderName} رسالة بخصوص إعلانك "${listingTitle}".`,
       preview: "معاينة:",
       cta: "عرض المحادثة",
-      ignore: "يمكنك الرد مباشرة من papimo.",
+      ignore: "يمكنك الرد مباشرة من LODGE.",
     },
   };
 

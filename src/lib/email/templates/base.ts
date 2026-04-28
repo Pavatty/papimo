@@ -6,9 +6,9 @@ export function wrapEmailHtml(
 ): string {
   const dir = locale === "ar" ? "rtl" : "ltr";
   const footer = {
-    fr: "papimo — L'immobilier entre particuliers",
-    en: "papimo — Real estate between individuals",
-    ar: "papimo - عقارات بين الأفراد",
+    fr: "LODGE — L'immobilier entre particuliers",
+    en: "LODGE — Real estate between individuals",
+    ar: "LODGE - عقارات بين الأفراد",
   };
   const unsubscribe = {
     fr: "Se désabonner",
@@ -30,7 +30,7 @@ export function wrapEmailHtml(
 </table>
 <table role="presentation" width="100%" style="max-width:560px; padding:24px 0;"><tr><td align="center">
 <p style="margin:0 0 8px 0; font-size:12px; color:#8A8A8A;"><strong style="color:#1E5A96;">${footer[locale]}</strong></p>
-<p style="margin:0; font-size:11px; color:#A0A0A0;">© 2026 papimo. <a href="https://papimo.vercel.app/${locale}/profile/edit" style="color:#A0A0A0;">${unsubscribe[locale]}</a></p>
+<p style="margin:0; font-size:11px; color:#A0A0A0;">© 2026 LODGE. <a href="https://papimo.vercel.app/${locale}/profile/edit" style="color:#A0A0A0;">${unsubscribe[locale]}</a></p>
 </td></tr></table>
 </td></tr></table>
 </body></html>`;

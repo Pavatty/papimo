@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return buildPageMetadata({
     locale,
     pathnameWithoutLocale: "/location/villa-marsa",
-    title: "Villa à louer à La Marsa | papimo",
+    title: "Villa à louer à La Marsa | LODGE",
     description: "Sélection de villas à louer à La Marsa entre particuliers.",
   });
 }

@@ -27,7 +27,7 @@ export async function createPayment(input: CreateKonnectPaymentInput) {
     amount: input.amount,
     currency: input.currency,
     type: "immediate",
-    description: `Papimo order ${input.orderId}`,
+    description: `LODGE order ${input.orderId}`,
     orderId: input.orderId,
     acceptedPaymentMethods: ["bank_card", "e-DINAR"],
     successUrl: input.returnUrl,
@@ -35,7 +35,7 @@ export async function createPayment(input: CreateKonnectPaymentInput) {
     webhook: input.webhookUrl,
     customer: {
       firstName: input.firstName ?? "Client",
-      lastName: input.lastName ?? "Papimo",
+      lastName: input.lastName ?? "LODGE",
       email: input.customerEmail,
       phoneNumber: input.phoneNumber ?? "",
     },
