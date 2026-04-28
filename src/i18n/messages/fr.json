@@ -40,7 +40,7 @@
     "columnHelp": "Aide & contact",
     "columnLegal": "Légal",
     "columnAbout": "À propos",
-    "columnAboutText": "Vente et location de particulier à particulier en Tunisie et pour la diaspora : une plateforme claire, des outils utiles, sans commission cachée.",
+    "columnAboutText": "Vente et location de particulier à particulier : une plateforme claire, des outils utiles, sans commission cachée.",
     "columnLanguages": "Langues",
     "faq": "Questions fréquentes",
     "contact": "Nous contacter",
@@ -58,7 +58,7 @@
       "step2Title": "Échangez en direct",
       "step2": "Recevez des messages, planifiez des visites et négociez sans intermédiaire.",
       "step3Title": "Concluez sereinement",
-      "step3": "Outils, estimation et ressources pour avancer de manière claire, en Tunisie et au-delà."
+      "step3": "Outils, estimation et ressources pour avancer de manière claire."
     },
     "tools": {
       "title": "Outils gratuits",
@@ -72,8 +72,8 @@
       "fallback": "Découvrez les annonces sur la recherche."
     },
     "hero": {
-      "headline": "L’immobilier, <bleu>chez-vous</bleu> et <corail>directement</corail>.",
-      "subline": "Annonces entre particuliers, sans agence, sans intermédiaire."
+      "headline": "Vendez, achetez, louez <corail>de particulier à particulier</corail> — plus facilement et sans frais d’agence.",
+      "subline": "L’immobilier entre particuliers."
     }
   },
   "faq": {

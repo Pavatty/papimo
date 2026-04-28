@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return buildPageMetadata({
     locale,
     pathnameWithoutLocale: "/location",
-    title: "Location immobilière en Tunisie | papimo",
+    title: "Location immobilière | papimo",
     description: "Consultez les annonces de biens à louer entre particuliers.",
   });
 }

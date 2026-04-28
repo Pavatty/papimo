@@ -34,8 +34,7 @@ export default async function PricingPage() {
         <h1 className="text-encre font-serif text-4xl">Tarifs papimo</h1>
         <p className="text-muted mt-2 text-sm">
           Quatre packs immobiliers pour vendre ou louer en toute simplicité,
-          sans commission cachée. Konnect en Tunisie, Stripe à
-          l&apos;international.
+          sans commission cachée. Konnect ou Stripe selon votre pays.
         </p>
 
         <section className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">

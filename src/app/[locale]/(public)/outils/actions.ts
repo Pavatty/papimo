@@ -61,7 +61,7 @@ export async function improveDescription(
 
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const prompt = [
-    "Tu es un expert immobilier tunisien spécialisé dans la rédaction d'annonces engageantes.",
+    "Tu es un expert immobilier spécialisé dans la rédaction d'annonces engageantes.",
     "Améliore la description en gardant les faits exacts.",
     "Reste sobre, professionnel, en français.",
     "Texte structuré, pas trop long.",
