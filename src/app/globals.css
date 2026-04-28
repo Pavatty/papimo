@@ -62,6 +62,16 @@
   --color-douceur: var(--douceur);
   --color-douceur-soft: var(--douceur-soft);
 
+  /* === LODGE Séjours — palette estivale Méditerranée === */
+  --color-sejours-turquoise: var(--sejours-turquoise);
+  --color-sejours-turquoise-hover: var(--sejours-turquoise-hover);
+  --color-sejours-turquoise-light: var(--sejours-turquoise-light);
+  --color-sejours-coral: var(--sejours-coral);
+  --color-sejours-coral-hover: var(--sejours-coral-hover);
+  --color-sejours-sun: var(--sejours-sun);
+  --color-sejours-sun-text: var(--sejours-sun-text);
+  --color-sejours-sky: var(--sejours-sky);
+
   /* Polices */
   --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-sans:
@@ -173,6 +183,16 @@
   --confiance-soft: rgba(20, 184, 166, 0.12);
   --douceur: #fba98c;
   --douceur-soft: rgba(251, 169, 140, 0.2);
+
+  /* === LODGE Séjours — light === */
+  --sejours-turquoise: #06b6d4;
+  --sejours-turquoise-hover: #0891b2;
+  --sejours-turquoise-light: #e0f2fe;
+  --sejours-coral: #f97316;
+  --sejours-coral-hover: #ea580c;
+  --sejours-sun: #facc15;
+  --sejours-sun-text: #854f0b;
+  --sejours-sky: #e0f2fe;
   --font-jetbrains-mono: ui-monospace, SFMono-Regular, menlo, monospace;
 
   --background: #fafaf7;
@@ -252,6 +272,16 @@
   --confiance-soft: rgba(45, 212, 191, 0.15);
   --douceur: #fdba8c;
   --douceur-soft: rgba(253, 186, 140, 0.2);
+
+  /* === LODGE Séjours — dark === */
+  --sejours-turquoise: #22d3ee;
+  --sejours-turquoise-hover: #06b6d4;
+  --sejours-turquoise-light: #164e63;
+  --sejours-coral: #fb923c;
+  --sejours-coral-hover: #f97316;
+  --sejours-sun: #fde047;
+  --sejours-sun-text: #fde68a;
+  --sejours-sky: #0c4a6e;
 
   --background: #0f1a14;
   --foreground: #fafaf7;

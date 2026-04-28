@@ -228,6 +228,162 @@ export type Database = {
         };
         Relationships: [];
       };
+      availability_calendars: {
+        Row: {
+          available: boolean;
+          created_at: string;
+          date: string;
+          id: string;
+          listing_id: string;
+          min_nights_override: number | null;
+          price_override: number | null;
+        };
+        Insert: {
+          available?: boolean;
+          created_at?: string;
+          date: string;
+          id?: string;
+          listing_id: string;
+          min_nights_override?: number | null;
+          price_override?: number | null;
+        };
+        Update: {
+          available?: boolean;
+          created_at?: string;
+          date?: string;
+          id?: string;
+          listing_id?: string;
+          min_nights_override?: number | null;
+          price_override?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "availability_calendars_listing_id_fkey";
+            columns: ["listing_id"];
+            isOneToOne: false;
+            referencedRelation: "listings";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      booking_payments: {
+        Row: {
+          amount: number;
+          booking_id: string;
+          created_at: string;
+          currency: string;
+          id: string;
+          paid_at: string | null;
+          payment_intent_id: string | null;
+          payment_method: string;
+          refunded_at: string | null;
+          status: string;
+        };
+        Insert: {
+          amount: number;
+          booking_id: string;
+          created_at?: string;
+          currency?: string;
+          id?: string;
+          paid_at?: string | null;
+          payment_intent_id?: string | null;
+          payment_method: string;
+          refunded_at?: string | null;
+          status?: string;
+        };
+        Update: {
+          amount?: number;
+          booking_id?: string;
+          created_at?: string;
+          currency?: string;
+          id?: string;
+          paid_at?: string | null;
+          payment_intent_id?: string | null;
+          payment_method?: string;
+          refunded_at?: string | null;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "booking_payments_booking_id_fkey";
+            columns: ["booking_id"];
+            isOneToOne: false;
+            referencedRelation: "bookings";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      bookings: {
+        Row: {
+          base_price: number;
+          cancellation_reason: string | null;
+          cancelled_at: string | null;
+          check_in_date: string;
+          check_out_date: string;
+          created_at: string;
+          currency: string;
+          guest_id: string;
+          host_id: string;
+          id: string;
+          listing_id: string;
+          num_guests: number;
+          payment_intent_id: string | null;
+          payment_status: string | null;
+          service_fee: number;
+          status: string;
+          total_price: number;
+          updated_at: string;
+        };
+        Insert: {
+          base_price: number;
+          cancellation_reason?: string | null;
+          cancelled_at?: string | null;
+          check_in_date: string;
+          check_out_date: string;
+          created_at?: string;
+          currency?: string;
+          guest_id: string;
+          host_id: string;
+          id?: string;
+          listing_id: string;
+          num_guests: number;
+          payment_intent_id?: string | null;
+          payment_status?: string | null;
+          service_fee: number;
+          status?: string;
+          total_price: number;
+          updated_at?: string;
+        };
+        Update: {
+          base_price?: number;
+          cancellation_reason?: string | null;
+          cancelled_at?: string | null;
+          check_in_date?: string;
+          check_out_date?: string;
+          created_at?: string;
+          currency?: string;
+          guest_id?: string;
+          host_id?: string;
+          id?: string;
+          listing_id?: string;
+          num_guests?: number;
+          payment_intent_id?: string | null;
+          payment_status?: string | null;
+          service_fee?: number;
+          status?: string;
+          total_price?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "bookings_listing_id_fkey";
+            columns: ["listing_id"];
+            isOneToOne: false;
+            referencedRelation: "listings";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       boosts: {
         Row: {
           created_at: string;
@@ -718,9 +874,13 @@ export type Database = {
         Row: {
           address: string | null;
           amenities: string[] | null;
+          base_price_per_night: number | null;
           bathrooms: number | null;
           bedrooms: number | null;
+          cancellation_policy: string | null;
           category: Database["public"]["Enums"]["listing_category"];
+          check_in_time: string | null;
+          check_out_time: string | null;
           city: string;
           condition: string | null;
           construction_year: number | null;
@@ -737,11 +897,16 @@ export type Database = {
           furnished_level: string | null;
           governorate: string | null;
           heating_type: string | null;
+          house_rules: string | null;
           id: string;
+          instant_booking: boolean | null;
           latitude: number | null;
           location: unknown;
           longitude: number | null;
           main_photo: string | null;
+          max_guests: number | null;
+          max_nights: number | null;
+          min_nights: number | null;
           neighborhood: string | null;
           orientation: string | null;
           owner_id: string;
@@ -753,6 +918,7 @@ export type Database = {
           property_type: string;
           published_at: string | null;
           region: string | null;
+          rental_type: string | null;
           rooms: number | null;
           rooms_total: number | null;
           search_vector: unknown;
@@ -774,9 +940,13 @@ export type Database = {
         Insert: {
           address?: string | null;
           amenities?: string[] | null;
+          base_price_per_night?: number | null;
           bathrooms?: number | null;
           bedrooms?: number | null;
+          cancellation_policy?: string | null;
           category: Database["public"]["Enums"]["listing_category"];
+          check_in_time?: string | null;
+          check_out_time?: string | null;
           city: string;
           condition?: string | null;
           construction_year?: number | null;
@@ -793,11 +963,16 @@ export type Database = {
           furnished_level?: string | null;
           governorate?: string | null;
           heating_type?: string | null;
+          house_rules?: string | null;
           id?: string;
+          instant_booking?: boolean | null;
           latitude?: number | null;
           location?: unknown;
           longitude?: number | null;
           main_photo?: string | null;
+          max_guests?: number | null;
+          max_nights?: number | null;
+          min_nights?: number | null;
           neighborhood?: string | null;
           orientation?: string | null;
           owner_id: string;
@@ -809,6 +984,7 @@ export type Database = {
           property_type?: string;
           published_at?: string | null;
           region?: string | null;
+          rental_type?: string | null;
           rooms?: number | null;
           rooms_total?: number | null;
           search_vector?: unknown;
@@ -830,9 +1006,13 @@ export type Database = {
         Update: {
           address?: string | null;
           amenities?: string[] | null;
+          base_price_per_night?: number | null;
           bathrooms?: number | null;
           bedrooms?: number | null;
+          cancellation_policy?: string | null;
           category?: Database["public"]["Enums"]["listing_category"];
+          check_in_time?: string | null;
+          check_out_time?: string | null;
           city?: string;
           condition?: string | null;
           construction_year?: number | null;
@@ -849,11 +1029,16 @@ export type Database = {
           furnished_level?: string | null;
           governorate?: string | null;
           heating_type?: string | null;
+          house_rules?: string | null;
           id?: string;
+          instant_booking?: boolean | null;
           latitude?: number | null;
           location?: unknown;
           longitude?: number | null;
           main_photo?: string | null;
+          max_guests?: number | null;
+          max_nights?: number | null;
+          min_nights?: number | null;
           neighborhood?: string | null;
           orientation?: string | null;
           owner_id?: string;
@@ -865,6 +1050,7 @@ export type Database = {
           property_type?: string;
           published_at?: string | null;
           region?: string | null;
+          rental_type?: string | null;
           rooms?: number | null;
           rooms_total?: number | null;
           search_vector?: unknown;
@@ -1132,6 +1318,50 @@ export type Database = {
         };
         Relationships: [];
       };
+      pricing_rules: {
+        Row: {
+          created_at: string;
+          discount_percent: number | null;
+          end_date: string | null;
+          id: string;
+          listing_id: string;
+          min_nights: number | null;
+          price_increase_percent: number | null;
+          rule_type: string;
+          start_date: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          discount_percent?: number | null;
+          end_date?: string | null;
+          id?: string;
+          listing_id: string;
+          min_nights?: number | null;
+          price_increase_percent?: number | null;
+          rule_type: string;
+          start_date?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          discount_percent?: number | null;
+          end_date?: string | null;
+          id?: string;
+          listing_id?: string;
+          min_nights?: number | null;
+          price_increase_percent?: number | null;
+          rule_type?: string;
+          start_date?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pricing_rules_listing_id_fkey";
+            columns: ["listing_id"];
+            isOneToOne: false;
+            referencedRelation: "listings";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       profiles: {
         Row: {
           account_type: string;
@@ -1321,6 +1551,81 @@ export type Database = {
             columns: ["reporter_id"];
             isOneToOne: false;
             referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      reviews: {
+        Row: {
+          accuracy_rating: number | null;
+          booking_id: string;
+          cleanliness_rating: number | null;
+          comment: string | null;
+          communication_rating: number | null;
+          created_at: string;
+          id: string;
+          listing_id: string;
+          location_rating: number | null;
+          private_feedback: string | null;
+          rating: number;
+          response: string | null;
+          response_at: string | null;
+          review_type: string;
+          reviewee_id: string;
+          reviewer_id: string;
+          value_rating: number | null;
+        };
+        Insert: {
+          accuracy_rating?: number | null;
+          booking_id: string;
+          cleanliness_rating?: number | null;
+          comment?: string | null;
+          communication_rating?: number | null;
+          created_at?: string;
+          id?: string;
+          listing_id: string;
+          location_rating?: number | null;
+          private_feedback?: string | null;
+          rating: number;
+          response?: string | null;
+          response_at?: string | null;
+          review_type: string;
+          reviewee_id: string;
+          reviewer_id: string;
+          value_rating?: number | null;
+        };
+        Update: {
+          accuracy_rating?: number | null;
+          booking_id?: string;
+          cleanliness_rating?: number | null;
+          comment?: string | null;
+          communication_rating?: number | null;
+          created_at?: string;
+          id?: string;
+          listing_id?: string;
+          location_rating?: number | null;
+          private_feedback?: string | null;
+          rating?: number;
+          response?: string | null;
+          response_at?: string | null;
+          review_type?: string;
+          reviewee_id?: string;
+          reviewer_id?: string;
+          value_rating?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "reviews_booking_id_fkey";
+            columns: ["booking_id"];
+            isOneToOne: false;
+            referencedRelation: "bookings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "reviews_listing_id_fkey";
+            columns: ["listing_id"];
+            isOneToOne: false;
+            referencedRelation: "listings";
             referencedColumns: ["id"];
           },
         ];
@@ -1578,6 +1883,42 @@ export type Database = {
           day?: string;
           last_publish_at?: string | null;
           publish_count?: number;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      verification_documents: {
+        Row: {
+          created_at: string;
+          document_type: string;
+          document_url: string;
+          id: string;
+          rejection_reason: string | null;
+          reviewed_at: string | null;
+          reviewed_by: string | null;
+          status: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          document_type: string;
+          document_url: string;
+          id?: string;
+          rejection_reason?: string | null;
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          status?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          document_type?: string;
+          document_url?: string;
+          id?: string;
+          rejection_reason?: string | null;
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          status?: string;
           user_id?: string;
         };
         Relationships: [];
