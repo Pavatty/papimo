@@ -19,6 +19,7 @@ type Props = {
   initialData: PublishFormState;
   preferredCurrency?: "TND" | "EUR" | "USD" | "MAD" | "DZD";
   onQuitRequest?: () => void;
+  watermarkEnabled?: boolean;
 };
 
 type Action =
@@ -56,6 +57,7 @@ export function PublishStepper({
   initialData,
   preferredCurrency,
   onQuitRequest,
+  watermarkEnabled = false,
 }: Props) {
   const t = useTranslations("publishPage");
   const locale = useLocale();
@@ -185,6 +187,7 @@ export function PublishStepper({
             onImagesChange={(images) =>
               dispatch({ type: "patch", payload: { images } })
             }
+            watermarkEnabled={watermarkEnabled}
           />
         ) : null}
         {state.currentStep === 6 ? (

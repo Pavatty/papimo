@@ -11,11 +11,13 @@ import type { PublishFormState } from "./types";
 type Props = {
   initialData: PublishFormState;
   preferredCurrency?: "TND" | "EUR" | "USD" | "MAD" | "DZD";
+  watermarkEnabled?: boolean;
 };
 
 export function PublishPageWithStepper({
   initialData,
   preferredCurrency,
+  watermarkEnabled = false,
 }: Props) {
   const t = useTranslations("publish");
   const tPage = useTranslations("publishPage");
@@ -47,6 +49,7 @@ export function PublishPageWithStepper({
         initialData={initialData}
         {...(preferredCurrency ? { preferredCurrency } : {})}
         onQuitRequest={openQuit}
+        watermarkEnabled={watermarkEnabled}
       />
 
       {showQuitModal ? (
