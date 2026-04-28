@@ -40,7 +40,7 @@
     "columnHelp": "Help & contact",
     "columnLegal": "Legal",
     "columnAbout": "About",
-    "columnAboutText": "Private sales and rentals in Tunisia and for the diaspora: a clear platform, useful tools, no hidden fees.",
+    "columnAboutText": "Private sales and rentals: a clear platform, useful tools, no hidden fees.",
     "columnLanguages": "Languages",
     "faq": "FAQ",
     "contact": "Contact us",
@@ -58,7 +58,7 @@
       "step2Title": "Chat directly",
       "step2": "Get messages, schedule visits, negotiate with no go-between.",
       "step3Title": "Move forward with confidence",
-      "step3": "Free tools, estimates and clear steps — in Tunisia and beyond."
+      "step3": "Free tools, estimates and clear steps."
     },
     "tools": {
       "title": "Free tools",
@@ -72,8 +72,8 @@
       "fallback": "Discover all listings on the search page."
     },
     "hero": {
-      "headline": "Real estate, <bleu>at home</bleu> and <corail>direct</corail>.",
-      "subline": "Listings from owner to owner — no agency, no intermediary."
+      "headline": "Sell, buy, rent <corail>peer to peer</corail> — easier and with no agency fees.",
+      "subline": "Peer-to-peer real estate."
     }
   },
   "faq": {

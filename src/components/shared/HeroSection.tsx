@@ -15,14 +15,14 @@ export async function HeroSection() {
     >
       <h1
         id="hero-heading"
-        className="font-heading text-ink max-w-4xl text-4xl font-bold tracking-tight text-balance md:text-5xl"
+        className="font-heading text-encre max-w-4xl text-4xl font-bold tracking-tight text-balance md:text-5xl"
       >
         {t.rich("home.hero.headline", {
           bleu: (chunks) => <span className="text-bleu">{chunks}</span>,
           corail: (chunks) => <span className="text-corail">{chunks}</span>,
         })}
       </h1>
-      <p className="text-ink-soft mt-6 max-w-2xl text-lg text-pretty md:text-xl">
+      <p className="text-encre/70 mt-6 max-w-2xl text-lg text-pretty md:text-xl">
         {t("home.hero.subline")}
       </p>
       <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">

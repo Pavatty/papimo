@@ -75,7 +75,7 @@ export default async function CheckoutPage({ params, searchParams }: Props) {
         <section className="border-line bg-paper rounded-2xl border p-6">
           <h2 className="text-ink text-lg font-semibold">Paiement</h2>
           <p className="text-ink-soft mt-2 text-sm">
-            Konnect est utilisé en priorité en Tunisie, Stripe pour la diaspora.
+            Konnect ou Stripe selon votre pays.
           </p>
           <form action={startListingPackCheckoutAction} className="mt-6">
             <input type="hidden" name="listingId" value={listing.id} />
