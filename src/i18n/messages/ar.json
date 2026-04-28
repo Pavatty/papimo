@@ -3,11 +3,36 @@
     "brandName": "papimo",
     "skipToContent": "الانتقال إلى المحتوى الرئيسي",
     "adminDashboard": "لوحة تحكم المسؤول",
+    "backToSite": "العودة إلى الموقع",
+    "signOut": "تسجيل الخروج",
+    "areYouSure": "هل أنت متأكد؟",
+    "confirmSignOut": "تأكيد تسجيل الخروج",
+    "cancel": "إلغاء",
+    "tryAgain": "أعد المحاولة",
+    "goHome": "العودة إلى الصفحة الرئيسية",
+    "noListingsTitle": "لا توجد إعلانات حالياً",
+    "noListingsDesc": "انشر إعلانك الأول وتواصل مباشرة مع الأفراد.",
+    "noFavoritesTitle": "لا توجد مفضلات",
+    "noFavoritesDesc": "اضغط على القلب في أي إعلان لحفظه هنا.",
+    "noSearchResultsTitle": "لا توجد نتائج",
+    "noSearchResultsDesc": "حاول توسيع معاييرك أو استكشف أنواعاً أخرى من العقارات.",
+    "publishMyFirst": "انشر إعلاني الأول",
+    "exploreListings": "استكشف الإعلانات",
+    "saveSuccess": "تم حفظ التعديلات",
+    "saveError": "خطأ — أعد المحاولة بعد قليل",
+    "deleteSuccess": "تم حذف العنصر",
+    "actionInProgress": "جاري التنفيذ…",
     "tagline": {
       "fr": "L'immobilier entre particuliers",
       "en": "Real estate between private owners",
       "ar": "العقارات بين الخواص"
     }
+  },
+  "notFound": {
+    "title": "هذه الصفحة لم تعد موجودة",
+    "description": "ربما تم إزالة الإعلان أو الصفحة التي تبحث عنها. لا تقلق — كل شيء على بُعد نقرة.",
+    "goHome": "العودة إلى الصفحة الرئيسية",
+    "exploreListings": "استكشف الإعلانات"
   },
   "a11y": {
     "mainMenu": "القائمة الرئيسية",

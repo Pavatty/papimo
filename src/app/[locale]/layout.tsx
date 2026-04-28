@@ -7,6 +7,7 @@ import {
   setRequestLocale,
 } from "next-intl/server";
 import { type ReactNode } from "react";
+import { Toaster } from "sonner";
 
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
@@ -110,6 +111,15 @@ export default async function LocaleLayout({
           {children}
           <InstallPrompt />
           <ServiceWorkerRegistration />
+          <Toaster
+            position="bottom-right"
+            closeButton
+            richColors
+            toastOptions={{
+              className:
+                "border border-bordurewarm-tertiary dark:border-encre/20",
+            }}
+          />
         </AuthProvider>
       </NextIntlClientProvider>
     </div>
