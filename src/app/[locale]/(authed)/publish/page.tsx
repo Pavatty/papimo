@@ -116,7 +116,7 @@ export default async function PublishPage({ params }: Props) {
         <nav className="mb-4 flex items-center gap-2 text-sm text-gray-500">
           <Link
             href={`/${locale}`}
-            className="hover:text-papimo-blue flex items-center gap-1 transition"
+            className="hover:text-LODGE-blue flex items-center gap-1 transition"
           >
             <Home className="h-4 w-4" />
             <span>{tPublish("breadcrumb.home")}</span>

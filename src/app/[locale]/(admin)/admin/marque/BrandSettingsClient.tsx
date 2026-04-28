@@ -22,7 +22,7 @@ const FIELDS: Array<{ key: keyof BrandFields; label: string; hint: string }> = [
   {
     key: "name",
     label: "Nom de marque",
-    hint: 'Affiché partout (ex: "papimo")',
+    hint: 'Affiché partout (ex: "LODGE")',
   },
   { key: "logo_part1", label: "Logo - partie bleue", hint: 'ex: "pap"' },
   { key: "logo_part2", label: "Logo - partie corail", hint: 'ex: "imo"' },
@@ -40,7 +40,7 @@ const FIELDS: Array<{ key: keyof BrandFields; label: string; hint: string }> = [
   {
     key: "contact_email",
     label: "Email de contact",
-    hint: 'ex: "contact@papimo.com"',
+    hint: 'ex: "contact@lodge.tn"',
   },
 ];
 

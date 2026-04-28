@@ -9,7 +9,7 @@ export default async function OutilsIndexPage({ params }: Props) {
     <main className="bg-paper min-h-screen px-6 py-10">
       <div className="mx-auto max-w-6xl">
         <h1 className="font-display text-ink text-3xl font-bold">
-          Outils papimo
+          Outils LODGE
         </h1>
         <p className="text-ink-soft mt-2 text-sm">
           Estimation, crédit, frais, IA et diagnostics.

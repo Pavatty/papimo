@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 
-export async function PourquoiPapimo() {
+export async function PourquoiLodge() {
   const t = await getTranslations("home.why");
   const benefits = [
     {

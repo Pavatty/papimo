@@ -31,7 +31,7 @@ export function ListingSeller({ seller }: Props) {
         </div>
         <div>
           <p className="text-ink font-medium">
-            {seller.full_name ?? "Membre Papimo"}
+            {seller.full_name ?? "Membre LODGE"}
           </p>
           <div className="mt-1 flex flex-wrap gap-2 text-xs">
             {seller.is_verified ? (

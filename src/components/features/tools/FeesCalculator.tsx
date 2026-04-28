@@ -17,7 +17,7 @@ export function FeesCalculator() {
     ["Droits enregistrement", fees.registration],
     ["Honoraires notaire", fees.notary],
     ["Taxe foncière prorata", fees.propertyTaxProrata],
-    ["Frais d'agence (papimo)", fees.agency],
+    ["Frais d'agence (LODGE)", fees.agency],
     ["Frais dossier banque", fees.bankFileFee],
   ];
 

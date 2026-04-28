@@ -28,7 +28,7 @@ export function generateStaticParams() {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#1E5A96",
+  themeColor: "#1B5E3F",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -69,7 +69,7 @@ export async function generateMetadata(
     appleWebApp: {
       capable: true,
       statusBarStyle: "default",
-      title: "papimo",
+      title: "LODGE",
     },
     icons: {
       icon: [

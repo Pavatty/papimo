@@ -115,7 +115,7 @@ export async function sendMessage(input: z.infer<typeof sendMessageSchema>) {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
     const { subject, html } = newMessageEmail({
       recipientName: recipient.full_name || recipient.email,
-      senderName: senderProfile?.full_name || "Utilisateur papimo",
+      senderName: senderProfile?.full_name || "Utilisateur LODGE",
       listingTitle: listing?.title ?? "Une annonce",
       messagePreview: parsed.data.content.slice(0, 200),
       conversationUrl: `${appUrl}/${preferredLocale}/messages/${parsed.data.conversationId}`,

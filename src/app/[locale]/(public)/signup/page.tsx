@@ -12,7 +12,7 @@ export default function SignUpPage() {
           <div className="w-full max-w-[480px] space-y-6">
             <Logo size="lg" />
             <h1 className="font-display text-ink text-4xl leading-tight font-bold">
-              Créer mon compte <span className="text-corail">papimo</span>
+              Créer mon compte <span className="text-corail">LODGE</span>
             </h1>
 
             <MagicLinkForm />
@@ -37,7 +37,7 @@ export default function SignUpPage() {
 
         <aside className="from-corail to-bleu hidden items-center justify-center bg-gradient-to-br p-12 lg:flex">
           <div className="rounded-3xl border border-white/30 bg-white/10 p-14 text-center backdrop-blur">
-            <p className="font-display text-6xl font-bold text-white">papimo</p>
+            <p className="font-display text-6xl font-bold text-white">LODGE</p>
           </div>
         </aside>
       </div>

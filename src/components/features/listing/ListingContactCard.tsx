@@ -56,7 +56,7 @@ export function ListingContactCard({
         </div>
         <div>
           <p className="text-ink text-sm font-semibold">
-            {seller.full_name ?? "Membre Papimo"}
+            {seller.full_name ?? "Membre LODGE"}
           </p>
           {seller.is_verified ? (
             <p className="text-green flex items-center gap-1 text-xs">

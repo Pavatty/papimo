@@ -44,7 +44,7 @@ export default async function FaqPage({ params }: Props) {
       <div className="mt-10 flex flex-wrap gap-3">
         <a
           className={cn(buttonVariants({ variant: "default" }), "inline-flex")}
-          href="mailto:contact@papimo.com"
+          href="mailto:contact@lodge.tn"
         >
           {t("footer.contact")}
         </a>

@@ -6,13 +6,13 @@ import { BrandSettingsClient } from "./BrandSettingsClient";
 type Props = { params: Promise<{ locale: string }> };
 
 const FALLBACK = {
-  name: "papimo",
+  name: "LODGE",
   logo_part1: "pap",
   logo_part2: "imo",
   tagline_fr: "L'immobilier entre particuliers",
   tagline_ar: "العقارات بين الأفراد",
   tagline_en: "Real estate, peer to peer",
-  contact_email: "contact@papimo.com",
+  contact_email: "contact@lodge.tn",
 };
 
 export default async function BrandSettingsPage({ params }: Props) {

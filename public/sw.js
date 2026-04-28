@@ -1,9 +1,11 @@
-// Service Worker papimo
+// Service Worker LODGE
 // IMPORTANT : bumper CACHE_NAME à chaque déploiement qui change le HTML statique.
 // Toute version différente déclenche la purge des caches précédents dans
 // `activate` ci-dessous, ce qui force les clients PWA installés à recharger
 // la version live des pages au lieu d'une version périmée.
-const CACHE_NAME = "papimo-v3";
+// Bump papimo-v3 -> lodge-v1 au rebrand : purge tous les caches papimo-* sur
+// les clients PWA installés.
+const CACHE_NAME = "lodge-v1";
 
 // Précacher uniquement les ressources réellement statiques.
 // Ne PAS précacher /fr ou / : le HTML est régénéré en SSR/ISR à chaque release

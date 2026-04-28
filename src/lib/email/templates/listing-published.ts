@@ -12,23 +12,23 @@ export function listingPublishedEmail(params: ListingPublishedEmailParams) {
 
   const labels = {
     fr: {
-      subject: "Votre annonce est en ligne sur papimo",
+      subject: "Votre annonce est en ligne sur LODGE",
       hello: `Bonjour ${recipientName},`,
-      intro: `Bonne nouvelle ! Votre annonce "${listingTitle}" est maintenant publiée sur papimo.`,
+      intro: `Bonne nouvelle ! Votre annonce "${listingTitle}" est maintenant publiée sur LODGE.`,
       cta: "Voir mon annonce",
       foot: "Vous pouvez modifier votre annonce à tout moment depuis votre espace.",
     },
     en: {
-      subject: "Your listing is live on papimo",
+      subject: "Your listing is live on LODGE",
       hello: `Hello ${recipientName},`,
-      intro: `Great news! Your listing "${listingTitle}" is now published on papimo.`,
+      intro: `Great news! Your listing "${listingTitle}" is now published on LODGE.`,
       cta: "View my listing",
       foot: "You can edit your listing at any time from your dashboard.",
     },
     ar: {
-      subject: "إعلانك منشور الآن على papimo",
+      subject: "إعلانك منشور الآن على LODGE",
       hello: `مرحباً ${recipientName}،`,
-      intro: `خبر رائع! إعلانك "${listingTitle}" تم نشره الآن على papimo.`,
+      intro: `خبر رائع! إعلانك "${listingTitle}" تم نشره الآن على LODGE.`,
       cta: "عرض إعلاني",
       foot: "يمكنك تعديل إعلانك في أي وقت من حسابك.",
     },

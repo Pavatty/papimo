@@ -33,10 +33,10 @@ export function buildWhatsAppLink(
   const normalizedBusiness = businessNumber.replace(/[^\d]/g, "");
   const message =
     locale === "ar"
-      ? `Bonjour papimo, mon code est ${code}`
+      ? `Bonjour LODGE, mon code est ${code}`
       : locale === "en"
-        ? `Bonjour papimo, mon code est ${code}`
-        : `Bonjour papimo, mon code est ${code}`;
+        ? `Bonjour LODGE, mon code est ${code}`
+        : `Bonjour LODGE, mon code est ${code}`;
 
   return `https://wa.me/${normalizedBusiness}?text=${encodeURIComponent(message)}`;
 }

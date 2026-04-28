@@ -34,7 +34,7 @@ export async function createCheckoutSession(input: CreateCheckoutSessionInput) {
           currency: input.currency.toLowerCase(),
           unit_amount: input.amount * 100,
           product_data: {
-            name: `Papimo order ${input.orderId}`,
+            name: `LODGE order ${input.orderId}`,
           },
         },
       },

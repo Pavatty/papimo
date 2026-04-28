@@ -1,6 +1,6 @@
 {
   "common": {
-    "brandName": "papimo",
+    "brandName": "LODGE",
     "skipToContent": "Skip to main content",
     "adminDashboard": "Admin dashboard",
     "myFavorites": "My favorites",
@@ -109,7 +109,7 @@
     },
     "sampleListings": {
       "title": "Latest listings",
-      "subtitle": "Recent properties published by private owners on papimo.",
+      "subtitle": "Recent properties published by private owners on LODGE.",
       "cta": "Browse all listings",
       "fallback": "Discover all listings on the search page."
     },
@@ -143,7 +143,7 @@
       "students": "For students"
     },
     "why": {
-      "title": "Why papimo?",
+      "title": "Why LODGE?",
       "subtitle": "A platform built for owners — no intermediaries.",
       "savings": {
         "title": "Real savings",
@@ -168,10 +168,10 @@
     }
   },
   "faq": {
-    "pageIntro": "Questions about listings, direct contact, or how papimo works? We’re expanding this page with more answers. In the meantime, email us and we’ll get back to you.",
+    "pageIntro": "Questions about listings, direct contact, or how LODGE works? We’re expanding this page with more answers. In the meantime, email us and we’ll get back to you.",
     "q1": "How do I publish a listing and get it approved?",
     "q2": "How do I message buyers or sellers safely?",
-    "q3": "What are the plans and pricing on papimo?",
+    "q3": "What are the plans and pricing on LODGE?",
     "backHome": "Back to home"
   },
   "cookies": {
@@ -282,9 +282,9 @@
     "loading": "Loading..."
   },
   "seo": {
-    "homeTitle": "papimo | Real estate between private owners",
-    "searchTitle": "Real estate search | papimo",
-    "listingNotFound": "Listing not found | papimo"
+    "homeTitle": "LODGE | Real estate between private owners",
+    "searchTitle": "Real estate search | LODGE",
+    "listingNotFound": "Listing not found | LODGE"
   },
   "profile": {
     "edit": {

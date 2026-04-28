@@ -165,7 +165,7 @@ export async function initiateListingPackPayment(
       amount,
       currency: gatewayData.currency,
       orderId: transaction.id,
-      customerEmail: profile?.email ?? user.email ?? "unknown@papimo.com",
+      customerEmail: profile?.email ?? user.email ?? "unknown@lodge.tn",
       returnUrl: successUrl,
       webhookUrl: webhookUrlKonnect,
     });
@@ -187,7 +187,7 @@ export async function initiateListingPackPayment(
     amount,
     currency: gatewayData.currency,
     orderId: transaction.id,
-    customerEmail: profile?.email ?? user.email ?? "unknown@papimo.com",
+    customerEmail: profile?.email ?? user.email ?? "unknown@lodge.tn",
     successUrl,
     cancelUrl,
     metadata: {
@@ -271,7 +271,7 @@ export async function initiateBoostPayment(
       amount,
       currency: gatewayData.currency,
       orderId: transaction.id,
-      customerEmail: profile?.email ?? user.email ?? "unknown@papimo.com",
+      customerEmail: profile?.email ?? user.email ?? "unknown@lodge.tn",
       returnUrl: successUrl,
       webhookUrl: `${appUrl}/api/webhooks/konnect`,
     });
@@ -289,7 +289,7 @@ export async function initiateBoostPayment(
     amount,
     currency: gatewayData.currency,
     orderId: transaction.id,
-    customerEmail: profile?.email ?? user.email ?? "unknown@papimo.com",
+    customerEmail: profile?.email ?? user.email ?? "unknown@lodge.tn",
     successUrl,
     cancelUrl,
     metadata: {
@@ -504,7 +504,7 @@ export async function generateInvoice(transactionId: string) {
   doc.on("data", (chunk: Buffer) => chunks.push(chunk));
   doc.on("end", () => undefined);
 
-  doc.fontSize(22).fillColor("#1f4fbf").text("papimo", { continued: true });
+  doc.fontSize(22).fillColor("#1f4fbf").text("LODGE", { continued: true });
   doc.fillColor("#ff6f61").text(" ");
   doc.fillColor("#111827").fontSize(12).text("Facture");
   doc.moveDown();
@@ -517,7 +517,7 @@ export async function generateInvoice(transactionId: string) {
   doc.text("TVA: 0.00");
   doc.text(`Total: ${tx.amount} ${tx.currency}`);
   doc.moveDown();
-  doc.fontSize(10).fillColor("#6b7280").text("Papimo — entité légale TBD");
+  doc.fontSize(10).fillColor("#6b7280").text("LODGE — entité légale TBD");
   doc.end();
 
   const pdfBuffer = await new Promise<Buffer>((resolve) => {

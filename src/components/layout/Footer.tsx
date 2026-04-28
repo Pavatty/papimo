@@ -83,7 +83,7 @@ export async function Footer() {
     { href: string; label: string } | { mailto: string; label: string }
   > = [
     { href: "/faq", label: t("footer.faq") },
-    { mailto: "mailto:contact@papimo.com", label: t("footer.contact") },
+    { mailto: "mailto:contact@LODGE.com", label: t("footer.contact") },
     ...(!PRICING_HIDDEN
       ? [{ href: "/pricing", label: t("footer.pricingLink") }]
       : []),

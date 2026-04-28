@@ -70,7 +70,7 @@ export function InstallPrompt() {
         setDismissCookie();
       }}
     >
-      📱 Installer papimo
+      📱 Installer LODGE
     </button>
   );
 }

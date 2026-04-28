@@ -16,7 +16,7 @@ import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { PourquoiPapimo } from "@/components/home/PourquoiPapimo";
+import { PourquoiLodge } from "@/components/home/PourquoiLodge";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { buttonVariants } from "@/components/ui/button";
 import { getLatestActiveListings } from "@/data/repositories/listings";
@@ -223,7 +223,7 @@ export async function HomePageSections() {
         </div>
       </AnimatedSection>
 
-      <PourquoiPapimo />
+      <PourquoiLodge />
 
       <AnimatedSection
         className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-20"

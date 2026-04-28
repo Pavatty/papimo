@@ -33,7 +33,7 @@ export function MagicLinkForm() {
           Vérifiez votre boîte mail
         </h3>
         <p className="text-ink-soft mt-2 text-sm">
-          Un lien de connexion papimo vient d&#39;être envoyé.
+          Un lien de connexion LODGE vient d&#39;être envoyé.
         </p>
       </div>
     );

@@ -1,26 +1,27 @@
-// Constantes de marque centralisées (source unique pour l’app et le SEO côté serveur)
+// LODGE — constantes de marque centralisées (source unique pour l'app et le SEO côté serveur).
 
 export const BRAND_COLORS = {
-  bleu: "#1E5A96" as const,
-  /** Corail Méditerranée (ex-#E63946) */
-  corail: "#EF6F50" as const,
-  creme: "#FBF6EC" as const,
+  vert: "#1B5E3F" as const,
+  vertHover: "#144A30" as const,
+  vertClair: "#3DA876" as const,
+  vertFonce: "#0A2A1B" as const,
+  terracotta: "#E07B3F" as const,
+  creme: "#FAFAF7" as const,
+  encre: "#1A1A1A" as const,
 } as const;
 
 export const BRAND = {
-  name: "papimo" as const,
+  name: "LODGE" as const,
   logoText: {
-    pap: { text: "pap", color: "bleu" },
-    imo: { text: "imo", color: "corail" },
+    full: { text: "LODGE", color: "vert" },
   },
   tagline: {
     fr: "L'immobilier entre particuliers" as const,
     en: "Real estate between private owners" as const,
-    ar: "العقارات بين الخواص" as const,
+    ar: "العقارات بين الأفراد" as const,
   },
-  url: "https://papimo.com" as const,
-  email: "contact@papimo.com" as const,
-  /** À compléter quand le numéro support est définitif */
+  url: "https://lodge.tn" as const,
+  email: "contact@lodge.tn" as const,
   supportPhone: null as null | string,
   supportedCountries: [
     "TN",

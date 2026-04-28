@@ -27,12 +27,12 @@ type Params = Promise<{ locale: string; slug: string }>;
 export async function generateMetadata({ params }: { params: Params }) {
   const { slug } = await params;
   const listing = await getListingDetailsBySlug(slug);
-  if (!listing) return { title: "Annonce introuvable | papimo" };
+  if (!listing) return { title: "Annonce introuvable | LODGE" };
   return {
-    title: `${listing.title} | papimo`,
+    title: `${listing.title} | LODGE`,
     description:
       listing.description?.slice(0, 160) ??
-      `Annonce à ${listing.city} sur papimo`,
+      `Annonce à ${listing.city} sur LODGE`,
   };
 }
 

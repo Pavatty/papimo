@@ -14,7 +14,7 @@ export function AdminHeader({ adminName, pendingTasks }: Props) {
             <Logo className="text-base" />
           </div>
           <p className="text-encre/70 dark:text-creme/70 text-xs">
-            Panneau dense de gestion papimo
+            Panneau dense de gestion LODGE
           </p>
         </div>
         <div className="flex items-center gap-3">

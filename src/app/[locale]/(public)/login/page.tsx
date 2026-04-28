@@ -38,7 +38,7 @@ export default function LoginPage() {
 
         <aside className="from-bleu to-corail hidden items-center justify-center bg-gradient-to-br p-12 lg:flex">
           <div className="rounded-3xl border border-white/30 bg-white/10 p-14 text-center backdrop-blur">
-            <p className="font-display text-6xl font-bold text-white">papimo</p>
+            <p className="font-display text-6xl font-bold text-white">LODGE</p>
           </div>
         </aside>
       </div>
