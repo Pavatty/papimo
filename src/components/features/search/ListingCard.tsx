@@ -77,7 +77,7 @@ export function ListingCard({
             </span>
           ) : null}
           {isNew ? (
-            <span className="bg-bleu absolute top-2 right-2 rounded-full px-2 py-1 text-[10px] font-semibold tracking-wider text-white uppercase shadow-md">
+            <span className="bg-nouveaute absolute top-2 right-2 rounded-full px-2 py-1 text-[10px] font-semibold tracking-wider text-white uppercase shadow-md">
               {t("newBadge")}
             </span>
           ) : null}

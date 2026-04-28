@@ -47,10 +47,10 @@ export function FavoriteButton({
       disabled={pending}
       aria-label={favorited ? t("removeFavorite") : t("addFavorite")}
       aria-pressed={favorited}
-      className={`focus-visible:ring-corail absolute top-3 left-3 z-10 inline-flex size-9 items-center justify-center rounded-full backdrop-blur-sm transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
+      className={`focus-visible:ring-coeur absolute top-3 left-3 z-10 inline-flex size-9 items-center justify-center rounded-full backdrop-blur-sm transition hover:scale-110 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
         favorited
-          ? "bg-corail text-white"
-          : "bg-blanc-casse/90 text-encre dark:bg-encre/80 dark:text-creme hover:bg-corail/10 hover:text-corail"
+          ? "bg-coeur text-white"
+          : "bg-blanc-casse/90 text-coeur dark:bg-encre/80 hover:bg-coeur-soft"
       }`}
     >
       <Heart className={`size-4 ${favorited ? "fill-current" : ""}`} />
