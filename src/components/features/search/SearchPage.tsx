@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -7,6 +8,7 @@ import {
   LayoutGrid,
   Map as MapIcon,
   SlidersHorizontal,
+  X,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -70,7 +72,7 @@ export function SearchPage({
   const t = useTranslations("search");
 
   const [view, setView] = useState<"list" | "map" | "split">("split");
-  const [filtersOpen, setFiltersOpen] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [results, setResults] = useState<SearchResult[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -270,10 +272,13 @@ export function SearchPage({
           </div>
           <div className="flex gap-2">
             <button
-              onClick={() => setFiltersOpen(!filtersOpen)}
-              className="rounded-lg border p-2 lg:hidden"
+              type="button"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Ouvrir les filtres"
+              className="border-bordurewarm-tertiary text-encre dark:border-encre/20 dark:text-creme dark:bg-encre/95 hover:border-bleu inline-flex items-center gap-2 rounded-lg border bg-white p-2 lg:hidden"
             >
               <SlidersHorizontal className="h-5 w-5" />
+              <span className="text-sm font-medium">Filtres</span>
             </button>
             <div className="hidden gap-1 rounded-lg border p-1 md:flex">
               <button
@@ -313,7 +318,7 @@ export function SearchPage({
       </div>
 
       <div className="mx-auto grid max-w-7xl gap-6 px-4 py-6 lg:grid-cols-[280px_1fr]">
-        <aside className={`${filtersOpen ? "block" : "hidden"} lg:block`}>
+        <aside className="hidden lg:block">
           <SearchFilters
             filters={filters}
             onChange={updateFilters}
@@ -322,6 +327,62 @@ export function SearchPage({
             {...(propertyTypes ? { propertyTypes } : {})}
           />
         </aside>
+
+        <AnimatePresence>
+          {drawerOpen ? (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setDrawerOpen(false)}
+                className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+                aria-hidden="true"
+              />
+              <motion.aside
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
+                role="dialog"
+                aria-label="Filtres"
+                className="bg-blanc-casse dark:bg-encre fixed inset-y-0 right-0 z-50 flex w-full flex-col overflow-y-auto sm:w-96 lg:hidden"
+              >
+                <div className="border-bordurewarm-tertiary dark:border-encre/20 flex items-center justify-between border-b px-4 py-3">
+                  <h2 className="text-encre dark:text-creme text-lg font-semibold">
+                    Filtres
+                  </h2>
+                  <button
+                    type="button"
+                    onClick={() => setDrawerOpen(false)}
+                    aria-label="Fermer les filtres"
+                    className="text-encre/70 dark:text-creme/70 hover:text-encre dark:hover:text-creme focus-visible:ring-bleu rounded p-1 focus-visible:ring-2 focus-visible:outline-none"
+                  >
+                    <X className="size-5" />
+                  </button>
+                </div>
+                <div className="flex-1 overflow-y-auto p-4">
+                  <SearchFilters
+                    filters={filters}
+                    onChange={updateFilters}
+                    onReset={resetFilters}
+                    {...(transactionTypes ? { transactionTypes } : {})}
+                    {...(propertyTypes ? { propertyTypes } : {})}
+                  />
+                </div>
+                <div className="border-bordurewarm-tertiary dark:border-encre/20 sticky bottom-0 border-t bg-inherit p-3">
+                  <button
+                    type="button"
+                    onClick={() => setDrawerOpen(false)}
+                    className="bg-corail hover:bg-corail-hover focus-visible:ring-corail w-full rounded-lg px-4 py-3 text-sm font-semibold text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                  >
+                    Appliquer ({totalCount} {t("results")})
+                  </button>
+                </div>
+              </motion.aside>
+            </>
+          ) : null}
+        </AnimatePresence>
 
         <main>
           {view === "list" && (
