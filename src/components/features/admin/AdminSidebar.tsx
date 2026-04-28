@@ -13,8 +13,13 @@ const ITEMS = [
   { href: "/admin/leads", label: "Leads" },
   { href: "/admin/pubs", label: "Pubs" },
   { href: "/admin/rapports", label: "Rapports" },
-  { href: "/admin/reglages", label: "Réglages" },
+  { href: "/admin/marque", label: "Marque" },
+  { href: "/admin/pricing", label: "Packs tarifaires" },
+  { href: "/admin/taxonomies/transaction-types", label: "Types transaction" },
+  { href: "/admin/taxonomies/property-types", label: "Types de bien" },
+  { href: "/admin/taxonomies/amenities", label: "Équipements" },
   { href: "/admin/feature-flags", label: "Feature Flags" },
+  { href: "/admin/reglages", label: "Réglages (JSON)" },
   { href: "/admin/audit-log", label: "Audit log" },
 ] as const;
 

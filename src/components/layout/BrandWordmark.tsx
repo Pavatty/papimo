@@ -5,6 +5,8 @@ type BrandWordmarkSize = "header" | "footer" | "compact";
 type Props = {
   size?: BrandWordmarkSize;
   className?: string;
+  part1?: string;
+  part2?: string;
 };
 
 const SIZE_CLASSES: Record<BrandWordmarkSize, string> = {
@@ -13,8 +15,12 @@ const SIZE_CLASSES: Record<BrandWordmarkSize, string> = {
   compact: "text-xl",
 };
 
-// Wordmark bicolor "pap·imo" — source unique partagée entre Header et Footer.
-export function BrandWordmark({ size = "header", className }: Props) {
+export function BrandWordmark({
+  size = "header",
+  className,
+  part1 = "pap",
+  part2 = "imo",
+}: Props) {
   return (
     <span
       className={cn(
@@ -24,10 +30,10 @@ export function BrandWordmark({ size = "header", className }: Props) {
       )}
     >
       <span className="text-bleu" aria-hidden>
-        pap
+        {part1}
       </span>
       <span className="text-corail" aria-hidden>
-        imo
+        {part2}
       </span>
     </span>
   );
