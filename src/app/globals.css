@@ -48,6 +48,20 @@
   --color-green: rgb(var(--green));
   --color-danger: rgb(var(--danger));
 
+  /* === COULEURS ÉMOTIONNELLES === */
+  --color-joie: var(--joie);
+  --color-joie-soft: var(--joie-soft);
+  --color-coeur: var(--coeur);
+  --color-coeur-soft: var(--coeur-soft);
+  --color-urgence: var(--urgence);
+  --color-urgence-soft: var(--urgence-soft);
+  --color-nouveaute: var(--nouveaute);
+  --color-nouveaute-soft: var(--nouveaute-soft);
+  --color-confiance: var(--confiance);
+  --color-confiance-soft: var(--confiance-soft);
+  --color-douceur: var(--douceur);
+  --color-douceur-soft: var(--douceur-soft);
+
   /* Polices */
   --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-sans:
@@ -139,6 +153,20 @@
   --line: 232 221 201;
   --green: 16 185 129;
   --danger: 220 38 38;
+
+  /* === Couleurs émotionnelles LODGE — light === */
+  --joie: #f0b45a;
+  --joie-soft: rgba(240, 180, 90, 0.18);
+  --coeur: #e85d75;
+  --coeur-soft: rgba(232, 93, 117, 0.12);
+  --urgence: #f97316;
+  --urgence-soft: rgba(249, 115, 22, 0.12);
+  --nouveaute: #06b6d4;
+  --nouveaute-soft: rgba(6, 182, 212, 0.12);
+  --confiance: #14b8a6;
+  --confiance-soft: rgba(20, 184, 166, 0.12);
+  --douceur: #fba98c;
+  --douceur-soft: rgba(251, 169, 140, 0.2);
   --font-jetbrains-mono: ui-monospace, SFMono-Regular, menlo, monospace;
 
   --background: #fafaf7;
@@ -198,6 +226,20 @@
   --ink: 250 250 247;
   --ink-soft: 184 184 175;
   --line: 38 56 47;
+
+  /* Couleurs émotionnelles dark — plus lumineuses pour contraste */
+  --joie: #ffc670;
+  --joie-soft: rgba(255, 198, 112, 0.15);
+  --coeur: #f07189;
+  --coeur-soft: rgba(240, 113, 137, 0.15);
+  --urgence: #fb923c;
+  --urgence-soft: rgba(251, 146, 60, 0.15);
+  --nouveaute: #22d3ee;
+  --nouveaute-soft: rgba(34, 211, 238, 0.15);
+  --confiance: #2dd4bf;
+  --confiance-soft: rgba(45, 212, 191, 0.15);
+  --douceur: #fdba8c;
+  --douceur-soft: rgba(253, 186, 140, 0.2);
 
   --background: #0f1a14;
   --foreground: #fafaf7;
