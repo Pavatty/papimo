@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  Briefcase,
+  Building,
   Building2,
   Home,
   Hotel,
@@ -35,24 +37,72 @@ import { FilterSection } from "./FilterSection";
 import { LocationCascade } from "./LocationCascade";
 import { PriceRangeSlider } from "./PriceRangeSlider";
 
+export type DbTaxonomyItem = {
+  code: string;
+  label_fr: string;
+  label_ar: string;
+  label_en: string;
+};
+
 type Props = {
   filters: SearchFiltersState;
   onChange: (next: Partial<SearchFiltersState>) => void;
   onReset: () => void;
+  transactionTypes?: DbTaxonomyItem[];
+  propertyTypes?: DbTaxonomyItem[];
 };
 
 const typeIcons: Record<string, typeof Home> = {
   apartment: Building2,
   house: Home,
   villa: Hotel,
+  studio: Building,
+  duplex: Building,
   land: LandPlot,
+  commercial: Store,
   commercial_space: Store,
+  shop: Store,
+  office: Briefcase,
   warehouse: Warehouse,
 };
 
-export function SearchFilters({ filters, onChange, onReset }: Props) {
+function pickLabel(item: DbTaxonomyItem, locale: "fr" | "en" | "ar"): string {
+  if (locale === "ar") return item.label_ar;
+  if (locale === "en") return item.label_en;
+  return item.label_fr;
+}
+
+export function SearchFilters({
+  filters,
+  onChange,
+  onReset,
+  transactionTypes,
+  propertyTypes,
+}: Props) {
   const t = useTranslations("search");
   const locale = useLocale() as "fr" | "en" | "ar";
+
+  const resolvedTransactionTypes =
+    transactionTypes && transactionTypes.length > 0
+      ? transactionTypes.map((tx) => ({
+          code: tx.code,
+          label: pickLabel(tx, locale),
+        }))
+      : LISTING_TRANSACTION_TYPES.map((code) => ({
+          code,
+          label: getLabel(TRANSACTION_TYPE_LABELS, code, locale),
+        }));
+
+  const resolvedPropertyTypes =
+    propertyTypes && propertyTypes.length > 0
+      ? propertyTypes.map((pt) => ({
+          code: pt.code,
+          label: pickLabel(pt, locale),
+        }))
+      : LISTING_PROPERTY_TYPES.map((code) => ({
+          code,
+          label: getLabel(PROPERTY_TYPE_LABELS, code, locale),
+        }));
 
   const saveSearch = async () => {
     const supabase = createClient();
@@ -71,18 +121,19 @@ export function SearchFilters({ filters, onChange, onReset }: Props) {
     <div className="space-y-3">
       <FilterSection title={t("filters.transactionType")}>
         <div className="space-y-1">
-          {LISTING_TRANSACTION_TYPES.map((transaction) => (
+          {resolvedTransactionTypes.map((tx) => (
             <label
-              key={transaction}
-              className="flex items-center gap-2 text-sm"
+              key={tx.code}
+              className="text-encre dark:text-creme flex items-center gap-2 text-sm"
             >
               <input
                 type="radio"
                 name="transaction"
-                checked={filters.transaction_type === transaction}
-                onChange={() => onChange({ transaction_type: transaction })}
+                checked={filters.transaction_type === tx.code}
+                onChange={() => onChange({ transaction_type: tx.code })}
+                className="accent-bleu"
               />
-              {getLabel(TRANSACTION_TYPE_LABELS, transaction, locale)}
+              {tx.label}
             </label>
           ))}
         </div>
@@ -90,30 +141,28 @@ export function SearchFilters({ filters, onChange, onReset }: Props) {
 
       <FilterSection title={t("filters.propertyType")}>
         <div className="flex flex-wrap gap-1.5">
-          {LISTING_PROPERTY_TYPES.map((propertyType) => {
-            const selected = filters.property_types.includes(propertyType);
-            const Icon = typeIcons[propertyType] ?? Home;
+          {resolvedPropertyTypes.map((pt) => {
+            const selected = filters.property_types.includes(pt.code);
+            const Icon = typeIcons[pt.code] ?? Home;
             return (
               <button
-                key={propertyType}
+                key={pt.code}
                 type="button"
                 onClick={() =>
                   onChange({
                     property_types: selected
-                      ? filters.property_types.filter(
-                          (it) => it !== propertyType,
-                        )
-                      : [...filters.property_types, propertyType],
+                      ? filters.property_types.filter((it) => it !== pt.code)
+                      : [...filters.property_types, pt.code],
                   })
                 }
-                className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-xs ${
+                className={`focus-visible:ring-bleu inline-flex items-center gap-1 rounded-full border px-2 py-1 text-xs transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
                   selected
                     ? "border-bleu bg-bleu-pale text-bleu"
-                    : "border-line text-ink bg-white"
+                    : "border-bordurewarm-tertiary text-encre bg-blanc-casse dark:border-encre/20 dark:text-creme dark:bg-encre/40"
                 }`}
               >
-                <Icon className="h-3.5 w-3.5" />
-                {getLabel(PROPERTY_TYPE_LABELS, propertyType, locale)}
+                <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                {pt.label}
               </button>
             );
           })}
