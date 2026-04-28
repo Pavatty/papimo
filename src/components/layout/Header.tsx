@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { type Locale, useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
@@ -29,18 +35,40 @@ export function Header({
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
 
+  const { scrollY } = useScroll();
+  const headerBg = useTransform(
+    scrollY,
+    [0, 80],
+    ["rgba(251, 246, 236, 0.5)", "rgba(255, 255, 255, 0.9)"],
+  );
+  const headerBorder = useTransform(scrollY, [0, 80], [0, 1]);
+
   const close = () => setOpen(false);
 
+  const navLinks = [
+    { href: "/search", label: t("navigation.search") },
+    { href: "/outils", label: t("navigation.tools") },
+    ...(!PRICING_HIDDEN
+      ? [{ href: "/pricing", label: t("navigation.pricing") }]
+      : []),
+  ];
+
+  const isActive = (href: string) => pathname.startsWith(href);
+
   return (
-    <header
+    <motion.header
       role="banner"
-      className="bg-creme/85 border-bordurewarm-tertiary sticky top-0 z-50 h-16 border-b backdrop-blur"
+      style={{
+        backgroundColor: headerBg,
+        borderBottomWidth: headerBorder,
+      }}
+      className="border-bordurewarm-tertiary sticky top-0 z-50 h-16 border-b backdrop-blur"
     >
       <div className="max-w-container mx-auto flex h-full items-center justify-between px-4 md:px-6 lg:px-8">
         <Link
           href="/"
           aria-label={t("common.brandName")}
-          className="focus-visible:ring-bleu/40 focus-visible:ring-offset-creme inline-flex items-center rounded focus-visible:ring-2 focus-visible:ring-offset-2"
+          className="focus-visible:ring-bleu/40 focus-visible:ring-offset-creme inline-flex items-center rounded transition-transform hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-offset-2"
         >
           <BrandWordmark size="header" part1={brandPart1} part2={brandPart2} />
         </Link>
@@ -49,26 +77,22 @@ export function Header({
           className="hidden items-center gap-6 text-sm font-medium md:flex"
           aria-label={t("a11y.mainMenu")}
         >
-          <Link
-            href="/search"
-            className="text-encre hover:text-bleu transition"
-          >
-            {t("navigation.search")}
-          </Link>
-          <Link
-            href="/outils"
-            className="text-encre hover:text-bleu transition"
-          >
-            {t("navigation.tools")}
-          </Link>
-          {!PRICING_HIDDEN ? (
+          {navLinks.map((link) => (
             <Link
-              href="/pricing"
-              className="text-encre hover:text-bleu transition"
+              key={link.href}
+              href={link.href}
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className={cn(
+                "relative transition",
+                "after:bg-bleu after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:transition-all hover:after:w-full",
+                isActive(link.href)
+                  ? "text-bleu after:w-full"
+                  : "text-encre hover:text-bleu",
+              )}
             >
-              {t("navigation.pricing")}
+              {link.label}
             </Link>
-          ) : null}
+          ))}
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -82,6 +106,7 @@ export function Header({
                 href={pathname}
                 locale={l}
                 hrefLang={l}
+                aria-current={l === locale ? "true" : undefined}
                 className={cn(
                   "rounded-control px-1.5 py-0.5 text-xs font-medium transition",
                   l === locale ? "text-bleu" : "text-muted hover:text-bleu",
@@ -122,92 +147,105 @@ export function Header({
           aria-expanded={open}
           aria-controls="header-mobile-menu"
           aria-label={open ? "Close menu" : t("a11y.mainMenu")}
-          className="text-encre rounded-control inline-flex h-10 w-10 items-center justify-center md:hidden"
+          className="text-encre rounded-control focus-visible:ring-bleu inline-flex h-10 w-10 items-center justify-center focus-visible:ring-2 focus-visible:outline-none md:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {open ? (
-        <div
-          id="header-mobile-menu"
-          className="bg-creme border-bordurewarm-tertiary shadow-card absolute inset-x-0 top-16 z-40 border-b md:hidden"
-        >
-          <nav
-            className="max-w-container mx-auto flex flex-col gap-1 px-4 py-4"
-            aria-label={t("a11y.mainMenu")}
-          >
-            <Link
-              href="/search"
+      <AnimatePresence>
+        {open ? (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               onClick={close}
-              className="text-encre hover:bg-creme-foncee rounded-control px-3 py-2 text-base"
+              className="fixed inset-0 top-16 z-40 bg-black/30 md:hidden"
+              aria-hidden="true"
+            />
+            <motion.div
+              id="header-mobile-menu"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
+              className="bg-blanc-casse border-bordurewarm-tertiary fixed inset-y-16 right-0 z-50 w-72 max-w-[85%] overflow-y-auto border-l shadow-2xl md:hidden"
             >
-              {t("navigation.search")}
-            </Link>
-            <Link
-              href="/outils"
-              onClick={close}
-              className="text-encre hover:bg-creme-foncee rounded-control px-3 py-2 text-base"
-            >
-              {t("navigation.tools")}
-            </Link>
-            {!PRICING_HIDDEN ? (
-              <Link
-                href="/pricing"
-                onClick={close}
-                className="text-encre hover:bg-creme-foncee rounded-control px-3 py-2 text-base"
+              <nav
+                className="flex flex-col gap-1 p-5"
+                aria-label={t("a11y.mainMenu")}
               >
-                {t("navigation.pricing")}
-              </Link>
-            ) : null}
-            <hr className="border-bordurewarm-tertiary my-2" />
-            <div className="flex items-center gap-1 px-3 py-1">
-              {LOCALES.map((l) => (
-                <Link
-                  key={l}
-                  href={pathname}
-                  locale={l}
-                  hrefLang={l}
-                  onClick={close}
-                  className={cn(
-                    "rounded-control px-2 py-1 text-xs font-medium transition",
-                    l === locale ? "text-bleu" : "text-muted hover:text-bleu",
-                  )}
-                >
-                  {l.toUpperCase()}
-                </Link>
-              ))}
-            </div>
-            <hr className="border-bordurewarm-tertiary my-2" />
-            {user ? (
-              <Link
-                href="/dashboard"
-                onClick={close}
-                className="text-bleu rounded-control px-3 py-2 text-base font-medium"
-              >
-                {t("navigation.profile")}
-              </Link>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  onClick={close}
-                  className="text-bleu rounded-control px-3 py-2 text-base font-medium"
-                >
-                  {t("navigation.login")}
-                </Link>
-                <Link
-                  href="/signup"
-                  onClick={close}
-                  className="bg-corail hover:bg-corail-hover rounded-control mt-1 px-3 py-2 text-center text-base font-medium text-white"
-                >
-                  {t("navigation.signup")}
-                </Link>
-              </>
-            )}
-          </nav>
-        </div>
-      ) : null}
-    </header>
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={close}
+                    aria-current={isActive(link.href) ? "page" : undefined}
+                    className={cn(
+                      "rounded-control px-3 py-2 text-base transition",
+                      isActive(link.href)
+                        ? "text-bleu bg-bleu-pale font-medium"
+                        : "text-encre hover:bg-creme-foncee",
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <hr className="border-bordurewarm-tertiary my-2" />
+                <div className="flex items-center gap-1 px-3 py-1">
+                  {LOCALES.map((l) => (
+                    <Link
+                      key={l}
+                      href={pathname}
+                      locale={l}
+                      hrefLang={l}
+                      onClick={close}
+                      aria-current={l === locale ? "true" : undefined}
+                      className={cn(
+                        "rounded-control px-2 py-1 text-xs font-medium transition",
+                        l === locale
+                          ? "text-bleu"
+                          : "text-muted hover:text-bleu",
+                      )}
+                    >
+                      {l.toUpperCase()}
+                    </Link>
+                  ))}
+                </div>
+                <hr className="border-bordurewarm-tertiary my-2" />
+                {user ? (
+                  <Link
+                    href="/dashboard"
+                    onClick={close}
+                    className="text-bleu rounded-control px-3 py-2 text-base font-medium"
+                  >
+                    {t("navigation.profile")}
+                  </Link>
+                ) : (
+                  <>
+                    <Link
+                      href="/login"
+                      onClick={close}
+                      className="text-bleu rounded-control px-3 py-2 text-base font-medium"
+                    >
+                      {t("navigation.login")}
+                    </Link>
+                    <Link
+                      href="/signup"
+                      onClick={close}
+                      className="bg-corail hover:bg-corail-hover rounded-control mt-1 px-3 py-2 text-center text-base font-medium text-white"
+                    >
+                      {t("navigation.signup")}
+                    </Link>
+                  </>
+                )}
+              </nav>
+            </motion.div>
+          </>
+        ) : null}
+      </AnimatePresence>
+    </motion.header>
   );
 }
