@@ -25,6 +25,7 @@ const SECTIONS: readonly SidebarSection[] = [
   {
     title: "Configuration",
     items: [
+      { href: "/admin/home", label: "Pages d'accueil" },
       { href: "/admin/marque", label: "Marque" },
       { href: "/admin/pricing", label: "Packs tarifaires" },
       { href: "/admin/feature-flags", label: "Feature Flags" },
