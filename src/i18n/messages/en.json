@@ -70,11 +70,29 @@
     "publish": "Publish",
     "publishMyProperty": "List my property",
     "discover": "Browse properties",
+    "stays": "Stays",
     "languages": {
       "fr": "Français",
       "ar": "العربية",
       "en": "English"
     }
+  },
+  "sejours": {
+    "title": "Stays in Tunisia",
+    "subtitle": "Short-term rentals between individuals",
+    "perNight": "per night",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "Guests",
+    "reserve": "Book now",
+    "instantBooking": "Instant",
+    "minNights": "Minimum {n} nights",
+    "totalLine": "Total",
+    "serviceFee": "Service fee",
+    "description": "Description",
+    "houseRules": "House rules",
+    "noResults": "No stays available right now.",
+    "newBadge": "NEW"
   },
   "footer": {
     "columnIndividuals": "Private owners",

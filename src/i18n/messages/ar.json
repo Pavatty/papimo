@@ -70,11 +70,29 @@
     "publish": "نشر",
     "publishMyProperty": "نشر عقاري",
     "discover": "استكشف العقارات",
+    "stays": "إقامات",
     "languages": {
       "fr": "Français",
       "ar": "العربية",
       "en": "English"
     }
+  },
+  "sejours": {
+    "title": "إقامات في تونس",
+    "subtitle": "إيجار قصير المدى بين الأفراد",
+    "perNight": "لليلة الواحدة",
+    "checkIn": "الوصول",
+    "checkOut": "المغادرة",
+    "guests": "المسافرون",
+    "reserve": "احجز الآن",
+    "instantBooking": "فوري",
+    "minNights": "الحد الأدنى {n} ليالٍ",
+    "totalLine": "المجموع",
+    "serviceFee": "رسوم الخدمة",
+    "description": "الوصف",
+    "houseRules": "قواعد المنزل",
+    "noResults": "لا توجد إقامات متاحة حاليًا.",
+    "newBadge": "جديد"
   },
   "footer": {
     "columnIndividuals": "الأفراد",
