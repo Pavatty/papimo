@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useCallback, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 
 import {
@@ -14,26 +14,62 @@ import {
 export { readConsent };
 export type { CookieConsent };
 
-function subscribe(callback: () => void) {
-  return subscribeConsent(callback);
+const emptySubscribe = () => () => {};
+
+function subscribeAll(callback: () => void): () => void {
+  const unsubConsent = subscribeConsent(callback);
+  if (typeof window === "undefined") return unsubConsent;
+  window.addEventListener("storage", callback);
+  return () => {
+    unsubConsent();
+    window.removeEventListener("storage", callback);
+  };
 }
+
+// Snapshot must be a stable PRIMITIVE — returning a fresh object here is what
+// caused the React #185 infinite loop in PR #28.
+function getNeedsBanner(): boolean {
+  return readConsent() === null;
+}
+
+const getNeedsBannerServer = () => false;
+const getIsClient = () => true;
+const getIsClientServer = () => false;
 
 export function CookieConsentBanner() {
   const t = useTranslations("cookies");
-  const consent = useSyncExternalStore(
-    subscribe,
-    () => readConsent(),
-    () => null,
+  const isClient = useSyncExternalStore(
+    emptySubscribe,
+    getIsClient,
+    getIsClientServer,
   );
+  const needsBanner = useSyncExternalStore(
+    subscribeAll,
+    getNeedsBanner,
+    getNeedsBannerServer,
+  );
+
+  const [submitting, setSubmitting] = useState(false);
   const [customize, setCustomize] = useState(false);
   const [analytics, setAnalytics] = useState(true);
   const [productAnalytics, setProductAnalytics] = useState(true);
 
-  const save = (next: CookieConsent) => {
-    writeConsent(next);
-  };
+  const save = useCallback(
+    (next: CookieConsent) => {
+      if (submitting) return;
+      setSubmitting(true);
+      try {
+        writeConsent(next);
+      } catch (err) {
+        console.error("[cookie-consent] write failed", err);
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [submitting],
+  );
 
-  if (consent !== null) return null;
+  if (!isClient || !needsBanner) return null;
 
   return (
     <aside
@@ -67,18 +103,24 @@ export function CookieConsentBanner() {
 
       <div className="mt-4 flex flex-wrap gap-2">
         <button
+          type="button"
+          disabled={submitting}
           onClick={() => save({ analytics: true, productAnalytics: true })}
-          className="bg-corail hover:bg-corail-hover rounded-control px-4 py-2 text-sm font-medium text-white transition"
+          className="bg-corail hover:bg-corail-hover rounded-control px-4 py-2 text-sm font-medium text-white transition disabled:opacity-50"
         >
           {t("acceptAll")}
         </button>
         <button
+          type="button"
+          disabled={submitting}
           onClick={() => save({ analytics: false, productAnalytics: false })}
-          className="bg-creme-foncee hover:bg-bordurewarm-tertiary text-encre rounded-control px-4 py-2 text-sm font-medium transition"
+          className="bg-creme-foncee hover:bg-bordurewarm-tertiary text-encre rounded-control px-4 py-2 text-sm font-medium transition disabled:opacity-50"
         >
           {t("rejectAll")}
         </button>
         <button
+          type="button"
+          disabled={submitting}
           onClick={() => {
             if (customize) {
               save({ analytics, productAnalytics });
@@ -86,7 +128,7 @@ export function CookieConsentBanner() {
               setCustomize(true);
             }
           }}
-          className="text-bleu hover:text-bleu-hover px-4 py-2 text-sm font-medium transition"
+          className="text-bleu hover:text-bleu-hover px-4 py-2 text-sm font-medium transition disabled:opacity-50"
         >
           {t("customize")}
         </button>
