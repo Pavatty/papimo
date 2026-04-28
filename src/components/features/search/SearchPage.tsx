@@ -56,6 +56,7 @@ export type SearchResult = {
   longitude: number | null;
   property_type: string | null;
   transaction_type: string | null;
+  published_at?: string | null;
   amenities?: string[] | null;
 };
 

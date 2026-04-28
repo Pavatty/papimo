@@ -1,16 +1,16 @@
 import { getTranslations } from "next-intl/server";
 
+import { HeroSearchBar } from "@/components/home/HeroSearchBar";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
-// Bandeau d’accueil : ton éditorial + CTA (corail = primaire, outline = secondaire)
 export async function HeroSection() {
   const t = await getTranslations();
 
   return (
     <section
-      className="flex flex-col items-center px-4 pt-16 pb-20 text-center md:px-6 md:pt-24"
+      className="flex flex-col items-center px-4 pt-12 pb-12 text-center md:px-6 md:pt-16 md:pb-16"
       aria-labelledby="hero-heading"
     >
       <h1
@@ -22,15 +22,15 @@ export async function HeroSection() {
           corail: (chunks) => <span className="text-corail">{chunks}</span>,
         })}
       </h1>
-      <p className="text-encre/70 dark:text-creme/70 mt-6 max-w-2xl text-base text-pretty md:text-lg">
+      <p className="text-encre/70 dark:text-creme/70 mt-4 max-w-2xl text-base text-pretty md:text-lg">
         {t("home.hero.subline")}
       </p>
-      <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
         <Link
           href="/publish"
           className={cn(
             buttonVariants({ variant: "default", size: "lg" }),
-            "min-h-11 min-w-[12rem] px-6",
+            "min-h-12 min-w-[12rem] px-8 text-base",
           )}
         >
           {t("navigation.publishMyProperty")}
@@ -39,12 +39,13 @@ export async function HeroSection() {
           href="/search"
           className={cn(
             buttonVariants({ variant: "outline", size: "lg" }),
-            "border-bleu/30 text-bleu min-h-11 min-w-[12rem]",
+            "border-bleu/30 text-bleu min-h-12 min-w-[12rem] px-8 text-base",
           )}
         >
           {t("navigation.discover")}
         </Link>
       </div>
+      <HeroSearchBar />
     </section>
   );
 }
