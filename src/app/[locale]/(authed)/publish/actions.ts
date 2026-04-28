@@ -10,6 +10,10 @@ import { sendEmail } from "@/lib/email/send";
 import { type EmailLocale } from "@/lib/email/templates/base";
 import { listingPublishedEmail } from "@/lib/email/templates/listing-published";
 import { moderateListing } from "@/lib/moderation/listing";
+import {
+  sanitizeDescription,
+  sanitizeTitle,
+} from "@/lib/validation/listing.schema";
 import { createClient } from "@/data/supabase/server";
 import type { TablesInsert } from "@/types/database";
 
@@ -29,17 +33,17 @@ const publishDraftSchema = z.object({
       "other",
     ])
     .optional(),
-  title: z.string().max(80).optional(),
-  description: z.string().max(2000).optional(),
-  price: z.number().positive().optional().nullable(),
+  title: z.string().trim().max(80).optional(),
+  description: z.string().trim().max(5000).optional(),
+  price: z.number().positive().max(10_000_000_000).optional().nullable(),
   currency: z.enum(["TND", "EUR", "USD", "MAD", "DZD"]).optional(),
-  surface_m2: z.number().int().positive().optional().nullable(),
-  rooms: z.number().int().optional().nullable(),
-  bedrooms: z.number().int().optional().nullable(),
-  bathrooms: z.number().int().optional().nullable(),
-  floor: z.number().int().optional().nullable(),
-  total_floors: z.number().int().optional().nullable(),
-  year_built: z.number().int().min(1900).max(2026).optional().nullable(),
+  surface_m2: z.number().int().positive().max(100_000).optional().nullable(),
+  rooms: z.number().int().nonnegative().max(50).optional().nullable(),
+  bedrooms: z.number().int().nonnegative().max(50).optional().nullable(),
+  bathrooms: z.number().int().nonnegative().max(20).optional().nullable(),
+  floor: z.number().int().min(-5).max(100).optional().nullable(),
+  total_floors: z.number().int().positive().max(100).optional().nullable(),
+  year_built: z.number().int().min(1800).max(2030).optional().nullable(),
   latitude: z.number().optional().nullable(),
   longitude: z.number().optional().nullable(),
   address: z.string().optional().nullable(),
@@ -78,19 +82,23 @@ export async function saveDraft(input: SaveDraftInput) {
       : d.type === "seasonal_rent" || d.type === "colocation"
         ? "rent"
         : "sale";
+  const cleanTitle = d.title?.trim() ? sanitizeTitle(d.title) : "Brouillon";
+  const cleanDescription = d.description?.trim()
+    ? sanitizeDescription(d.description)
+    : null;
   const payload: TablesInsert<"listings"> = {
     id: draftId,
     owner_id: user.id,
     type: legacyType,
     category: d.category ?? "apartment",
-    title: d.title?.trim() ? d.title : "Brouillon",
+    title: cleanTitle,
     price: d.price && d.price > 0 ? d.price : 1,
     city: d.city?.trim() ? d.city : "À préciser",
     status: "draft",
     country_code: d.country_code ?? "TN",
     currency: d.currency ?? "TND",
     address: d.address?.trim() ? d.address : null,
-    description: d.description?.trim() ? d.description : null,
+    description: cleanDescription,
     surface_m2: d.surface_m2 ?? null,
     rooms: d.rooms ?? null,
     bedrooms: d.bedrooms ?? null,

@@ -34,6 +34,18 @@
     "goHome": "العودة إلى الصفحة الرئيسية",
     "exploreListings": "استكشف الإعلانات"
   },
+  "validation": {
+    "required": "حقل إلزامي",
+    "minLength": "{min} أحرف على الأقل",
+    "maxLength": "{max} أحرف كحد أقصى",
+    "minValue": "يجب أن يكون أكبر من {min}",
+    "maxValue": "يجب أن يكون أقل من {max}",
+    "positiveNumber": "يجب أن يكون موجباً",
+    "invalidEmail": "بريد إلكتروني غير صالح",
+    "invalidPhone": "رقم غير صالح",
+    "yearRange": "السنة بين 1800 واليوم",
+    "minMaxOrder": "يجب أن تكون القيمة الدنيا أقل من القيمة العليا"
+  },
   "a11y": {
     "mainMenu": "القائمة الرئيسية",
     "languageMenu": "مبدّل اللغة"

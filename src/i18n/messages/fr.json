@@ -34,6 +34,18 @@
     "goHome": "Retour à l'accueil",
     "exploreListings": "Explorer les annonces"
   },
+  "validation": {
+    "required": "Champ obligatoire",
+    "minLength": "Minimum {min} caractères",
+    "maxLength": "Maximum {max} caractères",
+    "minValue": "Doit être supérieur à {min}",
+    "maxValue": "Doit être inférieur à {max}",
+    "positiveNumber": "Doit être positif",
+    "invalidEmail": "Email invalide",
+    "invalidPhone": "Numéro invalide",
+    "yearRange": "Année entre 1800 et aujourd'hui",
+    "minMaxOrder": "La valeur min doit être inférieure à la valeur max"
+  },
   "a11y": {
     "mainMenu": "Menu principal",
     "languageMenu": "Sélecteur de langue"
