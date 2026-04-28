@@ -51,45 +51,47 @@ export default async function AdminTransactionsPage({
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-ink text-2xl font-bold">Transactions</h1>
-      <form className="border-line grid gap-2 rounded-xl border bg-white p-4 md:grid-cols-6">
+      <h1 className="font-display text-encre text-2xl font-bold">
+        Transactions
+      </h1>
+      <form className="border-bordurewarm-tertiary grid gap-2 rounded-xl border bg-white p-4 md:grid-cols-6">
         <input
           name="status"
           defaultValue={query.status}
           placeholder="status"
-          className="border-line rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="gateway"
           defaultValue={query.gateway}
           placeholder="gateway"
-          className="border-line rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="type"
           defaultValue={query.type}
           placeholder="type"
-          className="border-line rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           type="date"
           name="from"
           defaultValue={query.from}
-          className="border-line rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           type="date"
           name="to"
           defaultValue={query.to}
-          className="border-line rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
         />
         <button className="bg-corail rounded-lg px-3 py-1.5 text-sm text-white">
           Filtrer
         </button>
       </form>
 
-      <div className="border-line flex items-center justify-between rounded-xl border bg-white p-3">
-        <p className="text-ink text-sm">
+      <div className="border-bordurewarm-tertiary flex items-center justify-between rounded-xl border bg-white p-3">
+        <p className="text-encre text-sm">
           Total cumulé visible:{" "}
           <span className="font-semibold">{totalAmount}</span>
         </p>
@@ -102,9 +104,9 @@ export default async function AdminTransactionsPage({
         </a>
       </div>
 
-      <div className="border-line overflow-auto rounded-xl border bg-white">
+      <div className="border-bordurewarm-tertiary overflow-auto rounded-xl border bg-white">
         <table className="w-full min-w-[1100px] text-sm">
-          <thead className="bg-creme-pale text-ink-soft text-xs">
+          <thead className="bg-creme-pale text-encre/70 text-xs">
             <tr>
               <th className="px-3 py-2 text-left">ID</th>
               <th className="px-3 py-2 text-left">Montant</th>
@@ -117,8 +119,8 @@ export default async function AdminTransactionsPage({
           </thead>
           <tbody>
             {(transactions ?? []).map((tx) => (
-              <tr key={tx.id} className="border-line border-t">
-                <td className="text-ink-soft px-3 py-2 text-xs">{tx.id}</td>
+              <tr key={tx.id} className="border-bordurewarm-tertiary border-t">
+                <td className="text-encre/70 px-3 py-2 text-xs">{tx.id}</td>
                 <td className="px-3 py-2">
                   {tx.amount} {tx.currency}
                 </td>
@@ -135,7 +137,7 @@ export default async function AdminTransactionsPage({
                       await refundTransactionAction(locale, tx.id);
                     }}
                   >
-                    <button className="bg-danger/15 text-danger rounded px-2 py-1 text-xs">
+                    <button className="rounded bg-red-600/15 px-2 py-1 text-xs text-red-600">
                       Rembourser
                     </button>
                   </form>

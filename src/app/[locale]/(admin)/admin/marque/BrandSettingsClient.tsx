@@ -65,7 +65,7 @@ export function BrandSettingsClient({ initial, locale }: Props) {
   return (
     <div className="max-w-lg space-y-5">
       {error ? (
-        <p className="bg-danger/10 text-danger rounded-control p-3 text-sm">
+        <p className="rounded-control bg-red-600/10 p-3 text-sm text-red-600">
           {error}
         </p>
       ) : null}
@@ -73,7 +73,7 @@ export function BrandSettingsClient({ initial, locale }: Props) {
         <div key={key}>
           <label
             htmlFor={`brand-${key}`}
-            className="text-ink mb-1 block text-sm font-medium"
+            className="text-encre mb-1 block text-sm font-medium"
           >
             {label}
           </label>
@@ -81,9 +81,9 @@ export function BrandSettingsClient({ initial, locale }: Props) {
             id={`brand-${key}`}
             value={form[key]}
             onChange={update(key)}
-            className="border-line text-ink focus:ring-bleu w-full rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+            className="border-bordurewarm-tertiary text-encre focus:ring-bleu w-full rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
           />
-          <p className="text-ink-soft mt-1 text-xs">{hint}</p>
+          <p className="text-encre/70 mt-1 text-xs">{hint}</p>
         </div>
       ))}
       <div className="flex items-center gap-4 pt-2">
@@ -97,8 +97,8 @@ export function BrandSettingsClient({ initial, locale }: Props) {
         </button>
         {saved ? <span className="text-bleu text-sm">✓ Sauvegardé</span> : null}
       </div>
-      <div className="border-line bg-creme-pale rounded-xl border p-4">
-        <p className="text-ink-soft mb-2 text-xs">Aperçu du logo</p>
+      <div className="border-bordurewarm-tertiary bg-creme-pale rounded-xl border p-4">
+        <p className="text-encre/70 mb-2 text-xs">Aperçu du logo</p>
         <span className="font-serif text-3xl font-medium tracking-tight">
           <span className="text-bleu">{form.logo_part1}</span>
           <span className="text-corail">{form.logo_part2}</span>

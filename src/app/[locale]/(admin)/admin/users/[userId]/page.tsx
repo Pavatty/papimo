@@ -45,62 +45,64 @@ export default async function AdminUserDetailPage({ params }: Props) {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-ink text-2xl font-bold">
+      <h1 className="font-display text-encre text-2xl font-bold">
         Détail utilisateur
       </h1>
-      <section className="border-line rounded-2xl border bg-white p-5">
-        <h2 className="text-ink text-lg font-semibold">Profil</h2>
-        <p className="text-ink-soft text-sm">
+      <section className="border-bordurewarm-tertiary rounded-2xl border bg-white p-5">
+        <h2 className="text-encre text-lg font-semibold">Profil</h2>
+        <p className="text-encre/70 text-sm">
           {profile?.full_name} • {profile?.email} • role {profile?.role}
         </p>
       </section>
       <section className="grid gap-4 lg:grid-cols-2">
-        <article className="border-line rounded-2xl border bg-white p-5">
-          <h3 className="text-ink mb-2 text-sm font-semibold">Annonces</h3>
+        <article className="border-bordurewarm-tertiary rounded-2xl border bg-white p-5">
+          <h3 className="text-encre mb-2 text-sm font-semibold">Annonces</h3>
           <ul className="space-y-1 text-sm">
             {(listings ?? []).map((l) => (
               <li key={l.id} className="flex justify-between">
                 <span>{l.title}</span>
-                <span className="text-ink-soft">{l.status}</span>
+                <span className="text-encre/70">{l.status}</span>
               </li>
             ))}
           </ul>
         </article>
-        <article className="border-line rounded-2xl border bg-white p-5">
-          <h3 className="text-ink mb-2 text-sm font-semibold">Transactions</h3>
+        <article className="border-bordurewarm-tertiary rounded-2xl border bg-white p-5">
+          <h3 className="text-encre mb-2 text-sm font-semibold">
+            Transactions
+          </h3>
           <ul className="space-y-1 text-sm">
             {(txs ?? []).map((t) => (
               <li key={t.id} className="flex justify-between">
                 <span>
                   {t.amount} {t.currency}
                 </span>
-                <span className="text-ink-soft">{t.status}</span>
+                <span className="text-encre/70">{t.status}</span>
               </li>
             ))}
           </ul>
         </article>
       </section>
       <section className="grid gap-4 lg:grid-cols-2">
-        <article className="border-line rounded-2xl border bg-white p-5">
-          <h3 className="text-ink mb-2 text-sm font-semibold">
+        <article className="border-bordurewarm-tertiary rounded-2xl border bg-white p-5">
+          <h3 className="text-encre mb-2 text-sm font-semibold">
             Messages flaggés
           </h3>
           <ul className="space-y-1 text-sm">
             {(flaggedMessages ?? []).map((m) => (
               <li key={m.id}>
                 <p className="line-clamp-2">{m.content}</p>
-                <p className="text-ink-soft text-xs">{m.flag_reason ?? "-"}</p>
+                <p className="text-encre/70 text-xs">{m.flag_reason ?? "-"}</p>
               </li>
             ))}
           </ul>
         </article>
-        <article className="border-line rounded-2xl border bg-white p-5">
-          <h3 className="text-ink mb-2 text-sm font-semibold">Audit log</h3>
+        <article className="border-bordurewarm-tertiary rounded-2xl border bg-white p-5">
+          <h3 className="text-encre mb-2 text-sm font-semibold">Audit log</h3>
           <ul className="space-y-1 text-sm">
             {(audit ?? []).map((a) => (
               <li key={a.id} className="flex justify-between">
                 <span>{a.action}</span>
-                <span className="text-ink-soft text-xs">
+                <span className="text-encre/70 text-xs">
                   {new Date(a.created_at).toLocaleString("fr-FR")}
                 </span>
               </li>

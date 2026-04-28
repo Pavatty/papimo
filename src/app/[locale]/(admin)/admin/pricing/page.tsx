@@ -17,10 +17,10 @@ export default async function AdminPricingPage({ params }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="font-display text-ink text-2xl font-bold">
+        <h1 className="font-display text-encre text-2xl font-bold">
           Packs tarifaires
         </h1>
-        <p className="text-ink-soft mt-1 text-sm">
+        <p className="text-encre/70 mt-1 text-sm">
           {packs.length} pack{packs.length > 1 ? "s" : ""} configuré
           {packs.length > 1 ? "s" : ""} (lecture seule).
         </p>
@@ -29,14 +29,14 @@ export default async function AdminPricingPage({ params }: Props) {
         {packs.map((pack) => (
           <article
             key={pack.id}
-            className={`border-line rounded-xl border bg-white p-5 ${pack.is_recommended ? "ring-bleu/30 ring-2" : ""} ${pack.is_active ? "" : "opacity-50"}`}
+            className={`border-bordurewarm-tertiary rounded-xl border bg-white p-5 ${pack.is_recommended ? "ring-bleu/30 ring-2" : ""} ${pack.is_active ? "" : "opacity-50"}`}
           >
             <div className="mb-3 flex items-start justify-between gap-3">
               <div>
-                <p className="text-ink text-lg font-semibold">
+                <p className="text-encre text-lg font-semibold">
                   {pack.label_fr}
                 </p>
-                <p className="text-ink-soft text-xs">code: {pack.code}</p>
+                <p className="text-encre/70 text-xs">code: {pack.code}</p>
               </div>
               {pack.is_recommended ? (
                 <span className="bg-bleu rounded px-2 py-0.5 text-xs font-medium text-white">
@@ -44,29 +44,29 @@ export default async function AdminPricingPage({ params }: Props) {
                 </span>
               ) : null}
             </div>
-            <dl className="text-ink space-y-1.5 text-sm">
+            <dl className="text-encre space-y-1.5 text-sm">
               <div className="flex justify-between">
-                <dt className="text-ink-soft">Prix mensuel</dt>
+                <dt className="text-encre/70">Prix mensuel</dt>
                 <dd className="font-medium">{pack.price_monthly_tnd} TND</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-ink-soft">Prix annuel</dt>
+                <dt className="text-encre/70">Prix annuel</dt>
                 <dd className="font-medium">{pack.price_yearly_tnd} TND</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-ink-soft">Annonces actives max</dt>
+                <dt className="text-encre/70">Annonces actives max</dt>
                 <dd className="font-medium">{pack.max_active_listings}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-ink-soft">Photos / annonce</dt>
+                <dt className="text-encre/70">Photos / annonce</dt>
                 <dd className="font-medium">{pack.max_photos_per_listing}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-ink-soft">Durée annonce (jours)</dt>
+                <dt className="text-encre/70">Durée annonce (jours)</dt>
                 <dd className="font-medium">{pack.active_days}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-ink-soft">Statut</dt>
+                <dt className="text-encre/70">Statut</dt>
                 <dd className="font-medium">
                   {pack.is_active ? "Actif" : "Inactif"}
                 </dd>
@@ -75,7 +75,7 @@ export default async function AdminPricingPage({ params }: Props) {
           </article>
         ))}
       </div>
-      <p className="text-ink-soft mt-2 text-xs">
+      <p className="text-encre/70 mt-2 text-xs">
         Modification des prix : ouvrir{" "}
         <code className="bg-creme-pale rounded px-1">{`/${locale}/admin/reglages`}</code>{" "}
         et éditer la clé JSON du pack.

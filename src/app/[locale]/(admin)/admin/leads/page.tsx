@@ -14,10 +14,10 @@ export default async function AdminLeadsPage({ params }: Props) {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-ink text-2xl font-bold">Leads</h1>
-      <div className="border-line overflow-auto rounded-xl border bg-white">
+      <h1 className="font-display text-encre text-2xl font-bold">Leads</h1>
+      <div className="border-bordurewarm-tertiary overflow-auto rounded-xl border bg-white">
         <table className="w-full min-w-[850px] text-sm">
-          <thead className="bg-creme-pale text-ink-soft text-xs">
+          <thead className="bg-creme-pale text-encre/70 text-xs">
             <tr>
               <th className="px-3 py-2 text-left">ID</th>
               <th className="px-3 py-2 text-left">Type</th>
@@ -28,8 +28,11 @@ export default async function AdminLeadsPage({ params }: Props) {
           </thead>
           <tbody>
             {(leads ?? []).map((lead) => (
-              <tr key={lead.id} className="border-line border-t">
-                <td className="text-ink-soft px-3 py-2 text-xs">{lead.id}</td>
+              <tr
+                key={lead.id}
+                className="border-bordurewarm-tertiary border-t"
+              >
+                <td className="text-encre/70 px-3 py-2 text-xs">{lead.id}</td>
                 <td className="px-3 py-2">{lead.type}</td>
                 <td className="px-3 py-2">{lead.status}</td>
                 <td className="px-3 py-2">{lead.price ?? "-"}</td>
@@ -49,7 +52,7 @@ export default async function AdminLeadsPage({ params }: Props) {
                       });
                     }}
                   >
-                    <button className="bg-green/15 text-green rounded px-2 py-1 text-xs">
+                    <button className="rounded bg-emerald-600/15 px-2 py-1 text-xs text-emerald-600">
                       Marquer converti
                     </button>
                   </form>

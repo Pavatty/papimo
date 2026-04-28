@@ -14,8 +14,8 @@ export default async function AdminSettingsPage({ params }: Props) {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-ink text-2xl font-bold">Réglages</h1>
-      <p className="text-ink-soft text-sm">
+      <h1 className="font-display text-encre text-2xl font-bold">Réglages</h1>
+      <p className="text-encre/70 text-sm">
         Modifiez les valeurs JSON des clés critiques (`feature_flags`,
         `blacklist_keywords`, `pricing_packs`, etc.)
       </p>
@@ -28,10 +28,10 @@ export default async function AdminSettingsPage({ params }: Props) {
               const raw = String(formData.get("value") ?? "");
               await updateSettingAction(locale, setting.key, raw);
             }}
-            className="border-line rounded-xl border bg-white p-4"
+            className="border-bordurewarm-tertiary rounded-xl border bg-white p-4"
           >
             <div className="mb-2 flex items-center justify-between">
-              <p className="text-ink font-medium">{setting.key}</p>
+              <p className="text-encre font-medium">{setting.key}</p>
               <button className="bg-bleu rounded px-3 py-1 text-xs text-white">
                 Enregistrer
               </button>
@@ -39,7 +39,7 @@ export default async function AdminSettingsPage({ params }: Props) {
             <textarea
               name="value"
               defaultValue={JSON.stringify(setting.value, null, 2)}
-              className="border-line min-h-32 w-full rounded border p-2 font-mono text-xs"
+              className="border-bordurewarm-tertiary min-h-32 w-full rounded border p-2 font-mono text-xs"
             />
           </form>
         ))}

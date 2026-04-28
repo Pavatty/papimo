@@ -17,20 +17,20 @@ export default async function AdminReportsPage({ params }: Props) {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-ink text-2xl font-bold">Rapports</h1>
+      <h1 className="font-display text-encre text-2xl font-bold">Rapports</h1>
       <div className="space-y-2">
         {(reports ?? []).map((r) => (
           <article
             key={r.id}
-            className="border-line rounded-xl border bg-white p-4"
+            className="border-bordurewarm-tertiary rounded-xl border bg-white p-4"
           >
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-ink font-medium">{r.reason}</p>
-                <p className="text-ink-soft text-xs">
+                <p className="text-encre font-medium">{r.reason}</p>
+                <p className="text-encre/70 text-xs">
                   {r.status} • {new Date(r.created_at).toLocaleString("fr-FR")}
                 </p>
-                <p className="text-ink-soft mt-1 text-sm">{r.details ?? "-"}</p>
+                <p className="text-encre/70 mt-1 text-sm">{r.details ?? "-"}</p>
               </div>
               <div className="flex gap-2 text-xs">
                 <form
@@ -39,7 +39,7 @@ export default async function AdminReportsPage({ params }: Props) {
                     await approveModerationItemAction(locale, "report", r.id);
                   }}
                 >
-                  <button className="bg-green/15 text-green rounded px-2 py-1">
+                  <button className="rounded bg-emerald-600/15 px-2 py-1 text-emerald-600">
                     Résoudre
                   </button>
                 </form>
@@ -54,7 +54,7 @@ export default async function AdminReportsPage({ params }: Props) {
                     );
                   }}
                 >
-                  <button className="bg-danger/15 text-danger rounded px-2 py-1">
+                  <button className="rounded bg-red-600/15 px-2 py-1 text-red-600">
                     Rejeter
                   </button>
                 </form>
