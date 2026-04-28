@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.ci.json",
     "e2e": "playwright test",
     "seed": "tsx scripts/seed-demo.ts",
-    "db:types": "npx -y supabase@latest gen types typescript --project-id iwwzxxdgzelfhgpptngq > src/types/database.ts",
+    "db:types": "npx -y supabase@latest gen types typescript --project-id iwwzxxdgzelfhgpptngq > .tmp-database.ts && [ -s .tmp-database.ts ] && mv .tmp-database.ts src/types/database.ts || (rm -f .tmp-database.ts && echo 'db:types FAILED - keeping previous database.ts intact' && exit 1)",
     "prepare": "husky"
   },
   "lint-staged": {

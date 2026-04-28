@@ -35,23 +35,23 @@ export default async function AdminModerationPage({ params }: Props) {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-ink text-2xl font-bold">
+      <h1 className="font-display text-encre text-2xl font-bold">
         File de modération
       </h1>
 
-      <section className="border-line rounded-xl border bg-white p-4">
-        <h2 className="text-ink mb-3 text-lg font-semibold">
+      <section className="border-bordurewarm-tertiary rounded-xl border bg-white p-4">
+        <h2 className="text-encre mb-3 text-lg font-semibold">
           Annonces pending
         </h2>
         <div className="space-y-2">
           {(pendingListings.data ?? []).map((item) => (
             <div
               key={item.id}
-              className="border-line flex items-start justify-between rounded-lg border p-3"
+              className="border-bordurewarm-tertiary flex items-start justify-between rounded-lg border p-3"
             >
               <div>
-                <p className="text-ink font-medium">{item.title}</p>
-                <p className="text-ink-soft text-xs">{item.city}</p>
+                <p className="text-encre font-medium">{item.title}</p>
+                <p className="text-encre/70 text-xs">{item.city}</p>
               </div>
               <div className="flex gap-2 text-xs">
                 <form
@@ -64,7 +64,7 @@ export default async function AdminModerationPage({ params }: Props) {
                     );
                   }}
                 >
-                  <button className="bg-green/15 text-green rounded px-2 py-1">
+                  <button className="rounded bg-emerald-600/15 px-2 py-1 text-emerald-600">
                     Approve
                   </button>
                 </form>
@@ -79,7 +79,7 @@ export default async function AdminModerationPage({ params }: Props) {
                     );
                   }}
                 >
-                  <button className="bg-danger/15 text-danger rounded px-2 py-1">
+                  <button className="rounded bg-red-600/15 px-2 py-1 text-red-600">
                     Reject
                   </button>
                 </form>
@@ -89,19 +89,21 @@ export default async function AdminModerationPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-line rounded-xl border bg-white p-4">
-        <h2 className="text-ink mb-3 text-lg font-semibold">
+      <section className="border-bordurewarm-tertiary rounded-xl border bg-white p-4">
+        <h2 className="text-encre mb-3 text-lg font-semibold">
           Messages flaggés
         </h2>
         <div className="space-y-2">
           {(flaggedMessages.data ?? []).map((item) => (
             <div
               key={item.id}
-              className="border-line flex items-start justify-between rounded-lg border p-3"
+              className="border-bordurewarm-tertiary flex items-start justify-between rounded-lg border p-3"
             >
               <div>
-                <p className="text-ink line-clamp-2 text-sm">{item.content}</p>
-                <p className="text-ink-soft text-xs">
+                <p className="text-encre line-clamp-2 text-sm">
+                  {item.content}
+                </p>
+                <p className="text-encre/70 text-xs">
                   {item.flag_reason ?? "-"}
                 </p>
               </div>
@@ -116,7 +118,7 @@ export default async function AdminModerationPage({ params }: Props) {
                     );
                   }}
                 >
-                  <button className="bg-green/15 text-green rounded px-2 py-1">
+                  <button className="rounded bg-emerald-600/15 px-2 py-1 text-emerald-600">
                     Approve
                   </button>
                 </form>
@@ -131,7 +133,7 @@ export default async function AdminModerationPage({ params }: Props) {
                     );
                   }}
                 >
-                  <button className="bg-danger/15 text-danger rounded px-2 py-1">
+                  <button className="rounded bg-red-600/15 px-2 py-1 text-red-600">
                     Reject
                   </button>
                 </form>
@@ -141,19 +143,19 @@ export default async function AdminModerationPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-line rounded-xl border bg-white p-4">
-        <h2 className="text-ink mb-3 text-lg font-semibold">
+      <section className="border-bordurewarm-tertiary rounded-xl border bg-white p-4">
+        <h2 className="text-encre mb-3 text-lg font-semibold">
           Reports utilisateurs
         </h2>
         <div className="space-y-2">
           {(openReports.data ?? []).map((item) => (
             <div
               key={item.id}
-              className="border-line flex items-start justify-between rounded-lg border p-3"
+              className="border-bordurewarm-tertiary flex items-start justify-between rounded-lg border p-3"
             >
               <div>
-                <p className="text-ink text-sm">Raison: {item.reason}</p>
-                <p className="text-ink-soft text-xs">{item.details ?? "-"}</p>
+                <p className="text-encre text-sm">Raison: {item.reason}</p>
+                <p className="text-encre/70 text-xs">{item.details ?? "-"}</p>
               </div>
               <div className="flex gap-2 text-xs">
                 <form
@@ -166,7 +168,7 @@ export default async function AdminModerationPage({ params }: Props) {
                     );
                   }}
                 >
-                  <button className="bg-green/15 text-green rounded px-2 py-1">
+                  <button className="rounded bg-emerald-600/15 px-2 py-1 text-emerald-600">
                     Approve
                   </button>
                 </form>
@@ -181,7 +183,7 @@ export default async function AdminModerationPage({ params }: Props) {
                     );
                   }}
                 >
-                  <button className="bg-danger/15 text-danger rounded px-2 py-1">
+                  <button className="rounded bg-red-600/15 px-2 py-1 text-red-600">
                     Reject
                   </button>
                 </form>

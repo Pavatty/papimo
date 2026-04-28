@@ -15,7 +15,9 @@ export default async function AdminPartnersPage({ params }: Props) {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-ink text-2xl font-bold">Partenaires</h1>
+      <h1 className="font-display text-encre text-2xl font-bold">
+        Partenaires
+      </h1>
       <form
         action={async (formData) => {
           "use server";
@@ -32,25 +34,25 @@ export default async function AdminPartnersPage({ params }: Props) {
             afterData: { name, type },
           });
         }}
-        className="border-line flex flex-wrap gap-2 rounded-xl border bg-white p-4"
+        className="border-bordurewarm-tertiary flex flex-wrap gap-2 rounded-xl border bg-white p-4"
       >
         <input
           name="name"
           placeholder="Nom partenaire"
-          className="border-line rounded border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded border px-2 py-1.5 text-sm"
         />
         <input
           name="type"
           placeholder="bank/notary/..."
-          className="border-line rounded border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded border px-2 py-1.5 text-sm"
         />
         <button className="bg-corail rounded px-3 py-1.5 text-sm text-white">
           Créer
         </button>
       </form>
-      <div className="border-line overflow-auto rounded-xl border bg-white">
+      <div className="border-bordurewarm-tertiary overflow-auto rounded-xl border bg-white">
         <table className="w-full min-w-[900px] text-sm">
-          <thead className="bg-creme-pale text-ink-soft text-xs">
+          <thead className="bg-creme-pale text-encre/70 text-xs">
             <tr>
               <th className="px-3 py-2 text-left">Nom</th>
               <th className="px-3 py-2 text-left">Type</th>
@@ -61,7 +63,7 @@ export default async function AdminPartnersPage({ params }: Props) {
           </thead>
           <tbody>
             {(partners ?? []).map((p) => (
-              <tr key={p.id} className="border-line border-t">
+              <tr key={p.id} className="border-bordurewarm-tertiary border-t">
                 <td className="px-3 py-2">{p.name}</td>
                 <td className="px-3 py-2">{p.type}</td>
                 <td className="px-3 py-2">{p.leads_count}</td>
@@ -79,7 +81,7 @@ export default async function AdminPartnersPage({ params }: Props) {
                       });
                     }}
                   >
-                    <button className="bg-danger/15 text-danger rounded px-2 py-1 text-xs">
+                    <button className="rounded bg-red-600/15 px-2 py-1 text-xs text-red-600">
                       Supprimer
                     </button>
                   </form>

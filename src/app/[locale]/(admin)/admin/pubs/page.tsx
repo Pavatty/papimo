@@ -17,7 +17,7 @@ export default async function AdminAdsPage({ params }: Props) {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-ink text-2xl font-bold">
+      <h1 className="font-display text-encre text-2xl font-bold">
         Campagnes pubs
       </h1>
       <form
@@ -47,22 +47,22 @@ export default async function AdminAdsPage({ params }: Props) {
             afterData: { advertiser_name, slot },
           });
         }}
-        className="border-line flex flex-wrap gap-2 rounded-xl border bg-white p-4"
+        className="border-bordurewarm-tertiary flex flex-wrap gap-2 rounded-xl border bg-white p-4"
       >
         <input
           name="advertiser_name"
           placeholder="Annonceur"
-          className="border-line rounded border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded border px-2 py-1.5 text-sm"
         />
         <input
           name="slot"
           placeholder="home_hero/listing_top/..."
-          className="border-line rounded border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded border px-2 py-1.5 text-sm"
         />
         <input
           name="target_url"
           placeholder="URL cible"
-          className="border-line min-w-[280px] rounded border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary min-w-[280px] rounded border px-2 py-1.5 text-sm"
         />
         <button className="bg-corail rounded px-3 py-1.5 text-sm text-white">
           Créer campagne
@@ -72,22 +72,22 @@ export default async function AdminAdsPage({ params }: Props) {
         {(campaigns ?? []).map((c) => (
           <article
             key={c.id}
-            className="border-line rounded-xl border bg-white p-4"
+            className="border-bordurewarm-tertiary rounded-xl border bg-white p-4"
           >
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-ink font-semibold">{c.advertiser_name}</p>
-                <p className="text-ink-soft text-xs">
+                <p className="text-encre font-semibold">{c.advertiser_name}</p>
+                <p className="text-encre/70 text-xs">
                   {c.slot} • {c.country_codes.join(", ")}
                 </p>
               </div>
               <span
-                className={`rounded px-2 py-0.5 text-xs ${c.is_active ? "bg-green/15 text-green" : "bg-creme text-ink-soft"}`}
+                className={`rounded px-2 py-0.5 text-xs ${c.is_active ? "bg-emerald-600/15 text-emerald-600" : "bg-creme text-encre/70"}`}
               >
                 {c.is_active ? "active" : "inactive"}
               </span>
             </div>
-            <p className="text-ink-soft mt-2 text-sm">
+            <p className="text-encre/70 mt-2 text-sm">
               Stats: {c.clicks} clics / {c.impressions} impressions
             </p>
             {c.image_url ? (

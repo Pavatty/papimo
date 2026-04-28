@@ -24,10 +24,10 @@ export default async function AdminPage({ params }: Props) {
         ].map(([label, value]) => (
           <article
             key={String(label)}
-            className="border-line rounded-xl border bg-white p-4"
+            className="border-bordurewarm-tertiary rounded-xl border bg-white p-4"
           >
-            <p className="text-ink-soft text-xs">{label}</p>
-            <p className="text-ink mt-1 text-xl font-semibold">
+            <p className="text-encre/70 text-xs">{label}</p>
+            <p className="text-encre mt-1 text-xl font-semibold">
               {String(value)}
             </p>
           </article>
@@ -35,23 +35,23 @@ export default async function AdminPage({ params }: Props) {
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
-        <article className="border-line rounded-2xl border bg-white p-5">
-          <h2 className="text-ink text-lg font-semibold">Top 10 villes</h2>
+        <article className="border-bordurewarm-tertiary rounded-2xl border bg-white p-5">
+          <h2 className="text-encre text-lg font-semibold">Top 10 villes</h2>
           <ul className="mt-3 space-y-2 text-sm">
             {topCities.map((row) => (
               <li key={row.city} className="flex items-center justify-between">
-                <span className="text-ink-soft">{row.city}</span>
-                <span className="text-ink font-medium">{row.count}</span>
+                <span className="text-encre/70">{row.city}</span>
+                <span className="text-encre font-medium">{row.count}</span>
               </li>
             ))}
           </ul>
         </article>
-        <article className="border-line rounded-2xl border bg-white p-5">
-          <h2 className="text-ink text-lg font-semibold">Évolution</h2>
+        <article className="border-bordurewarm-tertiary rounded-2xl border bg-white p-5">
+          <h2 className="text-encre text-lg font-semibold">Évolution</h2>
           <div className="mt-4 space-y-2">
             {trend.map((point) => (
               <div key={point.label}>
-                <div className="text-ink-soft mb-1 flex justify-between text-xs">
+                <div className="text-encre/70 mb-1 flex justify-between text-xs">
                   <span>{point.label}</span>
                   <span>{point.value}</span>
                 </div>
@@ -67,10 +67,10 @@ export default async function AdminPage({ params }: Props) {
         </article>
       </section>
 
-      <article className="border-line rounded-2xl border bg-white p-5">
-        <p className="text-ink-soft text-sm">
+      <article className="border-bordurewarm-tertiary rounded-2xl border bg-white p-5">
+        <p className="text-encre/70 text-sm">
           Taux conversion visite→inscription:{" "}
-          <span className="text-ink font-semibold">
+          <span className="text-encre font-semibold">
             {String(stats.conversion_visit_signup)}%
           </span>
         </p>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ImageOff } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useMemo, useState } from "react";
@@ -8,6 +9,8 @@ import type { SlideImage } from "yet-another-react-lightbox";
 
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
+
+import { EmptyState } from "@/components/shared/EmptyState";
 
 const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
   ssr: false,
@@ -35,8 +38,13 @@ export function ListingGallery({ images }: Props) {
 
   if (images.length === 0) {
     return (
-      <div className="border-line bg-paper flex aspect-video items-center justify-center rounded-2xl border">
-        <p className="text-ink-soft text-sm">Aucune photo disponible</p>
+      <div className="border-bordurewarm-tertiary bg-creme-pale rounded-card aspect-video border">
+        <EmptyState
+          icon={<ImageOff className="h-10 w-10" aria-hidden="true" />}
+          title="Aucune photo disponible"
+          description="Le vendeur n'a pas encore publié de photos pour cette annonce."
+          className="h-full"
+        />
       </div>
     );
   }

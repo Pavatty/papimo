@@ -15,10 +15,10 @@ export default async function AdminFeatureFlagsPage({ params }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="font-display text-ink text-2xl font-bold">
+        <h1 className="font-display text-encre text-2xl font-bold">
           Feature Flags
         </h1>
-        <p className="text-ink-soft mt-1 text-sm">
+        <p className="text-encre/70 mt-1 text-sm">
           Activez ou désactivez les fonctionnalités sans redéployer.
         </p>
       </div>

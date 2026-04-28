@@ -34,31 +34,31 @@ export default async function AdminUsersPage({ params, searchParams }: Props) {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-display text-ink text-2xl font-bold">
+      <h1 className="font-display text-encre text-2xl font-bold">
         Gestion utilisateurs
       </h1>
 
-      <form className="border-line grid gap-2 rounded-xl border bg-white p-4 md:grid-cols-3">
+      <form className="border-bordurewarm-tertiary grid gap-2 rounded-xl border bg-white p-4 md:grid-cols-3">
         <input
           name="q"
           defaultValue={query.q}
           placeholder="Recherche nom/email"
-          className="border-line rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
         />
         <input
           name="role"
           defaultValue={query.role}
           placeholder="role"
-          className="border-line rounded-lg border px-2 py-1.5 text-sm"
+          className="border-bordurewarm-tertiary rounded-lg border px-2 py-1.5 text-sm"
         />
         <button className="bg-corail rounded-lg px-3 py-1.5 text-sm text-white">
           Filtrer
         </button>
       </form>
 
-      <div className="border-line overflow-auto rounded-xl border bg-white">
+      <div className="border-bordurewarm-tertiary overflow-auto rounded-xl border bg-white">
         <table className="w-full min-w-[980px] text-sm">
-          <thead className="bg-creme-pale text-ink-soft text-xs">
+          <thead className="bg-creme-pale text-encre/70 text-xs">
             <tr>
               <th className="px-3 py-2 text-left">Utilisateur</th>
               <th className="px-3 py-2 text-left">Role</th>
@@ -69,12 +69,15 @@ export default async function AdminUsersPage({ params, searchParams }: Props) {
           </thead>
           <tbody>
             {(users ?? []).map((user) => (
-              <tr key={user.id} className="border-line border-t align-top">
+              <tr
+                key={user.id}
+                className="border-bordurewarm-tertiary border-t align-top"
+              >
                 <td className="px-3 py-2">
-                  <p className="text-ink font-medium">
+                  <p className="text-encre font-medium">
                     {user.full_name ?? "N/A"}
                   </p>
-                  <p className="text-ink-soft text-xs">{user.email ?? "N/A"}</p>
+                  <p className="text-encre/70 text-xs">{user.email ?? "N/A"}</p>
                 </td>
                 <td className="px-3 py-2">{user.role}</td>
                 <td className="px-3 py-2">{user.kyc_status}</td>
@@ -85,7 +88,7 @@ export default async function AdminUsersPage({ params, searchParams }: Props) {
                   <div className="flex flex-wrap gap-2 text-xs">
                     <Link
                       href={`/${locale}/admin/users/${user.id}`}
-                      className="border-line rounded border bg-white px-2 py-1"
+                      className="border-bordurewarm-tertiary rounded border bg-white px-2 py-1"
                     >
                       Voir profil
                     </Link>
@@ -95,7 +98,7 @@ export default async function AdminUsersPage({ params, searchParams }: Props) {
                         await verifyKycAction(locale, user.id);
                       }}
                     >
-                      <button className="bg-green/15 text-green rounded px-2 py-1">
+                      <button className="rounded bg-emerald-600/15 px-2 py-1 text-emerald-600">
                         Vérifier KYC
                       </button>
                     </form>
@@ -140,7 +143,7 @@ export default async function AdminUsersPage({ params, searchParams }: Props) {
                           await resetUserPasswordAction(locale, user.email!);
                         }}
                       >
-                        <button className="border-line rounded border bg-white px-2 py-1">
+                        <button className="border-bordurewarm-tertiary rounded border bg-white px-2 py-1">
                           Reset mdp
                         </button>
                       </form>

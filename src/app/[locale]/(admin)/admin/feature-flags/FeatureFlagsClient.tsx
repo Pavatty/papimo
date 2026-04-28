@@ -47,7 +47,7 @@ export function FeatureFlagsClient({ initialFlags, locale }: Props) {
   return (
     <div>
       {error ? (
-        <p className="bg-danger/10 text-danger rounded-control mb-4 p-3 text-sm">
+        <p className="rounded-control mb-4 bg-red-600/10 p-3 text-sm text-red-600">
           {error}
         </p>
       ) : null}
@@ -55,12 +55,12 @@ export function FeatureFlagsClient({ initialFlags, locale }: Props) {
         {flags.map((flag) => (
           <div
             key={flag.key}
-            className="border-line flex items-center justify-between gap-4 rounded-xl border bg-white px-5 py-4"
+            className="border-bordurewarm-tertiary flex items-center justify-between gap-4 rounded-xl border bg-white px-5 py-4"
           >
             <div className="min-w-0 flex-1">
-              <p className="text-ink text-sm font-medium">{flag.key}</p>
+              <p className="text-encre text-sm font-medium">{flag.key}</p>
               {flag.description ? (
-                <p className="text-ink-soft mt-0.5 text-xs">
+                <p className="text-encre/70 mt-0.5 text-xs">
                   {flag.description}
                 </p>
               ) : null}
