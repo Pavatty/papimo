@@ -1,17 +1,20 @@
 import {
   ChevronDown,
   CreditCard,
+  LayoutDashboard,
   LayoutGrid,
   LogOut,
   MessageSquare,
   Search,
   User,
 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Logo } from "@/components/shared/Logo";
+import { getIsAdmin } from "@/data/supabase/session";
 import { Link } from "@/i18n/navigation";
 import { getCurrentUser } from "@/lib/auth/session";
 import { signOut } from "@/lib/auth/actions";
@@ -26,7 +29,11 @@ type Props = {
 // Layout authentifié : barre de navigation vers les modules (recherche, publier, messages, compte)
 export default async function AuthedLayout({ children, params }: Props) {
   const { locale } = await params;
-  const { user, profile } = await getCurrentUser();
+  const [{ user, profile }, isAdmin, t] = await Promise.all([
+    getCurrentUser(),
+    getIsAdmin(),
+    getTranslations("common"),
+  ]);
 
   if (!user) {
     redirect(`/${locale}/login?redirect_to=/${locale}/dashboard`);
@@ -116,7 +123,22 @@ export default async function AuthedLayout({ children, params }: Props) {
                 <span className="max-w-28 truncate">{displayName}</span>
                 <ChevronDown className="h-3.5 w-3.5" />
               </summary>
-              <div className="border-line absolute right-0 z-20 mt-2 w-52 rounded-xl border bg-white p-2 shadow-md">
+              <div className="border-line absolute right-0 z-20 mt-2 w-56 rounded-xl border bg-white p-2 shadow-md">
+                {isAdmin ? (
+                  <>
+                    <Link
+                      href="/admin"
+                      className="text-bleu hover:bg-bleu-pale focus-visible:ring-bleu flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-semibold focus-visible:ring-2 focus-visible:outline-none"
+                    >
+                      <LayoutDashboard
+                        className="h-3.5 w-3.5"
+                        aria-hidden="true"
+                      />
+                      {t("adminDashboard")}
+                    </Link>
+                    <div className="bg-line my-1 h-px" />
+                  </>
+                ) : null}
                 <Link
                   href="/profile/edit"
                   className="hover:bg-creme-pale block rounded-md px-2 py-1.5 text-sm"

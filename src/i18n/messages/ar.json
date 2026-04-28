@@ -2,6 +2,7 @@
   "common": {
     "brandName": "papimo",
     "skipToContent": "الانتقال إلى المحتوى الرئيسي",
+    "adminDashboard": "لوحة تحكم المسؤول",
     "tagline": {
       "fr": "L'immobilier entre particuliers",
       "en": "Real estate between private owners",
