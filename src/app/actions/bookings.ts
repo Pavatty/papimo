@@ -1,10 +1,12 @@
 "use server";
 
+import { headers } from "next/headers";
 import { revalidateTag } from "next/cache";
 import { z } from "zod";
 
 import { createClient } from "@/data/supabase/server";
 import { getCurrentUser } from "@/data/supabase/session";
+import { createPayment } from "@/lib/payments/konnect";
 
 const DEFAULT_GUEST_FEE_PERCENT = 5;
 const DEFAULT_HOST_FEE_PERCENT = 5;
@@ -206,6 +208,122 @@ export async function confirmBooking(input: z.infer<typeof confirmSchema>) {
   revalidateTag(`bookings:${user.id}`, "default");
   revalidateTag(`bookings:listing:${booking.listing_id}`, "default");
   return { ok: true as const };
+}
+
+export async function initiateBookingPayment(bookingId: string) {
+  const user = await getCurrentUser();
+  if (!user) return { ok: false as const, error: "Non connecté" };
+
+  const supabase = await createClient();
+
+  const { data: booking } = await supabase
+    .from("bookings")
+    .select("id, total_price, currency, status, guest_id, listing_id")
+    .eq("id", bookingId)
+    .eq("guest_id", user.id)
+    .maybeSingle();
+  if (!booking) {
+    return { ok: false as const, error: "Réservation introuvable" };
+  }
+  if (booking.status !== "pending_payment") {
+    return { ok: false as const, error: "Réservation déjà finalisée" };
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("email, full_name, country_code")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  const { data: tx, error: txError } = await supabase
+    .from("transactions")
+    .insert({
+      user_id: user.id,
+      amount: Number(booking.total_price),
+      currency: booking.currency as "TND",
+      status: "pending",
+      type: "booking",
+      gateway: "konnect",
+      metadata: {
+        purpose: "booking",
+        bookingId: booking.id,
+        listingId: booking.listing_id,
+      },
+    })
+    .select("id")
+    .single();
+  if (txError || !tx) {
+    return { ok: false as const, error: txError?.message ?? "TX error" };
+  }
+
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const requestHeaders = await headers();
+  const referer = requestHeaders.get("referer") ?? "";
+  let locale = "fr";
+  try {
+    const candidate = new URL(referer).pathname.split("/")[1];
+    if (candidate === "en" || candidate === "ar") locale = candidate;
+  } catch {
+    // referer non parsable, garder fr
+  }
+  const successUrl = `${appUrl}/${locale}/dashboard/reservations?paid=${tx.id}`;
+  const webhookUrl = `${appUrl}/api/webhooks/konnect`;
+
+  try {
+    const payment = await createPayment({
+      amount: Number(booking.total_price),
+      currency: booking.currency,
+      orderId: tx.id,
+      customerEmail: profile?.email ?? user.email ?? "unknown@lodge.tn",
+      returnUrl: successUrl,
+      webhookUrl,
+      ...(profile?.full_name
+        ? {
+            firstName: profile.full_name.split(" ")[0] ?? "Client",
+            lastName:
+              profile.full_name.split(" ").slice(1).join(" ") || "LODGE",
+          }
+        : {}),
+    });
+
+    await supabase
+      .from("transactions")
+      .update({
+        gateway_ref: payment.paymentRef,
+        gateway_response: payment.raw,
+      })
+      .eq("id", tx.id);
+
+    await supabase.from("booking_payments").insert({
+      booking_id: booking.id,
+      amount: Number(booking.total_price),
+      currency: booking.currency,
+      payment_method: "konnect",
+      payment_intent_id: payment.paymentRef,
+      status: "pending",
+    });
+
+    await supabase
+      .from("bookings")
+      .update({ payment_intent_id: payment.paymentRef })
+      .eq("id", booking.id);
+
+    return {
+      ok: true as const,
+      paymentUrl: payment.payUrl,
+      transactionId: tx.id,
+    };
+  } catch (error) {
+    await supabase
+      .from("transactions")
+      .update({ status: "failed" })
+      .eq("id", tx.id);
+    return {
+      ok: false as const,
+      error:
+        error instanceof Error ? error.message : "Erreur initiation paiement",
+    };
+  }
 }
 
 export async function cancelBookingByGuest(bookingId: string) {

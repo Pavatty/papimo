@@ -375,10 +375,23 @@ export async function handleKonnectWebhook(
         transaction.id,
       );
     }
+    if (metadata.purpose === "booking" && metadata.bookingId) {
+      await confirmBookingPaid(
+        metadata.bookingId,
+        parsed.paymentRef ?? transaction.id,
+      );
+    }
     await captureServerEvent("payment_completed", transaction.user_id, {
       transactionId: transaction.id,
       gateway: "konnect",
     });
+  }
+
+  if (targetStatus === "failed") {
+    const metadata = (transaction.metadata ?? {}) as Record<string, string>;
+    if (metadata.purpose === "booking" && metadata.bookingId) {
+      await markBookingPaymentFailed(metadata.bookingId);
+    }
   }
 
   await logAuditEvent({
@@ -538,4 +551,55 @@ export async function generateInvoice(transactionId: string) {
     .createSignedUrl(objectPath, 60 * 60 * 24);
   if (signed.error) return { ok: false, error: signed.error.message };
   return { ok: true, url: signed.data.signedUrl };
+}
+
+async function confirmBookingPaid(bookingId: string, paymentRef: string) {
+  const supabase = await createClient();
+  const { data: booking } = await supabase
+    .from("bookings")
+    .update({
+      status: "confirmed",
+      payment_status: "paid",
+      payment_intent_id: paymentRef,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", bookingId)
+    .select("listing_id, check_in_date, check_out_date, guest_id")
+    .maybeSingle();
+  if (!booking) return;
+
+  await supabase
+    .from("booking_payments")
+    .update({
+      status: "succeeded",
+      paid_at: new Date().toISOString(),
+    })
+    .eq("booking_id", bookingId)
+    .eq("payment_intent_id", paymentRef);
+
+  const dates: string[] = [];
+  const cursor = new Date(booking.check_in_date + "T00:00:00Z");
+  const end = new Date(booking.check_out_date + "T00:00:00Z");
+  while (cursor < end) {
+    dates.push(cursor.toISOString().slice(0, 10));
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+  if (dates.length > 0) {
+    await supabase.from("availability_calendars").upsert(
+      dates.map((date) => ({
+        listing_id: booking.listing_id,
+        date,
+        available: false,
+      })),
+      { onConflict: "listing_id,date" },
+    );
+  }
+}
+
+async function markBookingPaymentFailed(bookingId: string) {
+  const supabase = await createClient();
+  await supabase
+    .from("booking_payments")
+    .update({ status: "failed" })
+    .eq("booking_id", bookingId);
 }
