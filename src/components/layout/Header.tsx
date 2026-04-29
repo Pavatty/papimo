@@ -22,6 +22,7 @@ export function Header() {
     pathname.startsWith("/achat") ||
     pathname.startsWith("/location");
   const isSejActive = pathname.startsWith("/sejours");
+  const isAgencesActive = pathname.startsWith("/agences");
 
   return (
     <header
@@ -58,6 +59,15 @@ export function Header() {
             )}
           >
             {t("sejours")}
+          </Link>
+          <Link
+            href="/agences"
+            className={cn(
+              "text-sm font-medium transition-colors",
+              isAgencesActive ? "text-ink" : "hover:text-ink text-gray-500",
+            )}
+          >
+            {t("agences")}
           </Link>
         </nav>
 
@@ -126,6 +136,13 @@ export function Header() {
               className="text-ink rounded-md px-3 py-2 text-base hover:bg-gray-50"
             >
               {t("sejours")}
+            </Link>
+            <Link
+              href="/agences"
+              onClick={close}
+              className="text-ink rounded-md px-3 py-2 text-base hover:bg-gray-50"
+            >
+              {t("agences")}
             </Link>
             <hr className="my-2 border-gray-200" />
             <Link

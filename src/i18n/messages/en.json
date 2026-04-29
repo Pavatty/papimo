@@ -338,6 +338,7 @@
     "close": "Close menu",
     "immobilier": "Real Estate",
     "sejours": "Stays",
+    "agences": "Agencies",
     "publier": "Publish",
     "monEspace": "My account"
   },
@@ -363,5 +364,13 @@
     "title": "Stays and short rentals",
     "decouvrir": "Discover",
     "empty": "No stays available right now."
+  },
+  "AgencesPage": {
+    "title": "Partner agencies",
+    "subtitle": "Find your trusted real estate agency",
+    "emptyState": "No agencies yet.",
+    "listingsCount": "active listing(s)",
+    "noListings": "No active listings",
+    "viewProfile": "View profile"
   }
 }

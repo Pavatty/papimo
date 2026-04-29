@@ -338,6 +338,7 @@
     "close": "Fermer le menu",
     "immobilier": "Immobilier",
     "sejours": "Séjours",
+    "agences": "Agences",
     "publier": "Publier",
     "monEspace": "Mon espace"
   },
@@ -363,5 +364,13 @@
     "title": "Séjours et locations courtes",
     "decouvrir": "Découvrir",
     "empty": "Aucun séjour disponible pour le moment."
+  },
+  "AgencesPage": {
+    "title": "Agences partenaires",
+    "subtitle": "Trouvez votre agence immobilière de confiance",
+    "emptyState": "Aucune agence pour le moment.",
+    "listingsCount": "annonce(s) active(s)",
+    "noListings": "Aucune annonce active",
+    "viewProfile": "Voir le profil"
   }
 }

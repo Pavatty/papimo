@@ -2513,6 +2513,14 @@ export type Database = {
       };
       geomfromewkt: { Args: { "": string }; Returns: unknown };
       get_admin_role: { Args: { check_user_id: string }; Returns: string };
+      get_immobilier_publisher_counts: {
+        Args: never;
+        Returns: {
+          all_count: number;
+          pap_count: number;
+          pro_count: number;
+        }[];
+      };
       gettransactionid: { Args: never; Returns: unknown };
       increment_listing_view: {
         Args: { listing_id: string };
