@@ -24,8 +24,9 @@ interface ListingCardProps {
 
 const BADGE_STYLES = {
   pap: "bg-pap text-white",
-  agency: "bg-pro text-white",
-  developer: "bg-amber-600 text-white",
+  // Agences : jaune taxi, texte noir obligatoire (WCAG AA)
+  agency: "bg-agency text-ink",
+  developer: "bg-developer text-white",
   host: "bg-sej text-white",
   sej: "bg-sej text-white",
 } as const;
