@@ -29,6 +29,7 @@ const SECTIONS: readonly SidebarSection[] = [
       { href: "/admin/marque", label: "Marque" },
       { href: "/admin/pricing", label: "Packs tarifaires" },
       { href: "/admin/feature-flags", label: "Feature Flags" },
+      { href: "/admin/settings", label: "Paramètres" },
       { href: "/admin/reglages", label: "Réglages (JSON)" },
     ],
   },

@@ -115,6 +115,8 @@ export type Database = {
       };
       app_settings: {
         Row: {
+          category: string | null;
+          created_at: string;
           description: string | null;
           key: string;
           updated_at: string;
@@ -122,6 +124,8 @@ export type Database = {
           value: Json;
         };
         Insert: {
+          category?: string | null;
+          created_at?: string;
           description?: string | null;
           key: string;
           updated_at?: string;
@@ -129,6 +133,8 @@ export type Database = {
           value?: Json;
         };
         Update: {
+          category?: string | null;
+          created_at?: string;
           description?: string | null;
           key?: string;
           updated_at?: string;
