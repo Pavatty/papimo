@@ -15,7 +15,7 @@ interface ListingCardProps {
   meta?: string; // ex: "250 m² · 5 pièces"
   price: number;
   priceUnit?: string; // "TND" ou "TND / nuit"
-  publisherType?: "pap" | "pro" | null;
+  publisherType?: "pap" | "agency" | "developer" | "host" | null;
   module: "immobilier" | "sejours";
   rating?: number; // 0-5 pour Séjours
   reviewsCount?: number; // pour Séjours
@@ -24,13 +24,17 @@ interface ListingCardProps {
 
 const BADGE_STYLES = {
   pap: "bg-pap text-white",
-  pro: "bg-pro text-white",
+  agency: "bg-pro text-white",
+  developer: "bg-amber-600 text-white",
+  host: "bg-sej text-white",
   sej: "bg-sej text-white",
 } as const;
 
 const BADGE_LABELS = {
   pap: "Particulier",
-  pro: "Agence",
+  agency: "Agence",
+  developer: "Promoteur",
+  host: "Hôte",
   sej: "Séjour",
 } as const;
 
@@ -49,14 +53,18 @@ export function ListingCard({
 }: ListingCardProps) {
   const [favorited, setFavorited] = useState(false);
 
-  const badgeKey =
+  const badgeKey: keyof typeof BADGE_LABELS | null =
     module === "sejours"
       ? "sej"
       : publisherType === "pap"
         ? "pap"
-        : publisherType === "pro"
-          ? "pro"
-          : null;
+        : publisherType === "agency"
+          ? "agency"
+          : publisherType === "developer"
+            ? "developer"
+            : publisherType === "host"
+              ? "host"
+              : null;
 
   const detailHref =
     module === "sejours" ? `/sejours/${slug}` : `/annonce/${slug}`;

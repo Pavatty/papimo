@@ -349,7 +349,8 @@
   "FilterToggle": {
     "toutes": "Toutes",
     "particuliers": "Particuliers",
-    "agences": "Agences"
+    "agences": "Agences",
+    "promoteurs": "Promoteurs"
   },
   "ImmobilierSection": {
     "title": "Annonces immobilier",
@@ -357,8 +358,10 @@
     "empty": "Aucune annonce immobilier disponible pour le moment.",
     "messagePapTitle": "Annonces entre particuliers",
     "messagePapBody": "Vendez, achetez et louez directement entre propriétaires.",
-    "messageProTitle": "Annonces des agences",
-    "messageProBody": "Avec une agence, vous êtes mieux conseillés et accompagnés dans toutes les étapes."
+    "messageAgencyTitle": "Annonces des agences",
+    "messageAgencyBody": "Avec une agence, vous êtes mieux conseillés et accompagnés dans toutes les étapes.",
+    "messageDeveloperTitle": "Programmes neufs des promoteurs",
+    "messageDeveloperBody": "Découvrez les dernières constructions et bénéficiez d'avantages exclusifs."
   },
   "SejoursSection": {
     "title": "Séjours et locations courtes",

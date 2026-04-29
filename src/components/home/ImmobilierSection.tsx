@@ -11,6 +11,8 @@ import {
 } from "@/components/listings/FilterToggle";
 import { createClient } from "@/data/supabase/client";
 
+type PublisherType = "pap" | "agency" | "developer" | "host";
+
 type ImmobilierRow = {
   id: string;
   slug: string | null;
@@ -23,14 +25,19 @@ type ImmobilierRow = {
   main_photo: string | null;
   photos: string[] | null;
   owner_id: string;
-  publisher_type: "pap" | "pro" | null;
+  publisher_type: PublisherType | null;
 };
 
 export function ImmobilierSection() {
   const t = useTranslations("ImmobilierSection");
   const [filter, setFilter] = useState<PublisherFilter>("all");
   const [listings, setListings] = useState<ImmobilierRow[]>([]);
-  const [counts, setCounts] = useState({ all: 0, pap: 0, pro: 0 });
+  const [counts, setCounts] = useState({
+    all: 0,
+    pap: 0,
+    agency: 0,
+    developer: 0,
+  });
   const [loading, setLoading] = useState(true);
 
   // Counts globaux (toute la DB) via RPC
@@ -46,7 +53,8 @@ export function ImmobilierSection() {
         setCounts({
           all: Number(data.all_count ?? 0),
           pap: Number(data.pap_count ?? 0),
-          pro: Number(data.pro_count ?? 0),
+          agency: Number(data.agency_count ?? 0),
+          developer: Number(data.developer_count ?? 0),
         });
       }
     }
@@ -77,7 +85,7 @@ export function ImmobilierSection() {
       const rows = (
         (data ?? []) as unknown as Array<
           Omit<ImmobilierRow, "publisher_type"> & {
-            profiles?: { publisher_type: "pap" | "pro" | null } | null;
+            profiles?: { publisher_type: PublisherType | null } | null;
           }
         >
       ).map((row) => ({
@@ -138,10 +146,17 @@ export function ImmobilierSection() {
         </div>
       ) : null}
 
-      {filter === "pro" ? (
+      {filter === "agency" ? (
         <div className="bg-pro-50 border-pro text-pro-700 mb-5 rounded-md border-l-4 px-5 py-3 text-sm">
-          <strong className="mb-0.5 block">{t("messageProTitle")}</strong>
-          {t("messageProBody")}
+          <strong className="mb-0.5 block">{t("messageAgencyTitle")}</strong>
+          {t("messageAgencyBody")}
+        </div>
+      ) : null}
+
+      {filter === "developer" ? (
+        <div className="mb-5 rounded-md border-l-4 border-amber-600 bg-amber-50 px-5 py-3 text-sm text-amber-900">
+          <strong className="mb-0.5 block">{t("messageDeveloperTitle")}</strong>
+          {t("messageDeveloperBody")}
         </div>
       ) : null}
 

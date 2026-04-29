@@ -348,17 +348,20 @@
   },
   "FilterToggle": {
     "toutes": "All",
-    "particuliers": "Individuals",
-    "agences": "Agencies"
+    "particuliers": "Owners",
+    "agences": "Agencies",
+    "promoteurs": "Developers"
   },
   "ImmobilierSection": {
     "title": "Real estate listings",
     "voirToutes": "View all",
     "empty": "No real estate listings available right now.",
-    "messagePapTitle": "Listings from individuals",
-    "messagePapBody": "Sell, buy and rent directly between owners.",
-    "messageProTitle": "Listings from agencies",
-    "messageProBody": "With an agency, you get expert guidance through every step."
+    "messagePapTitle": "Owner-to-owner listings",
+    "messagePapBody": "Sell, buy and rent directly between property owners.",
+    "messageAgencyTitle": "Agency listings",
+    "messageAgencyBody": "With an agency, you get expert guidance and full support throughout the process.",
+    "messageDeveloperTitle": "New developments",
+    "messageDeveloperBody": "Discover the latest constructions and exclusive benefits from developers."
   },
   "SejoursSection": {
     "title": "Stays and short rentals",
