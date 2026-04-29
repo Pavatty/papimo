@@ -4,6 +4,10 @@ import { notFound } from "next/navigation";
 
 import { PhotoGallery } from "@/components/features/sejours/PhotoGallery";
 import {
+  ReviewsList,
+  type ReviewItem,
+} from "@/components/features/sejours/ReviewsList";
+import {
   SejourBookingPanel,
   type AvailabilityDay,
   type BookingPanelListing,
@@ -58,6 +62,38 @@ export default async function SejourDetailPage({
       ? imagesRaw.map((i) => i.url)
       : (listing.photos ?? []);
 
+  const { data: reviewsRaw } = await supabase
+    .from("reviews")
+    .select(
+      "id, rating, comment, response, response_at, created_at, reviewer_id",
+    )
+    .eq("listing_id", listing.id)
+    .eq("review_type", "guest_to_host")
+    .order("created_at", { ascending: false })
+    .limit(20);
+
+  const reviewerIds = Array.from(
+    new Set((reviewsRaw ?? []).map((r) => r.reviewer_id)),
+  );
+  const reviewerNames: Record<string, string | null> = {};
+  if (reviewerIds.length > 0) {
+    const { data: reviewers } = await supabase
+      .from("profiles")
+      .select("id, full_name")
+      .in("id", reviewerIds);
+    for (const p of reviewers ?? []) reviewerNames[p.id] = p.full_name;
+  }
+
+  const reviews: ReviewItem[] = (reviewsRaw ?? []).map((r) => ({
+    id: r.id,
+    rating: r.rating,
+    comment: r.comment,
+    response: r.response,
+    response_at: r.response_at,
+    created_at: r.created_at,
+    reviewer_name: reviewerNames[r.reviewer_id] ?? null,
+  }));
+
   const panelListing: BookingPanelListing = {
     id: listing.id,
     base_price_per_night: listing.base_price_per_night,
@@ -111,6 +147,13 @@ export default async function SejourDetailPage({
                 </p>
               </section>
             ) : null}
+
+            <section className="border-bordurewarm-tertiary border-t pt-6">
+              <h2 className="text-encre dark:text-creme mb-4 text-xl font-semibold">
+                Avis
+              </h2>
+              <ReviewsList reviews={reviews} />
+            </section>
           </div>
 
           <div>
