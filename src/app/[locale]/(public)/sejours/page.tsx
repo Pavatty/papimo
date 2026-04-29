@@ -21,7 +21,7 @@ export default async function SejoursPage() {
   const { data: rawListings } = await supabase
     .from("listings")
     .select(
-      "id, title, slug, city, base_price_per_night, currency, max_guests, instant_booking",
+      "id, title, slug, city, base_price_per_night, currency, max_guests, instant_booking, main_photo, photos",
     )
     .eq("rental_type", "short_term")
     .eq("status", "active")
@@ -45,8 +45,15 @@ export default async function SejoursPage() {
   }
 
   const listings: SejoursListing[] = (rawListings ?? []).map((l) => ({
-    ...l,
-    cover: coverByListing[l.id] ?? null,
+    id: l.id,
+    title: l.title,
+    slug: l.slug,
+    city: l.city,
+    base_price_per_night: l.base_price_per_night,
+    currency: l.currency,
+    max_guests: l.max_guests,
+    instant_booking: l.instant_booking,
+    cover: coverByListing[l.id] ?? l.main_photo ?? l.photos?.[0] ?? null,
   }));
 
   return (
