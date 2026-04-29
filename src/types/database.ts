@@ -71,6 +71,146 @@ export type Database = {
         };
         Relationships: [];
       };
+      admin_activity_log: {
+        Row: {
+          action: string;
+          admin_id: string;
+          created_at: string;
+          details: Json | null;
+          entity_id: string | null;
+          entity_type: string | null;
+          id: string;
+          ip_address: string | null;
+        };
+        Insert: {
+          action: string;
+          admin_id: string;
+          created_at?: string;
+          details?: Json | null;
+          entity_id?: string | null;
+          entity_type?: string | null;
+          id?: string;
+          ip_address?: string | null;
+        };
+        Update: {
+          action?: string;
+          admin_id?: string;
+          created_at?: string;
+          details?: Json | null;
+          entity_id?: string | null;
+          entity_type?: string | null;
+          id?: string;
+          ip_address?: string | null;
+        };
+        Relationships: [];
+      };
+      admin_permissions: {
+        Row: {
+          created_at: string;
+          granted_by: string | null;
+          id: string;
+          role: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          granted_by?: string | null;
+          id?: string;
+          role: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          granted_by?: string | null;
+          id?: string;
+          role?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      ai_decisions: {
+        Row: {
+          auto_executed: boolean;
+          confidence: number;
+          created_at: string;
+          decision_type: string;
+          entity_id: string;
+          entity_type: string;
+          execution_time_ms: number | null;
+          id: string;
+          input_data: Json;
+          model_version: string;
+          output_data: Json;
+        };
+        Insert: {
+          auto_executed?: boolean;
+          confidence: number;
+          created_at?: string;
+          decision_type: string;
+          entity_id: string;
+          entity_type: string;
+          execution_time_ms?: number | null;
+          id?: string;
+          input_data?: Json;
+          model_version?: string;
+          output_data?: Json;
+        };
+        Update: {
+          auto_executed?: boolean;
+          confidence?: number;
+          created_at?: string;
+          decision_type?: string;
+          entity_id?: string;
+          entity_type?: string;
+          execution_time_ms?: number | null;
+          id?: string;
+          input_data?: Json;
+          model_version?: string;
+          output_data?: Json;
+        };
+        Relationships: [];
+      };
+      ai_training_feedback: {
+        Row: {
+          correct_decision: string | null;
+          created_at: string;
+          decision_id: string;
+          feedback_notes: string | null;
+          id: string;
+          reviewer_id: string;
+          was_correct: boolean;
+        };
+        Insert: {
+          correct_decision?: string | null;
+          created_at?: string;
+          decision_id: string;
+          feedback_notes?: string | null;
+          id?: string;
+          reviewer_id: string;
+          was_correct: boolean;
+        };
+        Update: {
+          correct_decision?: string | null;
+          created_at?: string;
+          decision_id?: string;
+          feedback_notes?: string | null;
+          id?: string;
+          reviewer_id?: string;
+          was_correct?: boolean;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ai_training_feedback_decision_id_fkey";
+            columns: ["decision_id"];
+            isOneToOne: false;
+            referencedRelation: "ai_decisions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       amenities: {
         Row: {
           category: string;
@@ -1183,6 +1323,51 @@ export type Database = {
           },
         ];
       };
+      moderation_queue: {
+        Row: {
+          ai_confidence: number | null;
+          ai_recommendation: string | null;
+          assigned_to: string | null;
+          created_at: string;
+          decided_at: string | null;
+          decided_by: string | null;
+          decision_notes: string | null;
+          entity_id: string;
+          entity_type: string;
+          id: string;
+          reason: string | null;
+          status: string;
+        };
+        Insert: {
+          ai_confidence?: number | null;
+          ai_recommendation?: string | null;
+          assigned_to?: string | null;
+          created_at?: string;
+          decided_at?: string | null;
+          decided_by?: string | null;
+          decision_notes?: string | null;
+          entity_id: string;
+          entity_type: string;
+          id?: string;
+          reason?: string | null;
+          status?: string;
+        };
+        Update: {
+          ai_confidence?: number | null;
+          ai_recommendation?: string | null;
+          assigned_to?: string | null;
+          created_at?: string;
+          decided_at?: string | null;
+          decided_by?: string | null;
+          decision_notes?: string | null;
+          entity_id?: string;
+          entity_type?: string;
+          id?: string;
+          reason?: string | null;
+          status?: string;
+        };
+        Relationships: [];
+      };
       partners: {
         Row: {
           balance: number;
@@ -1875,6 +2060,42 @@ export type Database = {
           },
         ];
       };
+      user_bans: {
+        Row: {
+          ban_type: string;
+          banned_by: string;
+          created_at: string;
+          expires_at: string | null;
+          id: string;
+          lifted_at: string | null;
+          lifted_by: string | null;
+          reason: string;
+          user_id: string;
+        };
+        Insert: {
+          ban_type?: string;
+          banned_by: string;
+          created_at?: string;
+          expires_at?: string | null;
+          id?: string;
+          lifted_at?: string | null;
+          lifted_by?: string | null;
+          reason: string;
+          user_id: string;
+        };
+        Update: {
+          ban_type?: string;
+          banned_by?: string;
+          created_at?: string;
+          expires_at?: string | null;
+          id?: string;
+          lifted_at?: string | null;
+          lifted_by?: string | null;
+          reason?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       user_rate_limits: {
         Row: {
           day: string;
@@ -1893,6 +2114,48 @@ export type Database = {
           last_publish_at?: string | null;
           publish_count?: number;
           user_id?: string;
+        };
+        Relationships: [];
+      };
+      user_reports: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          id: string;
+          reason: string;
+          reported_entity_id: string;
+          reported_entity_type: string;
+          reporter_id: string;
+          resolution_notes: string | null;
+          resolved_at: string | null;
+          resolved_by: string | null;
+          status: string;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          id?: string;
+          reason: string;
+          reported_entity_id: string;
+          reported_entity_type: string;
+          reporter_id: string;
+          resolution_notes?: string | null;
+          resolved_at?: string | null;
+          resolved_by?: string | null;
+          status?: string;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          id?: string;
+          reason?: string;
+          reported_entity_id?: string;
+          reported_entity_type?: string;
+          reporter_id?: string;
+          resolution_notes?: string | null;
+          resolved_at?: string | null;
+          resolved_by?: string | null;
+          status?: string;
         };
         Relationships: [];
       };
@@ -2246,12 +2509,14 @@ export type Database = {
         Returns: boolean;
       };
       geomfromewkt: { Args: { "": string }; Returns: unknown };
+      get_admin_role: { Args: { check_user_id: string }; Returns: string };
       gettransactionid: { Args: never; Returns: unknown };
       increment_listing_view: {
         Args: { listing_id: string };
         Returns: undefined;
       };
-      is_admin: { Args: { _uid: string }; Returns: boolean };
+      is_admin: { Args: { check_user_id: string }; Returns: boolean };
+      is_user_banned: { Args: { check_user_id: string }; Returns: boolean };
       log_audit_event: {
         Args: {
           p_action: string;
