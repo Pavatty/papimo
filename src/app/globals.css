@@ -351,3 +351,130 @@
 .mapboxgl-marker {
   direction: ltr;
 }
+
+/* ═══════════════════════════════════════════════ */
+/* SÉJOURS POLISH DESIGN                           */
+/* ═══════════════════════════════════════════════ */
+
+@keyframes sejours-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sejours-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes sejours-slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-sejours-fadeIn {
+  animation: sejours-fadeIn 0.3s ease-out both;
+}
+
+.animate-sejours-slideUp {
+  animation: sejours-slideUp 0.4s ease-out both;
+}
+
+.sejours-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.06) 0%,
+    rgba(0, 0, 0, 0.12) 50%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  background-size: 1000px 100%;
+  animation: sejours-shimmer 2s infinite linear;
+}
+
+.dark .sejours-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  background-size: 1000px 100%;
+  animation: sejours-shimmer 2s infinite linear;
+}
+
+.sejours-gradient-overlay {
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.65) 100%);
+}
+
+.sejours-gradient-coral {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+}
+
+.sejours-gradient-turquoise {
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+}
+
+.sejours-shadow-sm {
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.12);
+}
+
+.sejours-shadow-lg {
+  box-shadow: 0 12px 40px rgba(6, 182, 212, 0.22);
+}
+
+.dark .sejours-shadow-sm {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dark .sejours-shadow-lg {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* Range input theming pour les filtres */
+.sejours-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--color-sejours-sky);
+  height: 6px;
+  border-radius: 9999px;
+  outline: none;
+}
+.sejours-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--color-sejours-coral);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.4);
+  transition: transform 0.15s ease;
+}
+.sejours-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+.sejours-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--color-sejours-coral);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.4);
+}
