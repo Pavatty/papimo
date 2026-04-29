@@ -33,9 +33,35 @@ export function ImmobilierSection() {
   const [counts, setCounts] = useState({ all: 0, pap: 0, pro: 0 });
   const [loading, setLoading] = useState(true);
 
+  // Counts globaux (toute la DB) via RPC
   useEffect(() => {
     let cancelled = false;
-    async function fetch() {
+    async function fetchCounts() {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .rpc("get_immobilier_publisher_counts")
+        .single();
+      if (cancelled) return;
+      if (data && !error) {
+        setCounts({
+          all: Number(data.all_count ?? 0),
+          pap: Number(data.pap_count ?? 0),
+          pro: Number(data.pro_count ?? 0),
+        });
+      }
+    }
+    void fetchCounts();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Listings (limit 12, filtre côté client sur 12) — quand filter='pap'/'pro',
+  // on charge un peu plus large pour ne pas vider la grille.
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchListings() {
+      setLoading(true);
       const supabase = createClient();
       const { data } = await supabase
         .from("listings")
@@ -45,7 +71,7 @@ export function ImmobilierSection() {
         .eq("module_name", "immobilier")
         .eq("status", "active")
         .order("created_at", { ascending: false })
-        .limit(12);
+        .limit(filter === "all" ? 12 : 30);
 
       if (cancelled) return;
       const rows = (
@@ -69,17 +95,13 @@ export function ImmobilierSection() {
         publisher_type: row.profiles?.publisher_type ?? null,
       }));
       setListings(rows);
-      const all = rows.length;
-      const pap = rows.filter((l) => l.publisher_type === "pap").length;
-      const pro = rows.filter((l) => l.publisher_type === "pro").length;
-      setCounts({ all, pap, pro });
       setLoading(false);
     }
-    void fetch();
+    void fetchListings();
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [filter]);
 
   const filtered = useMemo(() => {
     const list =
