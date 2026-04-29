@@ -372,5 +372,18 @@
     "listingsCount": "active listing(s)",
     "noListings": "No active listings",
     "viewProfile": "View profile"
+  },
+  "Footer": {
+    "description": "The Mediterranean platform to buy, rent and stay.",
+    "discover": "Discover",
+    "immobilier": "Real estate",
+    "sejours": "Stays",
+    "agences": "Agencies",
+    "publish": "Publish",
+    "legal": "Legal",
+    "cgu": "Terms",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "contact": "Contact"
   }
 }
