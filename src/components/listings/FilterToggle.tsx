@@ -4,13 +4,23 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-export type PublisherFilter = "all" | "pap" | "pro";
+export type PublisherFilter = "all" | "pap" | "agency" | "developer";
 
 interface FilterToggleProps {
   activeFilter: PublisherFilter;
   onFilterChange: (filter: PublisherFilter) => void;
-  counts: { all: number; pap: number; pro: number };
+  counts: { all: number; pap: number; agency: number; developer: number };
 }
+
+const FILTERS: ReadonlyArray<{
+  key: PublisherFilter;
+  labelKey: "toutes" | "particuliers" | "agences" | "promoteurs";
+}> = [
+  { key: "all", labelKey: "toutes" },
+  { key: "pap", labelKey: "particuliers" },
+  { key: "agency", labelKey: "agences" },
+  { key: "developer", labelKey: "promoteurs" },
+];
 
 export function FilterToggle({
   activeFilter,
@@ -20,66 +30,34 @@ export function FilterToggle({
   const t = useTranslations("FilterToggle");
 
   const buttonBase =
-    "px-5 py-2.5 text-xs font-medium rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lodge focus-visible:ring-offset-2";
+    "px-4 py-2 text-xs font-medium rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lodge focus-visible:ring-offset-2";
   const activeStyle = "bg-lodge text-white";
   const inactiveStyle = "text-gray-500 hover:text-ink";
 
   return (
-    <div className="inline-flex gap-1 rounded-full border border-gray-200 bg-white p-1">
-      <button
-        type="button"
-        onClick={() => onFilterChange("all")}
-        className={cn(
-          buttonBase,
-          activeFilter === "all" ? activeStyle : inactiveStyle,
-        )}
-        aria-pressed={activeFilter === "all"}
-      >
-        {t("toutes")}{" "}
-        <span
-          className={cn(
-            activeFilter === "all" ? "text-white/70" : "text-gray-400",
-          )}
-        >
-          {counts.all}
-        </span>
-      </button>
-      <button
-        type="button"
-        onClick={() => onFilterChange("pap")}
-        className={cn(
-          buttonBase,
-          activeFilter === "pap" ? activeStyle : inactiveStyle,
-        )}
-        aria-pressed={activeFilter === "pap"}
-      >
-        {t("particuliers")}{" "}
-        <span
-          className={cn(
-            activeFilter === "pap" ? "text-white/70" : "text-gray-400",
-          )}
-        >
-          {counts.pap}
-        </span>
-      </button>
-      <button
-        type="button"
-        onClick={() => onFilterChange("pro")}
-        className={cn(
-          buttonBase,
-          activeFilter === "pro" ? activeStyle : inactiveStyle,
-        )}
-        aria-pressed={activeFilter === "pro"}
-      >
-        {t("agences")}{" "}
-        <span
-          className={cn(
-            activeFilter === "pro" ? "text-white/70" : "text-gray-400",
-          )}
-        >
-          {counts.pro}
-        </span>
-      </button>
+    <div className="inline-flex flex-wrap gap-1 rounded-full border border-gray-200 bg-white p-1">
+      {FILTERS.map(({ key, labelKey }) => {
+        const isActive = activeFilter === key;
+        return (
+          <button
+            key={key}
+            type="button"
+            onClick={() => onFilterChange(key)}
+            className={cn(buttonBase, isActive ? activeStyle : inactiveStyle)}
+            aria-pressed={isActive}
+          >
+            {t(labelKey)}{" "}
+            <span
+              className={cn(
+                "ml-1",
+                isActive ? "text-white/70" : "text-gray-400",
+              )}
+            >
+              {counts[key]}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }

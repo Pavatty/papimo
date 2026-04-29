@@ -46,7 +46,7 @@ export default async function AgencesPage({
     .select(
       "id, full_name, company_name, account_type, publisher_type, listings:listings!owner_id(id, title, city, slug, status, module_name)",
     )
-    .eq("publisher_type", "pro")
+    .eq("publisher_type", "agency")
     .order("full_name", { ascending: true });
 
   const agences = (data ?? []) as unknown as AgenceRow[];

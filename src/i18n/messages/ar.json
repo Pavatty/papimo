@@ -349,7 +349,8 @@
   "FilterToggle": {
     "toutes": "الكل",
     "particuliers": "أفراد",
-    "agences": "وكالات"
+    "agences": "وكالات",
+    "promoteurs": "المطورون"
   },
   "ImmobilierSection": {
     "title": "إعلانات عقارية",
@@ -357,8 +358,10 @@
     "empty": "لا توجد إعلانات عقارية متاحة حاليًا.",
     "messagePapTitle": "إعلانات بين الأفراد",
     "messagePapBody": "بيع وشراء وإيجار مباشرة بين المالكين.",
-    "messageProTitle": "إعلانات الوكالات",
-    "messageProBody": "مع الوكالة، تحصل على مشورة ومرافقة في كل الخطوات."
+    "messageAgencyTitle": "إعلانات الوكالات",
+    "messageAgencyBody": "مع الوكالة، تحصل على مشورة ومرافقة في كل الخطوات.",
+    "messageDeveloperTitle": "البرامج الجديدة من المطورين",
+    "messageDeveloperBody": "اكتشف أحدث المباني واستفد من المزايا الحصرية."
   },
   "SejoursSection": {
     "title": "إقامات وإيجارات قصيرة",

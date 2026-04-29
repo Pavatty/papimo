@@ -1512,6 +1512,63 @@ export type Database = {
         };
         Relationships: [];
       };
+      pricing_plans: {
+        Row: {
+          billing_interval: string | null;
+          code: string;
+          created_at: string | null;
+          currency: string | null;
+          description: string | null;
+          display_order: number | null;
+          features: Json | null;
+          id: string;
+          is_active: boolean | null;
+          is_visible_during_beta: boolean | null;
+          listings_limit: number | null;
+          name: string;
+          price_monthly: number | null;
+          price_yearly: number | null;
+          segment: string;
+          updated_at: string | null;
+        };
+        Insert: {
+          billing_interval?: string | null;
+          code: string;
+          created_at?: string | null;
+          currency?: string | null;
+          description?: string | null;
+          display_order?: number | null;
+          features?: Json | null;
+          id?: string;
+          is_active?: boolean | null;
+          is_visible_during_beta?: boolean | null;
+          listings_limit?: number | null;
+          name: string;
+          price_monthly?: number | null;
+          price_yearly?: number | null;
+          segment: string;
+          updated_at?: string | null;
+        };
+        Update: {
+          billing_interval?: string | null;
+          code?: string;
+          created_at?: string | null;
+          currency?: string | null;
+          description?: string | null;
+          display_order?: number | null;
+          features?: Json | null;
+          id?: string;
+          is_active?: boolean | null;
+          is_visible_during_beta?: boolean | null;
+          listings_limit?: number | null;
+          name?: string;
+          price_monthly?: number | null;
+          price_yearly?: number | null;
+          segment?: string;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
       pricing_rules: {
         Row: {
           created_at: string;
@@ -2516,10 +2573,38 @@ export type Database = {
       get_immobilier_publisher_counts: {
         Args: never;
         Returns: {
+          agency_count: number;
           all_count: number;
+          developer_count: number;
           pap_count: number;
-          pro_count: number;
         }[];
+      };
+      get_pricing_plans_for_segment: {
+        Args: { p_segment: string };
+        Returns: {
+          billing_interval: string | null;
+          code: string;
+          created_at: string | null;
+          currency: string | null;
+          description: string | null;
+          display_order: number | null;
+          features: Json | null;
+          id: string;
+          is_active: boolean | null;
+          is_visible_during_beta: boolean | null;
+          listings_limit: number | null;
+          name: string;
+          price_monthly: number | null;
+          price_yearly: number | null;
+          segment: string;
+          updated_at: string | null;
+        }[];
+        SetofOptions: {
+          from: "*";
+          to: "pricing_plans";
+          isOneToOne: false;
+          isSetofReturn: true;
+        };
       };
       gettransactionid: { Args: never; Returns: unknown };
       increment_listing_view: {
