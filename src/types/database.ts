@@ -3019,7 +3019,13 @@ export type Database = {
       report_status: "open" | "reviewing" | "resolved" | "rejected";
       subscription_status: "active" | "cancelled" | "expired" | "pending";
       transaction_status: "pending" | "completed" | "failed" | "refunded";
-      transaction_type: "subscription" | "boost" | "service" | "lead" | "ad";
+      transaction_type:
+        | "subscription"
+        | "boost"
+        | "service"
+        | "lead"
+        | "ad"
+        | "booking";
       user_role: "user" | "admin" | "moderator";
     };
     CompositeTypes: {
@@ -3208,7 +3214,14 @@ export const Constants = {
       report_status: ["open", "reviewing", "resolved", "rejected"],
       subscription_status: ["active", "cancelled", "expired", "pending"],
       transaction_status: ["pending", "completed", "failed", "refunded"],
-      transaction_type: ["subscription", "boost", "service", "lead", "ad"],
+      transaction_type: [
+        "subscription",
+        "boost",
+        "service",
+        "lead",
+        "ad",
+        "booking",
+      ],
       user_role: ["user", "admin", "moderator"],
     },
   },

@@ -7,7 +7,7 @@ import type { DateRange } from "react-day-picker";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
-import { createBooking } from "@/app/actions/bookings";
+import { createBooking, initiateBookingPayment } from "@/app/actions/bookings";
 import { Calendar } from "@/components/ui/calendar";
 
 export type BookingPanelListing = {
@@ -165,16 +165,23 @@ export function SejourBookingPanel({
           if (!checkIn || !checkOut) return;
           setError(null);
           startTransition(async () => {
-            const result = await createBooking({
+            const created = await createBooking({
               listingId: listing.id,
               checkInDate: format(checkIn, "yyyy-MM-dd"),
               checkOutDate: format(checkOut, "yyyy-MM-dd"),
               numGuests: guests,
             });
-            if (result.ok) {
+            if (!created.ok) {
+              setError(created.error);
+              return;
+            }
+            const payment = await initiateBookingPayment(created.bookingId);
+            if (payment.ok && payment.paymentUrl) {
+              window.location.href = payment.paymentUrl;
+            } else if (payment.ok) {
               router.push(`/${locale}/dashboard/reservations`);
             } else {
-              setError(result.error);
+              setError(payment.error);
             }
           });
         }}
