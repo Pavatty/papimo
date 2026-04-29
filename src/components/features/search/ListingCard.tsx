@@ -29,7 +29,7 @@ export function ListingCard({
   const badgeClass =
     listing.transaction_type === "sale"
       ? "bg-vert text-white"
-      : listing.transaction_type === "seasonal_rent"
+      : listing.transaction_type === "colocation"
         ? "bg-terracotta text-white"
         : "bg-vert-clair text-white";
   const cover = listing.main_photo || listing.photos?.[0] || null;

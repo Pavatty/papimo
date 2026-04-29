@@ -1,4 +1,6 @@
-export type TransactionType = "sale" | "rent" | "seasonal_rent" | "colocation";
+// Le module Immobilier ne propose que ces 3 types. Les locations courte durée
+// passent par le module Séjours (rental_type='short_term', module_name='sejours').
+export type TransactionType = "sale" | "rent" | "colocation";
 export type ListingCategory =
   | "apartment"
   | "villa"

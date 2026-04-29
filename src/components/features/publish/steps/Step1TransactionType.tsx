@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, KeyRound, Tag, Users } from "lucide-react";
+import { KeyRound, Tag, Users } from "lucide-react";
 
 import type { TransactionType } from "../types";
 
@@ -16,7 +16,6 @@ const OPTIONS: ReadonlyArray<{
 }> = [
   { id: "sale", title: "Vente", icon: Tag },
   { id: "rent", title: "Location", icon: KeyRound },
-  { id: "seasonal_rent", title: "Location saisonnière", icon: CalendarDays },
   { id: "colocation", title: "Colocation", icon: Users },
 ];
 

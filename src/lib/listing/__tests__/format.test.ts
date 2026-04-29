@@ -33,12 +33,6 @@ describe("formatPrice", () => {
     expect(result).toContain("/ mois");
   });
 
-  it("appends ' / mois' for seasonal_rent", () => {
-    const result = formatPrice(800, "EUR", "seasonal_rent");
-    expect(result).toContain("/ mois");
-    expect(result).toContain("EUR");
-  });
-
   it("does not append rent suffix for colocation", () => {
     const result = formatPrice(500, "TND", "colocation");
     expect(result).not.toContain("/ mois");
@@ -70,10 +64,6 @@ describe("getTransactionBadge", () => {
 
   it("returns French label for rent", () => {
     expect(getTransactionBadge("rent")).toBe("À louer");
-  });
-
-  it("returns label for seasonal_rent", () => {
-    expect(getTransactionBadge("seasonal_rent")).toBe("Location saisonnière");
   });
 
   it("returns label for colocation", () => {

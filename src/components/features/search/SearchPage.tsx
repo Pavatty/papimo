@@ -151,7 +151,9 @@ export function SearchPage({
           "id,slug,title,price,price_currency,surface_area,rooms_total,bedrooms,city,neighborhood,main_photo,photos,latitude,longitude,property_type,transaction_type,amenities,published_at",
           { count: "exact" },
         ) as unknown as AnyQuery
-    ).eq("status", "active");
+    )
+      .eq("status", "active")
+      .eq("module_name", "immobilier");
 
     if (currentFilters.transaction_type) {
       query = query.eq("transaction_type", currentFilters.transaction_type);
