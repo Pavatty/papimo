@@ -35,7 +35,7 @@ export default async function SejoursPage({
     .select(
       "id, title, slug, city, governorate, base_price_per_night, currency, max_guests, instant_booking, main_photo, photos",
     )
-    .eq("rental_type", "short_term")
+    .eq("module_name", "sejours")
     .eq("status", "active")
     .not("base_price_per_night", "is", null);
 
@@ -60,7 +60,7 @@ export default async function SejoursPage({
   const { data: cityRows } = await supabase
     .from("listings")
     .select("city")
-    .eq("rental_type", "short_term")
+    .eq("module_name", "sejours")
     .eq("status", "active")
     .order("city");
   const cities = Array.from(

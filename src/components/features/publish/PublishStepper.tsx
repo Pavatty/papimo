@@ -202,9 +202,7 @@ export function PublishStepper({
               neighborhood: state.form.neighborhood,
               country_code: state.form.country_code,
               type:
-                state.form.type === "rent" ||
-                state.form.type === "seasonal_rent" ||
-                state.form.type === "colocation"
+                state.form.type === "rent" || state.form.type === "colocation"
                   ? "rent"
                   : "sale",
               surface_m2: state.form.surface_m2,

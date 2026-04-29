@@ -1,7 +1,8 @@
+// LODGE Immobilier : 3 types uniquement. Les locations courte durée
+// passent par le module Séjours (rental_type='short_term').
 export const LISTING_TRANSACTION_TYPES = [
   "sale",
   "rent",
-  "seasonal_rent",
   "colocation",
 ] as const;
 export type ListingTransactionType = (typeof LISTING_TRANSACTION_TYPES)[number];

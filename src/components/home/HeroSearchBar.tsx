@@ -5,10 +5,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 
+// Immobilier uniquement. Les locations courte durée passent par le module Séjours
+// (page dédiée /sejours, pas via cette barre de recherche Immobilier).
 const TABS = [
   { id: "buy", trans: "sale" },
   { id: "rent", trans: "rent" },
-  { id: "seasonal", trans: "seasonal_rent" },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];

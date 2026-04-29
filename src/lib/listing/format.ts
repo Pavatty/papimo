@@ -21,8 +21,9 @@ export function formatPrice(
   } = options;
   if (price == null) return fallback;
   const formatted = new Intl.NumberFormat(locale).format(price);
-  const isRent =
-    transactionType === "rent" || transactionType === "seasonal_rent";
+  // Le suffixe " / mois" s'applique aux locations longue durée (Immobilier).
+  // Le module Séjours utilise base_price_per_night avec son propre formatter.
+  const isRent = transactionType === "rent";
   const suffix = isRent ? rentSuffix : "";
   return `${formatted} ${currency ?? "TND"}${suffix}`;
 }
@@ -30,7 +31,6 @@ export function formatPrice(
 export const TRANSACTION_BADGES: Record<string, string> = {
   sale: "À vendre",
   rent: "À louer",
-  seasonal_rent: "Location saisonnière",
   colocation: "Colocation",
 };
 

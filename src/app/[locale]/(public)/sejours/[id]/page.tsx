@@ -33,7 +33,7 @@ export default async function SejourDetailPage({
     .from("listings")
     .select("*")
     .or(`id.eq.${id},slug.eq.${id}`)
-    .eq("rental_type", "short_term")
+    .eq("module_name", "sejours")
     .maybeSingle();
 
   if (!listing) notFound();

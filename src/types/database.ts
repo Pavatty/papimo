@@ -913,6 +913,7 @@ export type Database = {
           max_guests: number | null;
           max_nights: number | null;
           min_nights: number | null;
+          module_name: string;
           neighborhood: string | null;
           orientation: string | null;
           owner_id: string;
@@ -979,6 +980,7 @@ export type Database = {
           max_guests?: number | null;
           max_nights?: number | null;
           min_nights?: number | null;
+          module_name?: string;
           neighborhood?: string | null;
           orientation?: string | null;
           owner_id: string;
@@ -1045,6 +1047,7 @@ export type Database = {
           max_guests?: number | null;
           max_nights?: number | null;
           min_nights?: number | null;
+          module_name?: string;
           neighborhood?: string | null;
           orientation?: string | null;
           owner_id?: string;

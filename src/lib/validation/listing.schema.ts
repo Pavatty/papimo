@@ -20,7 +20,7 @@ const phoneRegex = /^[+\d\s()-]{7,20}$/;
 
 export const listingSchema = z.object({
   // Step 1 — Type de transaction
-  transaction_type: z.enum(["sale", "rent", "seasonal_rent", "colocation"]),
+  transaction_type: z.enum(["sale", "rent", "colocation"]),
   // Step 2 — Catégorie
   property_type: z.string().min(1),
   // Step 3 — Localisation
