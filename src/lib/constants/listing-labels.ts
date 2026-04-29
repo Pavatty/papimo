@@ -15,6 +15,11 @@ type LabelMap<K extends string> = Record<K, Record<Locale, string>>;
 export const TRANSACTION_TYPE_LABELS: LabelMap<ListingTransactionType> = {
   sale: { fr: "Vente", en: "Sale", ar: "بيع" },
   rent: { fr: "Location", en: "Rent", ar: "إيجار" },
+  furnished_rent: {
+    fr: "Location meublée",
+    en: "Furnished Rental",
+    ar: "إيجار مفروش",
+  },
   colocation: { fr: "Colocation", en: "Shared housing", ar: "سكن مشترك" },
 };
 

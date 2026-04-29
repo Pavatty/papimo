@@ -8,6 +8,7 @@ import { useLocale, useTranslations } from "next-intl";
 
 import { FavoriteButton } from "@/components/features/listing/FavoriteButton";
 import { trackEvent } from "@/lib/analytics/plausible";
+import { getTransactionBadge } from "@/lib/listing/format";
 
 import type { SearchResult } from "./SearchPage";
 
@@ -29,9 +30,11 @@ export function ListingCard({
   const badgeClass =
     listing.transaction_type === "sale"
       ? "bg-vert text-white"
-      : listing.transaction_type === "colocation"
-        ? "bg-terracotta text-white"
-        : "bg-vert-clair text-white";
+      : listing.transaction_type === "furnished_rent"
+        ? "bg-douceur text-encre"
+        : listing.transaction_type === "colocation"
+          ? "bg-terracotta text-white"
+          : "bg-vert-clair text-white";
   const cover = listing.main_photo || listing.photos?.[0] || null;
   const href = `/${locale}/annonce/${listing.slug ?? listing.id}`;
   const publishedAt = listing.published_at;
@@ -80,7 +83,8 @@ export function ListingCard({
             <span
               className={`rounded-control absolute top-2 left-2 px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${badgeClass}`}
             >
-              {listing.transaction_type}
+              {getTransactionBadge(listing.transaction_type) ??
+                listing.transaction_type}
             </span>
           ) : null}
           {isNew ? (
