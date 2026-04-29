@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Sparkles } from "lucide-react";
 
+import { SejoursFilters } from "@/components/features/sejours/SejoursFilters";
 import {
   SejoursSearchResults,
   type SejoursListing,
@@ -9,7 +10,19 @@ import { isFlagEnabled } from "@/data/repositories/feature-flags";
 import { createAnonClient } from "@/data/supabase/server";
 import { notFound } from "next/navigation";
 
-export default async function SejoursPage() {
+type SearchParams = {
+  city?: string;
+  guests?: string;
+  priceMin?: string;
+  priceMax?: string;
+};
+
+export default async function SejoursPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const sp = await searchParams;
   const sejoursOn = await isFlagEnabled("sejours_enabled");
   if (!sejoursOn) {
     notFound();
@@ -18,16 +31,42 @@ export default async function SejoursPage() {
   const t = await getTranslations("sejours");
   const supabase = createAnonClient();
 
-  const { data: rawListings } = await supabase
+  let listingsQuery = supabase
     .from("listings")
     .select(
       "id, title, slug, city, base_price_per_night, currency, max_guests, instant_booking, main_photo, photos",
     )
     .eq("rental_type", "short_term")
     .eq("status", "active")
-    .not("base_price_per_night", "is", null)
+    .not("base_price_per_night", "is", null);
+
+  if (sp.city) listingsQuery = listingsQuery.eq("city", sp.city);
+  const guestsNum = sp.guests ? parseInt(sp.guests, 10) : NaN;
+  if (Number.isFinite(guestsNum) && guestsNum > 0) {
+    listingsQuery = listingsQuery.gte("max_guests", guestsNum);
+  }
+  const priceMinNum = sp.priceMin ? parseFloat(sp.priceMin) : NaN;
+  if (Number.isFinite(priceMinNum) && priceMinNum > 0) {
+    listingsQuery = listingsQuery.gte("base_price_per_night", priceMinNum);
+  }
+  const priceMaxNum = sp.priceMax ? parseFloat(sp.priceMax) : NaN;
+  if (Number.isFinite(priceMaxNum) && priceMaxNum > 0) {
+    listingsQuery = listingsQuery.lte("base_price_per_night", priceMaxNum);
+  }
+
+  const { data: rawListings } = await listingsQuery
     .order("created_at", { ascending: false })
     .limit(60);
+
+  const { data: cityRows } = await supabase
+    .from("listings")
+    .select("city")
+    .eq("rental_type", "short_term")
+    .eq("status", "active")
+    .order("city");
+  const cities = Array.from(
+    new Set((cityRows ?? []).map((r) => r.city).filter(Boolean)),
+  );
 
   const ids = (rawListings ?? []).map((l) => l.id);
   const coverByListing: Record<string, string> = {};
@@ -74,6 +113,7 @@ export default async function SejoursPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10 md:px-6">
+        <SejoursFilters cities={cities} />
         <SejoursSearchResults listings={listings} />
       </section>
     </main>
