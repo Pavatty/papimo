@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { Users } from "lucide-react";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
+import { PhotoGallery } from "@/components/features/sejours/PhotoGallery";
 import {
   SejourBookingPanel,
   type AvailabilityDay,
@@ -53,8 +53,10 @@ export default async function SejourDetailPage({
     available: d.available,
   }));
 
-  const images = imagesRaw ?? [];
-  const cover = images[0]?.url ?? null;
+  const photoUrls: string[] =
+    imagesRaw && imagesRaw.length > 0
+      ? imagesRaw.map((i) => i.url)
+      : (listing.photos ?? []);
 
   const panelListing: BookingPanelListing = {
     id: listing.id,
@@ -86,37 +88,7 @@ export default async function SejourDetailPage({
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="space-y-8 lg:col-span-2">
-            <div className="bg-sejours-sky rounded-card relative aspect-video overflow-hidden">
-              {cover ? (
-                <Image
-                  src={cover}
-                  alt={listing.title ?? ""}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  className="object-cover"
-                  priority
-                />
-              ) : null}
-            </div>
-
-            {images.length > 1 ? (
-              <div className="grid grid-cols-3 gap-3">
-                {images.slice(1, 7).map((img, i) => (
-                  <div
-                    key={i}
-                    className="bg-sejours-sky relative aspect-square overflow-hidden rounded-md"
-                  >
-                    <Image
-                      src={img.url}
-                      alt={img.alt_text ?? ""}
-                      fill
-                      sizes="33vw"
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : null}
+            <PhotoGallery photos={photoUrls} alt={listing.title ?? ""} />
 
             {listing.description ? (
               <section>
