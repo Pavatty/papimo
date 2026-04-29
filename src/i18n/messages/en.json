@@ -329,5 +329,39 @@
       "changeEmail": "Change my email",
       "deleteAccount": "Delete my account"
     }
+  },
+  "Header": {
+    "brandAria": "LODGE home",
+    "navAria": "Main navigation",
+    "languagesAria": "Languages",
+    "menu": "Open menu",
+    "close": "Close menu",
+    "immobilier": "Real Estate",
+    "sejours": "Stays",
+    "publier": "Publish",
+    "monEspace": "My account"
+  },
+  "MiniHero": {
+    "rechercher": "Find a property",
+    "publier": "Post a listing"
+  },
+  "FilterToggle": {
+    "toutes": "All",
+    "particuliers": "Individuals",
+    "agences": "Agencies"
+  },
+  "ImmobilierSection": {
+    "title": "Real estate listings",
+    "voirToutes": "View all",
+    "empty": "No real estate listings available right now.",
+    "messagePapTitle": "Listings from individuals",
+    "messagePapBody": "Sell, buy and rent directly between owners.",
+    "messageProTitle": "Listings from agencies",
+    "messageProBody": "With an agency, you get expert guidance through every step."
+  },
+  "SejoursSection": {
+    "title": "Stays and short rentals",
+    "decouvrir": "Discover",
+    "empty": "No stays available right now."
   }
 }

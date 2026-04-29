@@ -1,115 +1,84 @@
 "use client";
 
-import {
-  AnimatePresence,
-  motion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { type Locale, useLocale, useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
-import { BrandWordmark } from "@/components/layout/BrandWordmark";
-import { useAuth } from "@/components/providers/AuthProvider";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Link, usePathname } from "@/i18n/navigation";
-import { IS_BETA } from "@/lib/beta";
 import { cn } from "@/lib/utils";
 
-const LOCALES: Locale[] = ["fr", "ar", "en"];
-
-const PRICING_HIDDEN = IS_BETA;
-
 export function Header() {
-  const t = useTranslations();
-  const locale = useLocale() as Locale;
+  const t = useTranslations("Header");
+  const locale = useLocale();
   const pathname = usePathname();
-  const { user } = useAuth();
   const [open, setOpen] = useState(false);
-
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
-  const { scrollY } = useScroll();
-  const headerBg = useTransform(
-    scrollY,
-    [0, 80],
-    isDark
-      ? ["rgba(26, 26, 26, 0.5)", "rgba(31, 31, 31, 0.9)"]
-      : ["rgba(251, 246, 236, 0.5)", "rgba(255, 255, 255, 0.9)"],
-  );
-  const headerBorder = useTransform(scrollY, [0, 80], [0, 1]);
-
   const close = () => setOpen(false);
 
-  const navLinks: Array<{ href: string; label: string; badge?: string }> = [
-    {
-      href: "/sejours",
-      label: t("navigation.stays"),
-      badge: t("sejours.newBadge"),
-    },
-    { href: "/outils", label: t("navigation.tools") },
-    ...(!PRICING_HIDDEN
-      ? [{ href: "/pricing", label: t("navigation.pricing") }]
-      : []),
-  ];
-
-  const isActive = (href: string) => pathname.startsWith(href);
+  const isImmoActive =
+    pathname === "/" ||
+    pathname === "" ||
+    pathname.startsWith("/search") ||
+    pathname.startsWith("/immobilier") ||
+    pathname.startsWith("/achat") ||
+    pathname.startsWith("/location");
+  const isSejActive = pathname.startsWith("/sejours");
 
   return (
-    <motion.header
+    <header
       role="banner"
-      style={{
-        backgroundColor: headerBg,
-        borderBottomWidth: headerBorder,
-      }}
-      className="border-bordurewarm-tertiary dark:border-encre/20 sticky top-0 z-50 h-20 border-b shadow-sm backdrop-blur dark:shadow-none"
+      className="sticky top-0 z-50 border-b border-gray-200 bg-white"
     >
-      <div className="max-w-container mx-auto flex h-full items-center justify-between px-4 md:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
         <Link
           href="/"
-          aria-label={t("common.brandName")}
-          className="focus-visible:ring-bleu/40 focus-visible:ring-offset-creme inline-flex items-center rounded transition-transform hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-offset-2"
+          aria-label={t("brandAria")}
+          className="text-lodge focus-visible:ring-lodge text-2xl font-semibold tracking-tight focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
         >
-          <BrandWordmark size="header" />
+          LODGE
         </Link>
 
         <nav
-          className="hidden items-center gap-6 text-sm font-medium md:flex"
-          aria-label={t("a11y.mainMenu")}
+          className="hidden items-center gap-8 md:flex"
+          aria-label={t("navAria")}
         >
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={isActive(link.href) ? "page" : undefined}
-              className={cn(
-                "relative inline-flex items-center gap-1.5 rounded-sm transition",
-                "after:bg-bleu after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:transition-all hover:after:w-full",
-                "focus-visible:ring-bleu focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
-                isActive(link.href)
-                  ? "text-bleu after:w-full"
-                  : "text-encre dark:text-creme hover:text-bleu dark:hover:text-bleu",
-              )}
-            >
-              {link.label}
-              {link.badge ? (
-                <span className="bg-sejours-turquoise-light text-sejours-turquoise rounded-full px-1.5 py-0.5 text-[10px] font-bold tracking-wide">
-                  {link.badge}
-                </span>
-              ) : null}
-            </Link>
-          ))}
+          <Link
+            href="/search"
+            className={cn(
+              "text-sm font-medium transition-colors",
+              isImmoActive ? "text-ink" : "hover:text-ink text-gray-500",
+            )}
+          >
+            {t("immobilier")}
+          </Link>
+          <Link
+            href="/sejours"
+            className={cn(
+              "text-sm font-medium transition-colors",
+              isSejActive ? "text-ink" : "hover:text-ink text-gray-500",
+            )}
+          >
+            {t("sejours")}
+          </Link>
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <ThemeToggle />
-          <nav
-            aria-label={t("a11y.languageMenu")}
-            className="border-bordurewarm-tertiary dark:border-encre/20 flex items-center gap-1 border-r pr-3"
+          <Link
+            href="/publish"
+            className="bg-lodge hover:bg-lodge-700 focus-visible:ring-lodge rounded-full px-5 py-2 text-sm font-medium text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
-            {LOCALES.map((l) => (
+            {t("publier")}
+          </Link>
+          <Link
+            href="/dashboard"
+            className="text-ink hidden rounded-full border border-gray-200 px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-50 sm:inline-flex"
+          >
+            {t("monEspace")}
+          </Link>
+          <nav
+            aria-label={t("languagesAria")}
+            className="ml-2 flex items-center gap-1 border-l border-gray-200 pl-3"
+          >
+            {(["fr", "ar", "en"] as const).map((l) => (
               <Link
                 key={l}
                 href={pathname}
@@ -117,148 +86,83 @@ export function Header() {
                 hrefLang={l}
                 aria-current={l === locale ? "true" : undefined}
                 className={cn(
-                  "rounded-control px-1.5 py-0.5 text-xs transition",
-                  "focus-visible:ring-bleu focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none",
-                  l === locale
-                    ? "text-bleu font-semibold"
-                    : "text-encre/80 hover:text-bleu font-medium",
+                  "rounded px-1.5 py-0.5 text-xs font-medium transition",
+                  l === locale ? "text-lodge" : "hover:text-ink text-gray-400",
                 )}
               >
                 {l.toUpperCase()}
               </Link>
             ))}
           </nav>
-          {user ? (
-            <Link
-              href="/dashboard"
-              className="text-bleu hover:text-bleu-hover focus-visible:ring-bleu rounded-sm text-sm font-semibold focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-            >
-              {t("navigation.profile")}
-            </Link>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className="text-bleu hover:text-bleu-hover focus-visible:ring-bleu rounded-sm text-sm font-semibold focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-              >
-                {t("navigation.login")}
-              </Link>
-              <Link
-                href="/signup"
-                className="bg-corail hover:bg-corail-hover rounded-control focus-visible:ring-corail px-4 py-2 text-sm font-medium text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-              >
-                {t("navigation.signup")}
-              </Link>
-            </>
-          )}
         </div>
 
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          aria-controls="header-mobile-menu"
-          aria-label={open ? "Close menu" : t("a11y.mainMenu")}
-          className="text-encre dark:text-creme rounded-control focus-visible:ring-bleu inline-flex h-10 w-10 items-center justify-center focus-visible:ring-2 focus-visible:outline-none md:hidden"
+          aria-label={open ? t("close") : t("menu")}
+          className="text-ink focus-visible:ring-lodge inline-flex h-10 w-10 items-center justify-center rounded focus-visible:ring-2 focus-visible:outline-none md:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      <AnimatePresence>
-        {open ? (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+      {open ? (
+        <div
+          id="mobile-menu"
+          className="absolute right-0 left-0 z-40 border-b border-gray-200 bg-white px-4 pb-4 shadow-md md:hidden"
+        >
+          <nav aria-label={t("navAria")} className="flex flex-col gap-1 pt-2">
+            <Link
+              href="/search"
               onClick={close}
-              className="fixed inset-0 top-20 z-40 bg-black/30 md:hidden"
-              aria-hidden="true"
-            />
-            <motion.div
-              id="header-mobile-menu"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
-              className="bg-blanc-casse border-bordurewarm-tertiary dark:bg-encre dark:border-encre/20 fixed inset-y-20 right-0 z-50 w-72 max-w-[85%] overflow-y-auto border-l shadow-2xl md:hidden"
+              className="text-ink rounded-md px-3 py-2 text-base hover:bg-gray-50"
             >
-              <nav
-                className="flex flex-col gap-1 p-5"
-                aria-label={t("a11y.mainMenu")}
-              >
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={close}
-                    aria-current={isActive(link.href) ? "page" : undefined}
-                    className={cn(
-                      "rounded-control px-3 py-2 text-base transition",
-                      isActive(link.href)
-                        ? "text-bleu bg-bleu-pale font-medium"
-                        : "text-encre dark:text-creme hover:bg-creme-foncee dark:hover:bg-encre/40",
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                <hr className="border-bordurewarm-tertiary dark:border-encre/20 my-2" />
-                <div className="flex items-center gap-1 px-3 py-1">
-                  {LOCALES.map((l) => (
-                    <Link
-                      key={l}
-                      href={pathname}
-                      locale={l}
-                      hrefLang={l}
-                      onClick={close}
-                      aria-current={l === locale ? "true" : undefined}
-                      className={cn(
-                        "rounded-control px-2 py-1 text-xs transition",
-                        "focus-visible:ring-bleu focus-visible:ring-2 focus-visible:outline-none",
-                        l === locale
-                          ? "text-bleu font-semibold"
-                          : "text-encre/80 hover:text-bleu font-medium",
-                      )}
-                    >
-                      {l.toUpperCase()}
-                    </Link>
-                  ))}
-                </div>
-                <hr className="border-bordurewarm-tertiary dark:border-encre/20 my-2" />
-                {user ? (
-                  <Link
-                    href="/dashboard"
-                    onClick={close}
-                    className="text-bleu rounded-control px-3 py-2 text-base font-medium"
-                  >
-                    {t("navigation.profile")}
-                  </Link>
-                ) : (
-                  <>
-                    <Link
-                      href="/login"
-                      onClick={close}
-                      className="text-bleu rounded-control px-3 py-2 text-base font-medium"
-                    >
-                      {t("navigation.login")}
-                    </Link>
-                    <Link
-                      href="/signup"
-                      onClick={close}
-                      className="bg-corail hover:bg-corail-hover rounded-control mt-1 px-3 py-2 text-center text-base font-medium text-white"
-                    >
-                      {t("navigation.signup")}
-                    </Link>
-                  </>
-                )}
-              </nav>
-            </motion.div>
-          </>
-        ) : null}
-      </AnimatePresence>
-    </motion.header>
+              {t("immobilier")}
+            </Link>
+            <Link
+              href="/sejours"
+              onClick={close}
+              className="text-ink rounded-md px-3 py-2 text-base hover:bg-gray-50"
+            >
+              {t("sejours")}
+            </Link>
+            <hr className="my-2 border-gray-200" />
+            <Link
+              href="/publish"
+              onClick={close}
+              className="bg-lodge hover:bg-lodge-700 rounded-full px-4 py-2 text-center text-sm font-medium text-white"
+            >
+              {t("publier")}
+            </Link>
+            <Link
+              href="/dashboard"
+              onClick={close}
+              className="text-ink rounded-full border border-gray-200 px-4 py-2 text-center text-sm font-medium hover:bg-gray-50"
+            >
+              {t("monEspace")}
+            </Link>
+            <div className="mt-2 flex items-center justify-center gap-2 border-t border-gray-200 pt-3">
+              {(["fr", "ar", "en"] as const).map((l) => (
+                <Link
+                  key={l}
+                  href={pathname}
+                  locale={l}
+                  hrefLang={l}
+                  onClick={close}
+                  aria-current={l === locale ? "true" : undefined}
+                  className={cn(
+                    "rounded px-2 py-1 text-xs",
+                    l === locale ? "text-lodge font-semibold" : "text-gray-500",
+                  )}
+                >
+                  {l.toUpperCase()}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        </div>
+      ) : null}
+    </header>
   );
 }

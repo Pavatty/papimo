@@ -329,5 +329,39 @@
       "changeEmail": "تغيير بريدي الإلكتروني",
       "deleteAccount": "حذف حسابي"
     }
+  },
+  "Header": {
+    "brandAria": "الصفحة الرئيسية LODGE",
+    "navAria": "القائمة الرئيسية",
+    "languagesAria": "اللغات",
+    "menu": "فتح القائمة",
+    "close": "إغلاق القائمة",
+    "immobilier": "عقارات",
+    "sejours": "إقامات",
+    "publier": "نشر",
+    "monEspace": "حسابي"
+  },
+  "MiniHero": {
+    "rechercher": "ابحث عن عقار",
+    "publier": "نشر إعلان"
+  },
+  "FilterToggle": {
+    "toutes": "الكل",
+    "particuliers": "أفراد",
+    "agences": "وكالات"
+  },
+  "ImmobilierSection": {
+    "title": "إعلانات عقارية",
+    "voirToutes": "عرض الكل",
+    "empty": "لا توجد إعلانات عقارية متاحة حاليًا.",
+    "messagePapTitle": "إعلانات بين الأفراد",
+    "messagePapBody": "بيع وشراء وإيجار مباشرة بين المالكين.",
+    "messageProTitle": "إعلانات الوكالات",
+    "messageProBody": "مع الوكالة، تحصل على مشورة ومرافقة في كل الخطوات."
+  },
+  "SejoursSection": {
+    "title": "إقامات وإيجارات قصيرة",
+    "decouvrir": "اكتشف",
+    "empty": "لا توجد إقامات متاحة حاليًا."
   }
 }

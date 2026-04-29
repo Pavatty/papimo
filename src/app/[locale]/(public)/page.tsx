@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 
-import { HomePageSections } from "@/components/home/HomePageSections";
-import { QuickFilters } from "@/components/home/QuickFilters";
-import { StickyPublishCTA } from "@/components/home/StickyPublishCTA";
-import { TrustSignals } from "@/components/home/TrustSignals";
-import { HeroSection } from "@/components/shared/HeroSection";
-import { getFeatureFlags } from "@/data/repositories/feature-flags";
+import { ImmobilierSection } from "@/components/home/ImmobilierSection";
+import { MiniHero } from "@/components/home/MiniHero";
+import { SejoursSection } from "@/components/home/SejoursSection";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -17,25 +14,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     pathnameWithoutLocale: "",
     title: "LODGE | L'immobilier entre particuliers",
     description:
-      "Plateforme immobilière entre particuliers: achat, location, publication d'annonces et messagerie sécurisée.",
+      "Plateforme immobilière entre particuliers : achat, location, location meublée, séjours courte durée et publication d'annonces.",
   });
 }
 
 export const revalidate = 900;
 
 export default async function HomePage() {
-  const flags = await getFeatureFlags();
-  const showTrust = flags.show_trust_signals !== false;
-  const showQuickFilters = flags.show_quick_filters !== false;
-  const showStickyCta = flags.show_sticky_publish_cta !== false;
-
   return (
     <>
-      <HeroSection />
-      <HomePageSections />
-      {showTrust ? <TrustSignals /> : null}
-      {showQuickFilters ? <QuickFilters /> : null}
-      {showStickyCta ? <StickyPublishCTA /> : null}
+      <MiniHero />
+      <main className="bg-cream min-h-screen">
+        <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
+          <ImmobilierSection />
+          <hr className="my-14 border-gray-200" />
+          <SejoursSection />
+        </div>
+      </main>
     </>
   );
 }

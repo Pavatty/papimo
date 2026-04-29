@@ -329,5 +329,39 @@
       "changeEmail": "Changer mon email",
       "deleteAccount": "Supprimer mon compte"
     }
+  },
+  "Header": {
+    "brandAria": "Accueil LODGE",
+    "navAria": "Navigation principale",
+    "languagesAria": "Langues",
+    "menu": "Ouvrir le menu",
+    "close": "Fermer le menu",
+    "immobilier": "Immobilier",
+    "sejours": "Séjours",
+    "publier": "Publier",
+    "monEspace": "Mon espace"
+  },
+  "MiniHero": {
+    "rechercher": "Rechercher un bien",
+    "publier": "Publier une annonce"
+  },
+  "FilterToggle": {
+    "toutes": "Toutes",
+    "particuliers": "Particuliers",
+    "agences": "Agences"
+  },
+  "ImmobilierSection": {
+    "title": "Annonces immobilier",
+    "voirToutes": "Voir toutes",
+    "empty": "Aucune annonce immobilier disponible pour le moment.",
+    "messagePapTitle": "Annonces entre particuliers",
+    "messagePapBody": "Vendez, achetez et louez directement entre propriétaires.",
+    "messageProTitle": "Annonces des agences",
+    "messageProBody": "Avec une agence, vous êtes mieux conseillés et accompagnés dans toutes les étapes."
+  },
+  "SejoursSection": {
+    "title": "Séjours et locations courtes",
+    "decouvrir": "Découvrir",
+    "empty": "Aucun séjour disponible pour le moment."
   }
 }
