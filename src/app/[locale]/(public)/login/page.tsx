@@ -1,47 +1,75 @@
+import Image from "next/image";
+
 import { GoogleSignInButton } from "@/components/features/auth/GoogleSignInButton";
 import { MagicLinkForm } from "@/components/features/auth/MagicLinkForm";
-import { WhatsAppFlow } from "@/components/features/auth/WhatsAppFlow";
-import { Logo } from "@/components/shared/Logo";
 import { Link } from "@/i18n/navigation";
 
 export default function LoginPage() {
   return (
-    <main className="bg-creme-pale min-h-screen">
-      <div className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 lg:grid-cols-2">
-        <section className="flex items-center justify-center px-6 py-12 lg:px-12">
-          <div className="w-full max-w-[480px] space-y-6">
-            <Logo size="lg" />
-            <h1 className="font-display text-ink text-4xl leading-tight font-bold">
-              Connexion à <span className="text-bleu">pap</span>
-              <span className="text-corail">imo</span>
-            </h1>
+    <main className="grid min-h-screen grid-cols-1 lg:grid-cols-2">
+      <section className="flex items-center justify-center px-6 py-12 lg:px-16">
+        <div className="w-full max-w-sm">
+          <Link href="/" className="mb-10 inline-block">
+            <span className="text-lodge text-2xl font-semibold tracking-tight">
+              LODGE
+            </span>
+          </Link>
 
-            <MagicLinkForm />
+          <h1 className="text-ink mb-2 text-2xl font-medium">
+            Bienvenue sur LODGE
+          </h1>
+          <p className="mb-8 text-sm text-gray-500">
+            Connectez-vous pour accéder à votre espace.
+          </p>
+
+          <div className="space-y-4">
+            <GoogleSignInButton />
 
             <div className="flex items-center gap-3">
-              <div className="bg-line h-px flex-1" />
-              <span className="text-ink-soft text-xs">ou</span>
-              <div className="bg-line h-px flex-1" />
+              <hr className="flex-1 border-gray-200" />
+              <span className="text-xs tracking-wider text-gray-500 uppercase">
+                ou
+              </span>
+              <hr className="flex-1 border-gray-200" />
             </div>
 
-            <GoogleSignInButton />
-            <WhatsAppFlow />
-
-            <p className="text-ink-soft text-sm">
-              Pas encore de compte ?{" "}
-              <Link href="/signup" className="text-bleu font-medium">
-                Créer mon compte
-              </Link>
-            </p>
+            <MagicLinkForm />
           </div>
-        </section>
 
-        <aside className="from-bleu to-corail hidden items-center justify-center bg-gradient-to-br p-12 lg:flex">
-          <div className="rounded-3xl border border-white/30 bg-white/10 p-14 text-center backdrop-blur">
-            <p className="font-display text-6xl font-bold text-white">LODGE</p>
-          </div>
-        </aside>
-      </div>
+          <p className="mt-6 text-center text-xs leading-relaxed text-gray-500">
+            En continuant, vous acceptez nos{" "}
+            <Link href="/legal/cgv" className="text-ink underline">
+              Conditions Générales
+            </Link>{" "}
+            et notre{" "}
+            <Link href="/legal/confidentialite" className="text-ink underline">
+              Politique de Confidentialité
+            </Link>
+            .
+          </p>
+
+          <p className="mt-8 text-center text-sm text-gray-500">
+            Pas encore de compte ?{" "}
+            <Link
+              href="/signup"
+              className="text-lodge font-medium hover:underline"
+            >
+              Créer un compte
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      <section className="relative hidden lg:block">
+        <Image
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80"
+          alt="Salon lumineux Méditerranée"
+          fill
+          className="object-cover"
+          sizes="50vw"
+          priority
+        />
+      </section>
     </main>
   );
 }

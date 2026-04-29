@@ -14,6 +14,13 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
 
+  // Pages d'authentification : pas de Header (layout 50/50 dédié)
+  const isAuthPage =
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/signup") ||
+    pathname.startsWith("/auth");
+  if (isAuthPage) return null;
+
   const isImmoActive =
     pathname === "/" ||
     pathname === "" ||
