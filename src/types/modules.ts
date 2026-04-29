@@ -1,13 +1,9 @@
-// LODGE — Types par module (Immobilier vs Séjours, etc.)
+// LODGE — Types par module (Immobilier vs Séjours).
 // Source de vérité pour les distinctions UI/business côté TS.
 // Le mapping aux colonnes DB se fait dans @/data/repositories/* via module_name.
+// LODGE = Immobilier + Séjours uniquement (modules futurs retirés en chore/remove-future-modules).
 
-export type ModuleId =
-  | "immobilier"
-  | "sejours"
-  | "rentacar"
-  | "experiences"
-  | "services";
+export type ModuleId = "immobilier" | "sejours";
 
 // ═══════════════════════════════════════════
 // IMMOBILIER
@@ -54,45 +50,6 @@ export type SejoursAccommodationType =
   | "chalet"
   | "boat"
   | "camper"
-  | "other";
-
-// ═══════════════════════════════════════════
-// RENTACAR (futur)
-// ═══════════════════════════════════════════
-export type RentacarVehicleType =
-  | "car"
-  | "suv"
-  | "van"
-  | "motorcycle"
-  | "scooter"
-  | "bike"
-  | "truck"
-  | "other";
-
-// ═══════════════════════════════════════════
-// EXPERIENCES (futur)
-// ═══════════════════════════════════════════
-export type ExperiencesCategory =
-  | "cultural"
-  | "adventure"
-  | "food_drink"
-  | "sports"
-  | "wellness"
-  | "workshop"
-  | "tours"
-  | "other";
-
-// ═══════════════════════════════════════════
-// SERVICES (futur)
-// ═══════════════════════════════════════════
-export type ServicesCategory =
-  | "cleaning"
-  | "moving"
-  | "handyman"
-  | "plumbing"
-  | "electrical"
-  | "painting"
-  | "gardening"
   | "other";
 
 // ═══════════════════════════════════════════
@@ -150,9 +107,6 @@ export type Listing = ImmobilierListing | SejoursListing;
 export const MODULE_IDS: ReadonlyArray<ModuleId> = [
   "immobilier",
   "sejours",
-  "rentacar",
-  "experiences",
-  "services",
 ] as const;
 
 export function isModuleId(value: unknown): value is ModuleId {
