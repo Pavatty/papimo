@@ -28,7 +28,7 @@ import type { TablesInsert } from "@/types/database";
 const publishDraftSchema = z.object({
   id: z.string().uuid().optional(),
   owner_id: z.string().uuid().optional(),
-  type: z.enum(["sale", "rent", "colocation"]).optional(),
+  type: z.enum(["sale", "rent", "furnished_rent", "colocation"]).optional(),
   category: z
     .enum([
       "apartment",
@@ -87,7 +87,7 @@ export async function saveDraft(input: SaveDraftInput) {
   const legacyType: "sale" | "rent" =
     d.type === "sale" || d.type === "rent"
       ? d.type
-      : d.type === "colocation"
+      : d.type === "colocation" || d.type === "furnished_rent"
         ? "rent"
         : "sale";
   const cleanTitle = d.title?.trim() ? sanitizeTitle(d.title) : "Brouillon";

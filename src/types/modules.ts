@@ -12,7 +12,13 @@ export type ModuleId =
 // ═══════════════════════════════════════════
 // IMMOBILIER
 // ═══════════════════════════════════════════
-export type ImmobilierTransactionType = "sale" | "rent" | "colocation";
+// Immobilier (longue durée). Les Séjours (courte durée, prix/nuit) sont un module séparé.
+// `furnished_rent` = location meublée 1-12 mois (étudiants, diaspora, travailleurs temporaires).
+export type ImmobilierTransactionType =
+  | "sale"
+  | "rent"
+  | "furnished_rent"
+  | "colocation";
 
 export type ImmobilierPropertyType =
   | "apartment"

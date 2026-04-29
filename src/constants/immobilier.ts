@@ -7,13 +7,25 @@ type LocaleLabel = { fr: string; en: string; ar: string };
 
 export const IMMOBILIER_TRANSACTION_TYPES: Record<
   ImmobilierTransactionType,
-  { label: LocaleLabel }
+  { label: LocaleLabel; description?: LocaleLabel }
 > = {
   sale: {
     label: { fr: "À vendre", en: "For Sale", ar: "للبيع" },
   },
   rent: {
     label: { fr: "À louer", en: "For Rent", ar: "للإيجار" },
+  },
+  furnished_rent: {
+    label: {
+      fr: "Location meublée",
+      en: "Furnished Rental",
+      ar: "إيجار مفروش",
+    },
+    description: {
+      fr: "Location meublée de 1 à 12 mois",
+      en: "Furnished rental from 1 to 12 months",
+      ar: "إيجار مفروش من 1 إلى 12 شهرًا",
+    },
   },
   colocation: {
     label: { fr: "Colocation", en: "Shared", ar: "مشاركة" },

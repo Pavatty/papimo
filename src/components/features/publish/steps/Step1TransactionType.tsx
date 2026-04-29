@@ -1,6 +1,6 @@
 "use client";
 
-import { KeyRound, Tag, Users } from "lucide-react";
+import { KeyRound, Sofa, Tag, Users } from "lucide-react";
 
 import type { TransactionType } from "../types";
 
@@ -12,10 +12,17 @@ type Props = {
 const OPTIONS: ReadonlyArray<{
   id: TransactionType;
   title: string;
+  description?: string;
   icon: typeof Tag;
 }> = [
   { id: "sale", title: "Vente", icon: Tag },
   { id: "rent", title: "Location", icon: KeyRound },
+  {
+    id: "furnished_rent",
+    title: "Location meublée",
+    description: "1 à 12 mois (étudiants, diaspora, séjour temporaire)",
+    icon: Sofa,
+  },
   { id: "colocation", title: "Colocation", icon: Users },
 ];
 
@@ -36,6 +43,11 @@ export function Step1TransactionType({ value, onChange }: Props) {
           >
             <Icon className="text-bleu mb-4 h-8 w-8" />
             <h3 className="text-ink text-xl font-semibold">{option.title}</h3>
+            {option.description ? (
+              <p className="text-ink-soft mt-1.5 text-xs leading-relaxed">
+                {option.description}
+              </p>
+            ) : null}
           </button>
         );
       })}

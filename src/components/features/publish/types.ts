@@ -1,6 +1,7 @@
-// Le module Immobilier ne propose que ces 3 types. Les locations courte durée
-// passent par le module Séjours (rental_type='short_term', module_name='sejours').
-export type TransactionType = "sale" | "rent" | "colocation";
+// Module Immobilier : 4 types. Les locations courte durée (vacances) passent par
+// le module Séjours (rental_type='short_term', module_name='sejours').
+// `furnished_rent` = location meublée longue durée 1-12 mois (étudiants, diaspora).
+export type TransactionType = "sale" | "rent" | "furnished_rent" | "colocation";
 export type ListingCategory =
   | "apartment"
   | "villa"

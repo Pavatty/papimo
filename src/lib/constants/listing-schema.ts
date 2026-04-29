@@ -1,8 +1,9 @@
-// LODGE Immobilier : 3 types uniquement. Les locations courte durée
-// passent par le module Séjours (rental_type='short_term').
+// LODGE Immobilier : 4 types. Les locations courte durée (vacances) passent par
+// le module Séjours (rental_type='short_term'). 'furnished_rent' = meublé 1-12 mois.
 export const LISTING_TRANSACTION_TYPES = [
   "sale",
   "rent",
+  "furnished_rent",
   "colocation",
 ] as const;
 export type ListingTransactionType = (typeof LISTING_TRANSACTION_TYPES)[number];
