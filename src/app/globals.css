@@ -72,6 +72,37 @@
   --color-sejours-sun-text: var(--sejours-sun-text);
   --color-sejours-sky: var(--sejours-sky);
 
+  /* === PIERRES PRÉCIEUSES (home refactor) === */
+  --color-lodge: var(--lodge-primary);
+  --color-lodge-50: var(--lodge-50);
+  --color-lodge-100: var(--lodge-100);
+  --color-lodge-500: var(--lodge-500);
+  --color-lodge-600: var(--lodge-600);
+  --color-lodge-700: var(--lodge-700);
+  --color-lodge-900: var(--lodge-900);
+  --color-pap: var(--pap-primary);
+  --color-pap-50: var(--pap-50);
+  --color-pap-100: var(--pap-100);
+  --color-pap-500: var(--pap-500);
+  --color-pap-600: var(--pap-600);
+  --color-pap-700: var(--pap-700);
+  --color-pro: var(--pro-primary);
+  --color-pro-50: var(--pro-50);
+  --color-pro-100: var(--pro-100);
+  --color-pro-500: var(--pro-500);
+  --color-pro-600: var(--pro-600);
+  --color-pro-700: var(--pro-700);
+  --color-sej: var(--sej-primary);
+  --color-sej-50: var(--sej-50);
+  --color-sej-100: var(--sej-100);
+  --color-sej-500: var(--sej-500);
+  --color-sej-700: var(--sej-700);
+  --color-sej-coral: var(--sej-coral);
+  --color-sej-coral-hover: var(--sej-coral-hover);
+  --color-sej-mimosa: var(--sej-mimosa);
+  --color-cream: #fbf6ec;
+  --color-ink: #1a1a1a;
+
   /* Polices */
   --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-sans:
@@ -193,6 +224,40 @@
   --sejours-sun: #facc15;
   --sejours-sun-text: #854f0b;
   --sejours-sky: #e0f2fe;
+
+  /* === PIERRES PRÉCIEUSES — palette home refactor === */
+  /* Améthyste — LODGE primaire */
+  --lodge-50: #f5edfe;
+  --lodge-100: #e5d2fb;
+  --lodge-500: #9f67f0;
+  --lodge-600: #7c3aed;
+  --lodge-700: #6929d8;
+  --lodge-900: #4c1d95;
+  --lodge-primary: #7c3aed;
+  /* Saphir — Particuliers */
+  --pap-50: #e8eff9;
+  --pap-100: #c5d5ee;
+  --pap-500: #2d6fcc;
+  --pap-600: #0f52ba;
+  --pap-700: #0a3d8c;
+  --pap-primary: #0f52ba;
+  /* Émeraude — Agences */
+  --pro-50: #e0f2ec;
+  --pro-100: #a8dbc8;
+  --pro-500: #00a685;
+  --pro-600: #00876c;
+  --pro-700: #006b56;
+  --pro-primary: #00876c;
+  /* Rose Airbnb — Séjours */
+  --sej-50: #ffe4e8;
+  --sej-100: #ffb3bf;
+  --sej-500: #ff385c;
+  --sej-700: #c92f4d;
+  --sej-primary: #ff385c;
+  --sej-coral: #f97316;
+  --sej-coral-hover: #ea580c;
+  --sej-mimosa: #ffd93d;
+
   --font-jetbrains-mono: ui-monospace, SFMono-Regular, menlo, monospace;
 
   --background: #fafaf7;

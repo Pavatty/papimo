@@ -5,6 +5,44 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Pierres Précieuses (home refactor)
+        lodge: {
+          50: "var(--lodge-50)",
+          100: "var(--lodge-100)",
+          500: "var(--lodge-500)",
+          600: "var(--lodge-600)",
+          700: "var(--lodge-700)",
+          900: "var(--lodge-900)",
+          DEFAULT: "var(--lodge-primary)",
+        },
+        pap: {
+          50: "var(--pap-50)",
+          100: "var(--pap-100)",
+          500: "var(--pap-500)",
+          600: "var(--pap-600)",
+          700: "var(--pap-700)",
+          DEFAULT: "var(--pap-primary)",
+        },
+        pro: {
+          50: "var(--pro-50)",
+          100: "var(--pro-100)",
+          500: "var(--pro-500)",
+          600: "var(--pro-600)",
+          700: "var(--pro-700)",
+          DEFAULT: "var(--pro-primary)",
+        },
+        sej: {
+          50: "var(--sej-50)",
+          100: "var(--sej-100)",
+          500: "var(--sej-500)",
+          700: "var(--sej-700)",
+          coral: "var(--sej-coral)",
+          coralHover: "var(--sej-coral-hover)",
+          mimosa: "var(--sej-mimosa)",
+          DEFAULT: "var(--sej-primary)",
+        },
+        cream: "#FBF6EC",
+        ink: "#1A1A1A",
         bleu: {
           DEFAULT: "rgb(var(--bleu) / <alpha-value>)",
           hover: "#174A7E",
@@ -29,7 +67,7 @@ const config: Config = {
         "creme-pale": "rgb(var(--creme-pale) / <alpha-value>)",
         paper: "rgb(var(--paper) / <alpha-value>)",
         "blanc-casse": "#FFFFFF",
-        ink: "rgb(var(--ink) / <alpha-value>)",
+        "ink-rgb": "rgb(var(--ink) / <alpha-value>)",
         "ink-soft": "rgb(var(--ink-soft) / <alpha-value>)",
         encre: "#1A1A1A",
         muted: "#6B6B6B",

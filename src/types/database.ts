@@ -1578,6 +1578,7 @@ export type Database = {
           preferred_language: Database["public"]["Enums"]["locale_code"];
           pro_address: string | null;
           pro_rib: string | null;
+          publisher_type: string;
           role: Database["public"]["Enums"]["user_role"];
           sector: string | null;
           tax_id: string | null;
@@ -1607,6 +1608,7 @@ export type Database = {
           preferred_language?: Database["public"]["Enums"]["locale_code"];
           pro_address?: string | null;
           pro_rib?: string | null;
+          publisher_type?: string;
           role?: Database["public"]["Enums"]["user_role"];
           sector?: string | null;
           tax_id?: string | null;
@@ -1636,6 +1638,7 @@ export type Database = {
           preferred_language?: Database["public"]["Enums"]["locale_code"];
           pro_address?: string | null;
           pro_rib?: string | null;
+          publisher_type?: string;
           role?: Database["public"]["Enums"]["user_role"];
           sector?: string | null;
           tax_id?: string | null;
