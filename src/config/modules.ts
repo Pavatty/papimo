@@ -1,6 +1,7 @@
-// Registry central des modules LODGE. Toggler enabled=true|false pour
-// activer/désactiver une partie de la plateforme (nav + routes + filtres
-// reposent sur cette source de vérité).
+// Registry central des modules LODGE.
+// LODGE = Immobilier + Séjours (2 modules uniquement).
+// Les modules futurs (rentacar / experiences / services) ont été retirés —
+// ils seront réintégrés si la traction des 2 verticales actuelles le justifie.
 
 export interface ModuleConfig {
   id: string;
@@ -8,7 +9,7 @@ export interface ModuleConfig {
   slug: string;
   icon: string; // nom d'icône lucide-react
   enabled: boolean;
-  color: string; // tailwind color name
+  color: string; // tailwind color
   description: { fr: string; en: string; ar: string };
   order: number;
 }
@@ -22,9 +23,9 @@ export const MODULES: Record<string, ModuleConfig> = {
     enabled: true,
     color: "blue",
     description: {
-      fr: "Vente, location et colocation entre particuliers",
-      en: "Sale, rental and shared housing between individuals",
-      ar: "بيع وإيجار ومشاركة السكن بين الأفراد",
+      fr: "Vente, location et colocation immobilière",
+      en: "Real estate sale, rental and shared housing",
+      ar: "بيع وإيجار ومشاركة السكن",
     },
     order: 1,
   },
@@ -34,7 +35,7 @@ export const MODULES: Record<string, ModuleConfig> = {
     slug: "sejours",
     icon: "Palmtree",
     enabled: true,
-    color: "cyan",
+    color: "red",
     description: {
       fr: "Locations saisonnières et vacances",
       en: "Holiday rentals and vacation stays",
@@ -42,53 +43,9 @@ export const MODULES: Record<string, ModuleConfig> = {
     },
     order: 2,
   },
-  rentacar: {
-    id: "rentacar",
-    name: {
-      fr: "Location voitures",
-      en: "Car Rental",
-      ar: "تأجير سيارات",
-    },
-    slug: "rentacar",
-    icon: "Car",
-    enabled: false,
-    color: "orange",
-    description: {
-      fr: "Location de voitures entre particuliers",
-      en: "Car rental between individuals",
-      ar: "تأجير سيارات بين الأفراد",
-    },
-    order: 3,
-  },
-  experiences: {
-    id: "experiences",
-    name: { fr: "Expériences", en: "Experiences", ar: "تجارب" },
-    slug: "experiences",
-    icon: "Compass",
-    enabled: false,
-    color: "purple",
-    description: {
-      fr: "Activités et expériences locales",
-      en: "Local activities and experiences",
-      ar: "أنشطة وتجارب محلية",
-    },
-    order: 4,
-  },
-  services: {
-    id: "services",
-    name: { fr: "Services", en: "Services", ar: "خدمات" },
-    slug: "services",
-    icon: "Wrench",
-    enabled: false,
-    color: "green",
-    description: {
-      fr: "Services à domicile et prestataires locaux",
-      en: "Home services and local providers",
-      ar: "خدمات منزلية ومقدمي خدمات محليين",
-    },
-    order: 5,
-  },
 };
+
+export type ModuleId = keyof typeof MODULES;
 
 export function getEnabledModules(): ModuleConfig[] {
   return Object.values(MODULES)
@@ -96,10 +53,22 @@ export function getEnabledModules(): ModuleConfig[] {
     .sort((a, b) => a.order - b.order);
 }
 
+export function getAllModules(): ModuleConfig[] {
+  return Object.values(MODULES).sort((a, b) => a.order - b.order);
+}
+
 export function getModuleBySlug(slug: string): ModuleConfig | undefined {
   return Object.values(MODULES).find((m) => m.slug === slug);
 }
 
-export function isModuleEnabled(id: string): boolean {
-  return MODULES[id]?.enabled ?? false;
+export function getModuleById(id: string): ModuleConfig | undefined {
+  return MODULES[id as ModuleId];
 }
+
+export function isModuleEnabled(id: string): boolean {
+  return MODULES[id as ModuleId]?.enabled ?? false;
+}
+
+export const ENABLED_MODULE_IDS: ModuleId[] = (
+  Object.keys(MODULES) as ModuleId[]
+).filter((id) => MODULES[id]?.enabled === true);
