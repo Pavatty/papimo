@@ -5,16 +5,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Pierres Précieuses (home refactor)
+        // LODGE — Framboise
         lodge: {
           50: "var(--lodge-50)",
           100: "var(--lodge-100)",
+          300: "var(--lodge-300)",
           500: "var(--lodge-500)",
           600: "var(--lodge-600)",
           700: "var(--lodge-700)",
+          800: "var(--lodge-800)",
           900: "var(--lodge-900)",
           DEFAULT: "var(--lodge-primary)",
         },
+        // Particuliers — Turquoise
         pap: {
           50: "var(--pap-50)",
           100: "var(--pap-100)",
@@ -23,6 +26,18 @@ const config: Config = {
           700: "var(--pap-700)",
           DEFAULT: "var(--pap-primary)",
         },
+        // Agences — Jaune taxi (texte noir)
+        agency: {
+          50: "var(--agency-50)",
+          100: "var(--agency-100)",
+          400: "var(--agency-400)",
+          500: "var(--agency-500)",
+          600: "var(--agency-600)",
+          700: "var(--agency-700)",
+          800: "var(--agency-800)",
+          DEFAULT: "var(--agency-primary)",
+        },
+        // pro DEPRECATED — alias agency pour rétrocompat
         pro: {
           50: "var(--pro-50)",
           100: "var(--pro-100)",
@@ -30,6 +45,16 @@ const config: Config = {
           600: "var(--pro-600)",
           700: "var(--pro-700)",
           DEFAULT: "var(--pro-primary)",
+        },
+        // Promoteurs — Vert
+        developer: {
+          50: "var(--developer-50)",
+          100: "var(--developer-100)",
+          500: "var(--developer-500)",
+          600: "var(--developer-600)",
+          700: "var(--developer-700)",
+          800: "var(--developer-800)",
+          DEFAULT: "var(--developer-primary)",
         },
         sej: {
           50: "var(--sej-50)",
@@ -45,7 +70,7 @@ const config: Config = {
         ink: "#1A1A1A",
         bleu: {
           DEFAULT: "rgb(var(--bleu) / <alpha-value>)",
-          hover: "#6929D8",
+          hover: "#BE123C",
           soft: "rgb(var(--bleu-soft) / <alpha-value>)",
           pale: "rgb(var(--bleu-pale) / <alpha-value>)",
         },

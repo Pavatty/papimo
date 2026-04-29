@@ -15,7 +15,7 @@
 @theme inline {
   /* === LODGE tokens === */
   --color-vert: rgb(var(--vert));
-  --color-vert-hover: #6929d8;
+  --color-vert-hover: #be123c;
   --color-vert-soft: rgb(var(--vert-soft));
   --color-vert-pale: rgb(var(--vert-pale));
   --color-vert-clair: rgb(var(--vert-clair));
@@ -25,11 +25,11 @@
 
   /* === aliases compat papimo → lodge === */
   --color-bleu: rgb(var(--bleu));
-  --color-bleu-hover: #6929d8;
+  --color-bleu-hover: #be123c;
   --color-bleu-soft: rgb(var(--bleu-soft));
   --color-bleu-pale: rgb(var(--bleu-pale));
   --color-corail: rgb(var(--corail));
-  --color-corail-hover: #6929d8;
+  --color-corail-hover: #be123c;
   --color-corail-soft: rgb(var(--corail-soft));
   --color-corail-pale: rgb(var(--corail-pale));
 
@@ -92,6 +92,22 @@
   --color-pro-500: var(--pro-500);
   --color-pro-600: var(--pro-600);
   --color-pro-700: var(--pro-700);
+  --color-agency: var(--agency-primary);
+  --color-agency-50: var(--agency-50);
+  --color-agency-100: var(--agency-100);
+  --color-agency-400: var(--agency-400);
+  --color-agency-500: var(--agency-500);
+  --color-agency-600: var(--agency-600);
+  --color-agency-700: var(--agency-700);
+  --color-agency-800: var(--agency-800);
+  --color-agency-text-on: var(--agency-text-on);
+  --color-developer: var(--developer-primary);
+  --color-developer-50: var(--developer-50);
+  --color-developer-100: var(--developer-100);
+  --color-developer-500: var(--developer-500);
+  --color-developer-600: var(--developer-600);
+  --color-developer-700: var(--developer-700);
+  --color-developer-800: var(--developer-800);
   --color-sej: var(--sej-primary);
   --color-sej-50: var(--sej-50);
   --color-sej-100: var(--sej-100);
@@ -165,14 +181,14 @@
 
 /* LODGE values. RGB triplets pour Tailwind v4 alpha syntax (slash). */
 :root {
-  /* LEGACY tokens redirigés vers la palette LODGE Améthyste #7C3AED.
+  /* LEGACY tokens redirigés vers la palette LODGE Framboise #E11D48.
      Tous les composants existants utilisant text-vert / bg-bleu / border-corail
-     rendent désormais en améthyste, supprimant le vert sapin résiduel. */
-  --vert: 124 58 237; /* Améthyste #7C3AED — ex-vert sapin remplacé */
-  --vert-soft: 245 237 254; /* #F5EDFE — lodge-50 */
-  --vert-pale: 245 237 254; /* lodge-50 */
-  --vert-clair: 159 103 240; /* lodge-500 #9F67F0 */
-  --vert-fonce: 76 29 149; /* lodge-900 #4C1D95 */
+     rendent désormais en framboise (palette LODGE primaire). */
+  --vert: 225 29 72; /* Framboise #E11D48 */
+  --vert-soft: 255 228 230; /* #FFE4E6 — lodge-50 */
+  --vert-pale: 255 228 230;
+  --vert-clair: 244 63 94; /* lodge-500 #F43F5E */
+  --vert-fonce: 136 19 55; /* lodge-900 #881337 */
   /* Terracotta conservé tel quel (utilisé sur badges colocation Listing) */
   --terracotta: 224 123 63;
   --terracotta-soft: 250 237 227; /* #FAEDE3 */
@@ -225,30 +241,50 @@
   --sejours-sun-text: #854f0b;
   --sejours-sky: #e0f2fe;
 
-  /* === PIERRES PRÉCIEUSES — palette home refactor === */
-  /* Améthyste — LODGE primaire */
-  --lodge-50: #f5edfe;
-  --lodge-100: #e5d2fb;
-  --lodge-500: #9f67f0;
-  --lodge-600: #7c3aed;
-  --lodge-700: #6929d8;
-  --lodge-900: #4c1d95;
-  --lodge-primary: #7c3aed;
-  /* Saphir — Particuliers */
-  --pap-50: #e8eff9;
-  --pap-100: #c5d5ee;
-  --pap-500: #2d6fcc;
-  --pap-600: #0f52ba;
-  --pap-700: #0a3d8c;
-  --pap-primary: #0f52ba;
-  /* Émeraude — Agences */
-  --pro-50: #e0f2ec;
-  --pro-100: #a8dbc8;
-  --pro-500: #00a685;
-  --pro-600: #00876c;
-  --pro-700: #006b56;
-  --pro-primary: #00876c;
-  /* Rose Airbnb — Séjours */
+  /* === PALETTE LODGE FRAMBOISE (4 segments + Séjours) === */
+  /* LODGE primaire — Rose-rouge framboise */
+  --lodge-50: #ffe4e6;
+  --lodge-100: #fecdd3;
+  --lodge-300: #fda4af;
+  --lodge-500: #f43f5e;
+  --lodge-600: #e11d48; /* PRINCIPAL */
+  --lodge-700: #be123c; /* hover */
+  --lodge-800: #9f1239;
+  --lodge-900: #881337;
+  --lodge-primary: #e11d48;
+  /* Particuliers — Bleu turquoise */
+  --pap-50: #ecfeff;
+  --pap-100: #cffafe;
+  --pap-500: #06b6d4; /* PRINCIPAL */
+  --pap-600: #0891b2;
+  --pap-700: #0e7490;
+  --pap-primary: #06b6d4;
+  /* Agences — Jaune taxi (texte noir #222 sur fond jaune obligatoire) */
+  --agency-50: #fefce8;
+  --agency-100: #fef9c3;
+  --agency-400: #facc15; /* PRINCIPAL */
+  --agency-500: #eab308;
+  --agency-600: #ca8a04;
+  --agency-700: #a16207;
+  --agency-800: #854d0e;
+  --agency-primary: #facc15;
+  --agency-text-on: #1a1a1a;
+  /* Promoteurs — Vert */
+  --developer-50: #f0fdf4;
+  --developer-100: #dcfce7;
+  --developer-500: #22c55e;
+  --developer-600: #16a34a; /* PRINCIPAL */
+  --developer-700: #15803d;
+  --developer-800: #166534;
+  --developer-primary: #16a34a;
+  /* Tokens 'pro' DEPRECATED — alias agency pour rétrocompat */
+  --pro-50: var(--agency-50);
+  --pro-100: var(--agency-100);
+  --pro-500: var(--agency-400);
+  --pro-600: var(--agency-500);
+  --pro-700: var(--agency-700);
+  --pro-primary: var(--agency-primary);
+  /* Rose Airbnb — Séjours / Hôtes (CONSERVÉ) */
   --sej-50: #ffe4e8;
   --sej-100: #ffb3bf;
   --sej-500: #ff385c;
@@ -266,19 +302,19 @@
   --card-foreground: #1a1a1a;
   --popover: #ffffff;
   --popover-foreground: #1a1a1a;
-  --primary: #7c3aed;
+  --primary: #e11d48;
   --primary-foreground: #ffffff;
   --secondary: #ffffff;
-  --secondary-foreground: #7c3aed;
+  --secondary-foreground: #e11d48;
   --muted: #f0eee8;
   --muted-foreground: #6b6b6b;
-  --accent: #f5edfe;
+  --accent: #ffe4e6;
   --accent-foreground: #1a1a1a;
   --destructive: #dc2626;
   --border: rgba(0, 0, 0, 0.08);
   --input: rgba(0, 0, 0, 0.08);
-  --ring: #7c3aed;
-  --chart-1: #7c3aed;
+  --ring: #e11d48;
+  --chart-1: #e11d48;
   --chart-2: #9f67f0;
   --chart-3: #e07b3f;
   --chart-4: #6b6b6b;
@@ -286,21 +322,21 @@
   --radius: 0.625rem;
   --sidebar: #fafaf7;
   --sidebar-foreground: #1a1a1a;
-  --sidebar-primary: #7c3aed;
+  --sidebar-primary: #e11d48;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f5edfe;
+  --sidebar-accent: #ffe4e6;
   --sidebar-accent-foreground: #1a1a1a;
   --sidebar-border: rgba(0, 0, 0, 0.08);
-  --sidebar-ring: #7c3aed;
+  --sidebar-ring: #e11d48;
 }
 
 .dark {
-  /* Améthyste dark — variants éclaircis pour contraste */
-  --vert: 159 103 240; /* lodge-500 */
-  --vert-soft: 76 29 149; /* lodge-900 */
-  --vert-pale: 76 29 149;
-  --vert-clair: 197 162 245;
-  --vert-fonce: 245 237 254; /* lodge-50 inversé */
+  /* Framboise dark — variants éclaircis pour contraste */
+  --vert: 244 63 94; /* lodge-500 */
+  --vert-soft: 136 19 55; /* lodge-900 */
+  --vert-pale: 136 19 55;
+  --vert-clair: 253 164 175; /* lodge-300 */
+  --vert-fonce: 255 228 230; /* lodge-50 inversé */
   --terracotta: 240 137 86;
   --terracotta-soft: 60 38 28;
 

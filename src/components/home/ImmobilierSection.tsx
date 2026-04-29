@@ -147,14 +147,14 @@ export function ImmobilierSection() {
       ) : null}
 
       {filter === "agency" ? (
-        <div className="bg-pro-50 border-pro text-pro-700 mb-5 rounded-md border-l-4 px-5 py-3 text-sm">
+        <div className="bg-agency-50 border-agency-500 text-agency-800 mb-5 rounded-md border-l-4 px-5 py-3 text-sm">
           <strong className="mb-0.5 block">{t("messageAgencyTitle")}</strong>
           {t("messageAgencyBody")}
         </div>
       ) : null}
 
       {filter === "developer" ? (
-        <div className="mb-5 rounded-md border-l-4 border-amber-600 bg-amber-50 px-5 py-3 text-sm text-amber-900">
+        <div className="bg-developer-50 border-developer text-developer-800 mb-5 rounded-md border-l-4 px-5 py-3 text-sm">
           <strong className="mb-0.5 block">{t("messageDeveloperTitle")}</strong>
           {t("messageDeveloperBody")}
         </div>
