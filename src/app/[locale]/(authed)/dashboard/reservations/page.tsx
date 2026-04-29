@@ -1,6 +1,7 @@
-import { Sparkles } from "lucide-react";
+import { Sparkles, Star } from "lucide-react";
 import { redirect } from "next/navigation";
 
+import { Link } from "@/i18n/navigation";
 import { createClient } from "@/data/supabase/server";
 import { getCurrentUser } from "@/data/supabase/session";
 
@@ -15,6 +16,19 @@ type BookingRow = {
   listing: { title: string | null; city: string | null } | null;
   guest?: { full_name: string | null } | null;
 };
+
+function ReviewLink({ id, locale }: { id: string; locale: string }) {
+  return (
+    <Link
+      href={`/dashboard/reservations/${id}/review`}
+      locale={locale}
+      className="bg-sejours-coral hover:bg-sejours-coral-hover mt-2 inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-semibold text-white transition"
+    >
+      <Star className="h-3 w-3" aria-hidden />
+      Laisser un avis
+    </Link>
+  );
+}
 
 type Params = { locale: string };
 
@@ -72,6 +86,30 @@ export default async function ReservationsPage({
   const guestBookings = (guestRaw ?? []) as unknown as BookingRow[];
   const hostBookings = (hostRaw ?? []) as unknown as BookingRow[];
 
+  const today = new Date().toISOString().slice(0, 10);
+  const reviewableIds = [...guestBookings, ...hostBookings]
+    .filter(
+      (b) =>
+        b.check_out_date <= today &&
+        b.status !== "cancelled_by_guest" &&
+        b.status !== "cancelled_by_host",
+    )
+    .map((b) => b.id);
+  const reviewedIds = new Set<string>();
+  if (reviewableIds.length > 0) {
+    const { data: reviewed } = await supabase
+      .from("reviews")
+      .select("booking_id")
+      .eq("reviewer_id", user.id)
+      .in("booking_id", reviewableIds);
+    for (const r of reviewed ?? []) reviewedIds.add(r.booking_id);
+  }
+  const canReview = (b: BookingRow) =>
+    b.check_out_date <= today &&
+    b.status !== "cancelled_by_guest" &&
+    b.status !== "cancelled_by_host" &&
+    !reviewedIds.has(b.id);
+
   return (
     <main className="bg-creme min-h-screen">
       <div className="mx-auto max-w-6xl px-4 py-8 md:px-6">
@@ -119,6 +157,9 @@ export default async function ReservationsPage({
                   <p className="text-sejours-coral mt-3 text-sm font-semibold">
                     {Number(b.total_price).toLocaleString("fr-FR")} {b.currency}
                   </p>
+                  {canReview(b) ? (
+                    <ReviewLink id={b.id} locale={locale} />
+                  ) : null}
                 </li>
               ))}
             </ul>
@@ -161,6 +202,9 @@ export default async function ReservationsPage({
                   <p className="text-sejours-coral mt-3 text-sm font-semibold">
                     {Number(b.total_price).toLocaleString("fr-FR")} {b.currency}
                   </p>
+                  {canReview(b) ? (
+                    <ReviewLink id={b.id} locale={locale} />
+                  ) : null}
                 </li>
               ))}
             </ul>
