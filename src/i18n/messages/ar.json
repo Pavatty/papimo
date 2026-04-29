@@ -372,5 +372,18 @@
     "listingsCount": "إعلان نشط",
     "noListings": "لا توجد إعلانات نشطة",
     "viewProfile": "عرض الملف"
+  },
+  "Footer": {
+    "description": "المنصة المتوسطية للشراء والإيجار والإقامة.",
+    "discover": "اكتشف",
+    "immobilier": "عقارات",
+    "sejours": "إقامات",
+    "agences": "الوكالات",
+    "publish": "نشر",
+    "legal": "قانوني",
+    "cgu": "الشروط",
+    "privacy": "الخصوصية",
+    "cookies": "ملفات تعريف الارتباط",
+    "contact": "اتصل بنا"
   }
 }

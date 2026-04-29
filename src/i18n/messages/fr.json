@@ -372,5 +372,18 @@
     "listingsCount": "annonce(s) active(s)",
     "noListings": "Aucune annonce active",
     "viewProfile": "Voir le profil"
+  },
+  "Footer": {
+    "description": "La plateforme méditerranéenne pour acheter, louer et séjourner.",
+    "discover": "Découvrir",
+    "immobilier": "Immobilier",
+    "sejours": "Séjours",
+    "agences": "Agences",
+    "publish": "Publier",
+    "legal": "Légal",
+    "cgu": "Conditions Générales",
+    "privacy": "Confidentialité",
+    "cookies": "Cookies",
+    "contact": "Contact"
   }
 }

@@ -15,7 +15,7 @@
 @theme inline {
   /* === LODGE tokens === */
   --color-vert: rgb(var(--vert));
-  --color-vert-hover: #144a30;
+  --color-vert-hover: #6929d8;
   --color-vert-soft: rgb(var(--vert-soft));
   --color-vert-pale: rgb(var(--vert-pale));
   --color-vert-clair: rgb(var(--vert-clair));
@@ -25,11 +25,11 @@
 
   /* === aliases compat papimo → lodge === */
   --color-bleu: rgb(var(--bleu));
-  --color-bleu-hover: #144a30;
+  --color-bleu-hover: #6929d8;
   --color-bleu-soft: rgb(var(--bleu-soft));
   --color-bleu-pale: rgb(var(--bleu-pale));
   --color-corail: rgb(var(--corail));
-  --color-corail-hover: #144a30;
+  --color-corail-hover: #6929d8;
   --color-corail-soft: rgb(var(--corail-soft));
   --color-corail-pale: rgb(var(--corail-pale));
 
@@ -165,15 +165,15 @@
 
 /* LODGE values. RGB triplets pour Tailwind v4 alpha syntax (slash). */
 :root {
-  /* Vert LODGE #1B5E3F = rgb(27, 94, 63) */
-  --vert: 27 94 63;
-  --vert-soft: 232 241 236; /* #E8F1EC */
-  --vert-pale: 240 246 242; /* #F0F6F2 */
-  /* Vert clair #3DA876 = rgb(61, 168, 118) */
-  --vert-clair: 61 168 118;
-  /* Vert très foncé #0A2A1B = rgb(10, 42, 27) */
-  --vert-fonce: 10 42 27;
-  /* Terracotta #E07B3F = rgb(224, 123, 63) */
+  /* LEGACY tokens redirigés vers la palette LODGE Améthyste #7C3AED.
+     Tous les composants existants utilisant text-vert / bg-bleu / border-corail
+     rendent désormais en améthyste, supprimant le vert sapin résiduel. */
+  --vert: 124 58 237; /* Améthyste #7C3AED — ex-vert sapin remplacé */
+  --vert-soft: 245 237 254; /* #F5EDFE — lodge-50 */
+  --vert-pale: 245 237 254; /* lodge-50 */
+  --vert-clair: 159 103 240; /* lodge-500 #9F67F0 */
+  --vert-fonce: 76 29 149; /* lodge-900 #4C1D95 */
+  /* Terracotta conservé tel quel (utilisé sur badges colocation Listing) */
   --terracotta: 224 123 63;
   --terracotta-soft: 250 237 227; /* #FAEDE3 */
 
@@ -266,41 +266,41 @@
   --card-foreground: #1a1a1a;
   --popover: #ffffff;
   --popover-foreground: #1a1a1a;
-  --primary: #1b5e3f;
+  --primary: #7c3aed;
   --primary-foreground: #ffffff;
   --secondary: #ffffff;
-  --secondary-foreground: #1b5e3f;
+  --secondary-foreground: #7c3aed;
   --muted: #f0eee8;
   --muted-foreground: #6b6b6b;
-  --accent: #e8f1ec;
+  --accent: #f5edfe;
   --accent-foreground: #1a1a1a;
   --destructive: #dc2626;
   --border: rgba(0, 0, 0, 0.08);
   --input: rgba(0, 0, 0, 0.08);
-  --ring: #1b5e3f;
-  --chart-1: #1b5e3f;
-  --chart-2: #3da876;
+  --ring: #7c3aed;
+  --chart-1: #7c3aed;
+  --chart-2: #9f67f0;
   --chart-3: #e07b3f;
   --chart-4: #6b6b6b;
   --chart-5: #f0eee8;
   --radius: 0.625rem;
   --sidebar: #fafaf7;
   --sidebar-foreground: #1a1a1a;
-  --sidebar-primary: #1b5e3f;
+  --sidebar-primary: #7c3aed;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f0eee8;
+  --sidebar-accent: #f5edfe;
   --sidebar-accent-foreground: #1a1a1a;
   --sidebar-border: rgba(0, 0, 0, 0.08);
-  --sidebar-ring: #1b5e3f;
+  --sidebar-ring: #7c3aed;
 }
 
 .dark {
-  /* Vert dark plus lumineux pour contraste #2A8A5E */
-  --vert: 42 138 94;
-  --vert-soft: 31 60 47;
-  --vert-pale: 21 45 35;
-  --vert-clair: 79 194 137;
-  --vert-fonce: 15 26 20;
+  /* Améthyste dark — variants éclaircis pour contraste */
+  --vert: 159 103 240; /* lodge-500 */
+  --vert-soft: 76 29 149; /* lodge-900 */
+  --vert-pale: 76 29 149;
+  --vert-clair: 197 162 245;
+  --vert-fonce: 245 237 254; /* lodge-50 inversé */
   --terracotta: 240 137 86;
   --terracotta-soft: 60 38 28;
 

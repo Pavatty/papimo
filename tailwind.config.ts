@@ -45,7 +45,7 @@ const config: Config = {
         ink: "#1A1A1A",
         bleu: {
           DEFAULT: "rgb(var(--bleu) / <alpha-value>)",
-          hover: "#174A7E",
+          hover: "#6929D8",
           soft: "rgb(var(--bleu-soft) / <alpha-value>)",
           pale: "rgb(var(--bleu-pale) / <alpha-value>)",
         },
